@@ -43,8 +43,11 @@ export async function visitByFileSystemHandle(
   try {
     // FileSystemDirectoryHandle의 values()는 async iterator를 반환
     const children: FileSystemHandle[] = [];
-    // FileSystemDirectoryHandle.values()는 일부 환경의 표준 타입에 없을 수 있으므로 단언 사용
-    const iterator = (handle as FileSystemDirectoryHandle).values();
+    // FileSystemDirectoryHandle.values()는 일부 환경의 표준 타입에 없을 수 있으므로 인터페이스 확장 사용
+    const directoryHandle = handle as FileSystemDirectoryHandle & {
+      values(): AsyncIterableIterator<FileSystemHandle>;
+    };
+    const iterator = directoryHandle.values();
 
     if (isInfoEnabled) {
       console.log(`🔍 Traversing directory: ${handle.name} at path: ${newParent.toString()}`);

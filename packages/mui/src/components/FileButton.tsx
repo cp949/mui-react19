@@ -105,7 +105,7 @@ type FileButtonComponent = (<Multiple extends boolean = false>(
  * </FileButton>
  * ```
  */
-export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, FileButtonProps>(
+export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, FileButtonProps<boolean>>(
   (props, ref) => {
     const {
       onChange,
@@ -144,7 +144,7 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
       const files = event.currentTarget?.files;
       if (!files) return;
       if (multiple) {
-        onChange(Array.from(files) as Multiple extends true ? File[] : File);
+        onChange(Array.from(files));
       } else {
         const file = files[0];
         if (file) {
