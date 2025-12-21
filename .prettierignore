@@ -1,0 +1,13 @@
+.turbo
+.next
+**/.next
+**/.turbo
+**/node_modules
+**/dist
+**/build
+**/out
+**/coverage
+**/*.min.js
+pnpm-lock.yaml
+**/pnpm-lock.yaml
+
