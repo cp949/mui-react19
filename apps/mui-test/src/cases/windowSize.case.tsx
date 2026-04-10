@@ -1,13 +1,13 @@
-import { Button, Stack, Typography } from '@mui/material';
 import { useWindowSize } from '@cp949/mui-react19/hooks';
+import { Button, Stack, Typography } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
 import type { HookCase } from './types';
+import { canMockWindowSize, setMockWindowSize } from './window-size-env';
 
 function setWindowSize(width: number, height: number) {
-  Object.defineProperty(window, 'innerWidth', { value: width, configurable: true });
-  Object.defineProperty(window, 'innerHeight', { value: height, configurable: true });
+  setMockWindowSize(window, width, height);
 }
 
 function nextRaf() {
@@ -16,17 +16,38 @@ function nextRaf() {
   });
 }
 
+async function waitForWindowSize(
+  getValue: () => { width: number; height: number },
+  width: number,
+  height: number,
+  timeoutMs = 500,
+) {
+  const startedAt = Date.now();
+
+  while (Date.now() - startedAt < timeoutMs) {
+    const current = getValue();
+    if (current.width === width && current.height === height) {
+      return current;
+    }
+
+    await nextRaf();
+    await delay(10);
+  }
+
+  return getValue();
+}
+
 function Preview() {
   const { width, height } = useWindowSize();
 
   return (
     <Stack spacing={1}>
-      <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+      <Typography variant='body2' sx={{ fontFamily: 'monospace' }}>
         {JSON.stringify({ width, height })}
       </Typography>
       <Button
-        size="small"
-        variant="outlined"
+        size='small'
+        variant='outlined'
         onClick={() => {
           setWindowSize(777, 333);
           window.dispatchEvent(new Event('resize'));
@@ -44,6 +65,13 @@ export const windowSizeCase: HookCase = {
   tags: ['dom', 'events', 'assert'],
   Preview,
   run: async () => {
+    if (!canMockWindowSize(window)) {
+      return {
+        status: 'skipped',
+        error: 'This environment does not allow overriding window.innerWidth/innerHeight.',
+      };
+    }
+
     const res = await runReactTest((done) => {
       function Harness() {
         const onChangeCount = useRef<number>(0);
@@ -67,15 +95,16 @@ export const windowSizeCase: HookCase = {
           const prevHeightDesc = Object.getOwnPropertyDescriptor(window, 'innerHeight');
 
           async function run() {
-            setWindowSize(100, 200);
-            window.dispatchEvent(new Event('resize'));
-
-            // useWindowSize uses raf state
             await nextRaf();
             await delay(0);
             if (cancelled) return;
 
-            const first = stateRef.current;
+            setWindowSize(100, 200);
+            window.dispatchEvent(new Event('resize'));
+
+            const first = await waitForWindowSize(() => stateRef.current, 100, 200);
+            if (cancelled) return;
+
             if (first.width !== 100 || first.height !== 200) {
               done({ ok: false, error: `expected {100,200}, got ${JSON.stringify(first)}` });
               return;
@@ -83,11 +112,9 @@ export const windowSizeCase: HookCase = {
 
             setWindowSize(300, 400);
             window.dispatchEvent(new Event('resize'));
-            await nextRaf();
-            await delay(0);
+            const second = await waitForWindowSize(() => stateRef.current, 300, 400);
             if (cancelled) return;
 
-            const second = stateRef.current;
             if (second.width !== 300 || second.height !== 400) {
               done({ ok: false, error: `expected {300,400}, got ${JSON.stringify(second)}` });
               return;
