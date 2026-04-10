@@ -1,4 +1,5 @@
-_work/
+_works/*
+!_works/README.md
 CLAUDE.md
 .claude/
 AGENTS.md
