@@ -4,6 +4,9 @@ import type { DependencyList, EffectCallback } from 'react';
 import { useEffect, useRef } from 'react';
 
 const isPrimitive = (val: unknown) => val !== Object(val);
+const isProductionEnv = () =>
+  (globalThis as typeof globalThis & { process?: { env?: { NODE_ENV?: string } } }).process?.env
+    ?.NODE_ENV === 'production';
 
 type DepsEqualFnType<TDeps extends DependencyList> = (prevDeps: TDeps, nextDeps: TDeps) => boolean;
 
@@ -61,8 +64,8 @@ export const useCustomCompareEffect = <TDeps extends DependencyList>(
   deps: TDeps,
   depsEqual: DepsEqualFnType<TDeps>,
 ) => {
-  if (process.env['NODE_ENV'] !== 'production') {
-    if (!(deps instanceof Array) || !deps.length) {
+  if (!isProductionEnv()) {
+    if (!Array.isArray(deps) || !deps.length) {
       console.warn(
         '`useCustomCompareEffect` should not be used with no dependencies. Use React.useEffect instead.',
       );

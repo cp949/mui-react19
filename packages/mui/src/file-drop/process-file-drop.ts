@@ -8,9 +8,9 @@ import type {
   FileItem,
   ProcessedDirectory,
   ProcessedFile,
+  ProcessingOptions,
   ProcessResult,
   SafeProcessResult,
-  ProcessingOptions,
 } from './types.js';
 import { FileDropError } from './types.js';
 import { buildFileTree, createFileItem } from './utils/file-utils.js';
@@ -48,7 +48,9 @@ async function normalizeSource(
           return item.webkitGetAsEntry(); // 레거시 웹킷 API 사용
         } else if (supportsFileSystemAccessAPI) {
           // File System Access API - getAsFileSystemHandle은 표준 타입에 없음
-          return (item as DataTransferItem & { getAsFileSystemHandle(): Promise<FileSystemHandle> }).getAsFileSystemHandle();
+          return (
+            item as DataTransferItem & { getAsFileSystemHandle(): Promise<FileSystemHandle> }
+          ).getAsFileSystemHandle();
         }
         return item.getAsFile(); // fallback
       })

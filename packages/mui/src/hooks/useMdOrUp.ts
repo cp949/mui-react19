@@ -1,4 +1,4 @@
-import { useMediaQuery, type UseMediaQueryOptions, useTheme } from '@mui/material';
+import { type UseMediaQueryOptions, useMediaQuery, useTheme } from '@mui/material';
 
 export function useMdOrUp(options?: UseMediaQueryOptions) {
   const theme = useTheme();

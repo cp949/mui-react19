@@ -36,7 +36,9 @@ const defaultState: ObserverRect = {
  * );
  * ```
  */
-export function useResizeObserver<T extends HTMLElement = HTMLElement>(options?: ResizeObserverOptions) {
+export function useResizeObserver<T extends HTMLElement = HTMLElement>(
+  options?: ResizeObserverOptions,
+) {
   // Reference to the animation frame ID for cleanup
   const frameID = useRef(0);
 

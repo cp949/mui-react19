@@ -5,6 +5,8 @@ import { createComponent } from './create-component.js';
 
 export interface StackRowProps extends Omit<StackProps, 'direction'> {
   center?: boolean;
+  alignItems?: React.CSSProperties['alignItems'];
+  justifyContent?: React.CSSProperties['justifyContent'];
 }
 
 const StackRowCenter = createComponent('StackRow.Center', 'row', {
@@ -44,11 +46,16 @@ export const StackRow = forwardRef<HTMLDivElement, StackRowProps>(
   ({ center = false, alignItems, justifyContent, children, ...props }, ref) => {
     return (
       <Stack
-        direction="row"
-        alignItems={center ? 'center' : alignItems}
-        justifyContent={center ? 'center' : justifyContent}
+        direction='row'
         {...props}
         ref={ref}
+        sx={[
+          {
+            alignItems: center ? 'center' : alignItems,
+            justifyContent: center ? 'center' : justifyContent,
+          },
+          ...(Array.isArray(props.sx) ? props.sx : [props.sx ?? false]),
+        ]}
       >
         {children}
       </Stack>

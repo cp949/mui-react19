@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { Button, Stack, Typography } from '@mui/material';
 import { useLocalStorage } from '@cp949/mui-react19/hooks';
+import { Button, Stack, Typography } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
 import type { HookCase } from './types';
@@ -12,15 +12,15 @@ function Preview() {
 
   return (
     <Stack spacing={1}>
-      <Typography variant="body2">key: {KEY}</Typography>
-      <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+      <Typography variant='body2'>key: {KEY}</Typography>
+      <Typography variant='body2' sx={{ fontFamily: 'monospace' }}>
         value: {JSON.stringify(value)}
       </Typography>
-      <Stack direction="row" spacing={1}>
-        <Button size="small" variant="outlined" onClick={() => setValue('hello')}>
+      <Stack direction='row' spacing={1}>
+        <Button size='small' variant='outlined' onClick={() => setValue('hello')}>
           set hello
         </Button>
-        <Button size="small" variant="outlined" onClick={() => remove()}>
+        <Button size='small' variant='outlined' onClick={() => remove()}>
           remove
         </Button>
       </Stack>
@@ -71,7 +71,7 @@ export const localStorageCase: HookCase = {
             if (cancelled) return;
 
             const raw = localStorage.getItem(KEY);
-            if (!raw || !raw.includes('hello')) {
+            if (!raw?.includes('hello')) {
               done({
                 ok: false,
                 error: `expected localStorage to include 'hello', got ${JSON.stringify(raw)}`,
@@ -102,7 +102,12 @@ export const localStorageCase: HookCase = {
         }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
         return (
-          <Typography variant="caption" color="text.secondary">
+          <Typography
+            variant='caption'
+            sx={{
+              color: 'text.secondary',
+            }}
+          >
             phase: {phase} / value: {String(value)}
           </Typography>
         );

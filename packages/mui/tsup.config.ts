@@ -2,7 +2,12 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig((options) => {
   return {
-    dts: true,
+    dts: {
+      compilerOptions: {
+        // tsup 8.5.1 injects `baseUrl: "."` during DTS bundling under TS 6.
+        ignoreDeprecations: '6.0',
+      },
+    },
     format: ['esm', 'cjs'],
     minify: !options.watch,
     entry: {

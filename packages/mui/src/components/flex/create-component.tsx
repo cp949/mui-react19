@@ -1,8 +1,8 @@
 import { Box } from '@mui/material';
+import type { CSSProperties } from 'react';
 import { forwardRef } from 'react';
 import { overrideProps } from '../../util/override-props.js';
 import type { FlexBaseProps } from './types.js';
-import type { CSSProperties } from 'react';
 
 export function createFlexComponent(
   displayName: string,

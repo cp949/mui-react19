@@ -41,7 +41,7 @@ export const sxDialogHeight = (
   heightInPercent = 100,
 ) => {
   return {
-    '& .MuiDialog-paperScrollPaper': {
+    '& .MuiDialog-scrollPaper > .MuiDialog-paper': {
       [key]: `calc(${heightInPercent}% - 64px)`,
     },
   };

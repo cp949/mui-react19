@@ -18,9 +18,8 @@ export function LengthLimitHelperText(props: Props) {
   if (text) {
     return (
       <Box
-        alignItems="flex-start"
         className={clsx('LengthLimitHelperText-root', className)}
-        component="span"
+        component='span'
         sx={[
           {
             display: 'flex',
@@ -32,7 +31,7 @@ export function LengthLimitHelperText(props: Props) {
         ]}
       >
         {typeof text === 'string' ? <span>{text}</span> : text}
-        <Box component="span" sx={{ ml: 2, whiteSpace: 'nowrap' }}>
+        <Box component='span' sx={{ ml: 2, whiteSpace: 'nowrap' }}>
           {currentLen} / {maxLen}
         </Box>
       </Box>
@@ -41,9 +40,8 @@ export function LengthLimitHelperText(props: Props) {
 
   return (
     <Box
-      alignItems="flex-start"
       className={clsx('LengthLimitHelperText-root', className)}
-      component="span"
+      component='span'
       sx={[
         {
           display: 'flex',

@@ -1,9 +1,9 @@
-import { useEffect, useRef, type RefObject } from 'react';
-import { Button, Stack, Typography } from '@mui/material';
 import { useEventListener } from '@cp949/mui-react19/hooks';
-import type { HookCase } from './types';
+import { Button, Stack, Typography } from '@mui/material';
+import { type RefObject, useEffect, useRef } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
+import type { HookCase } from './types';
 
 function Preview() {
   const countRef = useRef(0);
@@ -13,10 +13,10 @@ function Preview() {
 
   return (
     <Stack spacing={1}>
-      <Typography variant="body2">Click the box to trigger listener</Typography>
+      <Typography variant='body2'>Click the box to trigger listener</Typography>
       <Button
-        size="small"
-        variant="outlined"
+        size='small'
+        variant='outlined'
         onClick={() => ref.current?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
       >
         dispatch

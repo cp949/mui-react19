@@ -1,6 +1,6 @@
 import { Box, type BoxProps } from '@mui/material';
-import { forwardRef } from 'react';
 import type { CSSProperties } from 'react';
+import { forwardRef } from 'react';
 
 export interface CenterAbsoluteLeftProps extends BoxProps {
   left?: CSSProperties['left'];

@@ -34,7 +34,9 @@ function offCurrentTabStorageChange(key: string, handler: () => void) {
 function emitCurrentTabStorageChange(key: string) {
   const listeners = currentTabChangeListeners.get(key);
   if (listeners) {
-    listeners.forEach((listener) => listener());
+    listeners.forEach((listener) => {
+      listener();
+    });
   }
 }
 

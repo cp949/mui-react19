@@ -1,5 +1,4 @@
-import type { FC } from 'react';
-import { type ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 
 export interface ShowProps {
   when: boolean | null | undefined;

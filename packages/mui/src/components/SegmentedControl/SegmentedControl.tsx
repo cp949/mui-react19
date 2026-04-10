@@ -156,7 +156,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       sx={sx}
       style={style}
       ref={mergedRef}
-      role="radiogroup"
+      role='radiogroup'
       data-vertical={trueOrUndef(vertical)} // 수직 여부
       data-fullwidth={trueOrUndef(fullWidth)} // 100% 너비 여부
       data-with-item-border={trueOrUndef(withItemBorder)} // 항목 경계 표시 여부
@@ -164,8 +164,8 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     >
       {typeof _value === 'string' && (
         <FloatingIndicator
-          className="SegmentedControl-indicator"
-          component="span"
+          className='SegmentedControl-indicator'
+          component='span'
           target={refs[_value]} // 인디케이터 대상
           parent={parent} // 부모 요소
           transitionDuration={transitionDuration} // 전환 시간
@@ -193,10 +193,10 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
           transitionTimingFunction={transitionTimingFunction}
         >
           <SegmentedControlInput
-            component="input"
-            className="SegmentedControl-input"
+            component='input'
+            className='SegmentedControl-input'
             key={`${item.value}-input`}
-            type="radio"
+            type='radio'
             name={uuid}
             value={item.value}
             checked={_value === item.value}
@@ -208,9 +208,9 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
             }}
           />
           <SegmentedControlLabel
-            component="label"
+            component='label'
             key={`${item.value}-label`}
-            className="SegmentedControl-label"
+            className='SegmentedControl-label'
             ref={setElementRef(item.value)}
             htmlFor={`${uuid}-${item.value}`}
             primaryColor={primaryColor}
@@ -219,7 +219,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
             transitionTimingFunction={transitionTimingFunction}
           >
             <Box
-              component="span"
+              component='span'
               sx={{
                 position: 'relative',
                 zIndex: 2,

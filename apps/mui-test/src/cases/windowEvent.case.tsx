@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { Button, Stack, Typography } from '@mui/material';
 import { useWindowEvent } from '@cp949/mui-react19/hooks';
-import type { HookCase } from './types';
+import { Button, Stack, Typography } from '@mui/material';
+import { useEffect, useRef } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
+import type { HookCase } from './types';
 
 function Preview() {
   const countRef = useRef(0);
@@ -13,10 +13,10 @@ function Preview() {
 
   return (
     <Stack spacing={1}>
-      <Typography variant="body2">Dispatch window resize event</Typography>
+      <Typography variant='body2'>Dispatch window resize event</Typography>
       <Button
-        size="small"
-        variant="outlined"
+        size='small'
+        variant='outlined'
         onClick={() => window.dispatchEvent(new Event('resize'))}
       >
         dispatch

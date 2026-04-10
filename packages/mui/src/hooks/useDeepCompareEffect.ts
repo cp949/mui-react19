@@ -5,6 +5,9 @@ import { deepEq } from '../misc/deepEq.js';
 import { useCustomCompareEffect } from './useCustomCompareEffect.js';
 
 const isPrimitive = (val: unknown) => val !== Object(val);
+const isProductionEnv = () =>
+  (globalThis as typeof globalThis & { process?: { env?: { NODE_ENV?: string } } }).process?.env
+    ?.NODE_ENV === 'production';
 
 /**
  * 의존성 배열의 깊은 비교(Deep Comparison)를 수행하여 `useEffect`를 실행하는 커스텀 훅입니다.
@@ -52,8 +55,8 @@ const isPrimitive = (val: unknown) => val !== Object(val);
  * @returns 없음. 이 훅은 `useEffect`와 동일하게 부수 효과를 실행하며, 반환값은 없습니다.
  */
 export const useDeepCompareEffect = (effect: EffectCallback, deps: DependencyList) => {
-  if (process.env['NODE_ENV'] !== 'production') {
-    if (!(deps instanceof Array) || !deps.length) {
+  if (!isProductionEnv()) {
+    if (!Array.isArray(deps) || !deps.length) {
       console.warn(
         '`useDeepCompareEffect` should not be used with no dependencies. Use React.useEffect instead.',
       );

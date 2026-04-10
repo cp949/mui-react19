@@ -1,4 +1,4 @@
-import { Box, Typography, type BoxProps } from '@mui/material';
+import { Box, type BoxProps, Typography } from '@mui/material';
 import { forwardRef } from 'react';
 
 export interface PortletLabelProps extends BoxProps {
@@ -23,7 +23,7 @@ export const PortletLabel = forwardRef<HTMLDivElement, PortletLabelProps>((props
     >
       {icon && (
         <Box
-          component="span"
+          component='span'
           sx={{
             fontSize: '1.2rem',
             mr: 1,
@@ -41,14 +41,14 @@ export const PortletLabel = forwardRef<HTMLDivElement, PortletLabelProps>((props
             fontWeight: 500,
             fontSize: '1.1rem',
           }}
-          variant="h6"
+          variant='h6'
         >
           {title}
         </Typography>
       )}
       {subtitle && (
         <Typography
-          variant="subtitle2"
+          variant='subtitle2'
           sx={{
             fontWeight: 400,
             ml: 1,

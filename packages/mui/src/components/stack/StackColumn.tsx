@@ -5,6 +5,8 @@ import { createComponent } from './create-component.js';
 
 export interface StackColumnProps extends Omit<StackProps, 'direction'> {
   center?: boolean;
+  alignItems?: React.CSSProperties['alignItems'];
+  justifyContent?: React.CSSProperties['justifyContent'];
 }
 
 const StackColumnCenter = createComponent('StackColumn.Center', 'column', {
@@ -44,11 +46,16 @@ export const StackColumn = forwardRef<HTMLDivElement, StackColumnProps>(
   ({ center = false, alignItems, justifyContent, children, ...props }, ref) => {
     return (
       <Stack
-        direction="column"
-        alignItems={center ? 'center' : alignItems}
-        justifyContent={center ? 'center' : justifyContent}
+        direction='column'
         {...props}
         ref={ref}
+        sx={[
+          {
+            alignItems: center ? 'center' : alignItems,
+            justifyContent: center ? 'center' : justifyContent,
+          },
+          ...(Array.isArray(props.sx) ? props.sx : [props.sx ?? false]),
+        ]}
       >
         {children}
       </Stack>

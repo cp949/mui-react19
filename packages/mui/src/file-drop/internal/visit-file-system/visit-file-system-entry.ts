@@ -156,7 +156,7 @@ async function readAllEntries(
   async function readEntriesRecursively() {
     return new Promise<FileSystemEntry[]>((resolve, reject) => {
       dirReader.readEntries(
-        function (entries) {
+        (entries) => {
           if (entries.length > 0) {
             allEntries = allEntries.concat(entries);
             // 아직 더 읽을 파일이 남아 있을 수 있으므로 재귀적으로 호출

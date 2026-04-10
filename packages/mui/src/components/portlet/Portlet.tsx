@@ -30,7 +30,7 @@ export const Portlet = forwardRef<HTMLDivElement, PortletProps>((props, ref) => 
       {...restProps}
       elevation={0}
       ref={ref}
-      component="div"
+      component='div'
       className={className ? `Portlet-root ${className}` : 'Portlet-root'}
       sx={[
         {

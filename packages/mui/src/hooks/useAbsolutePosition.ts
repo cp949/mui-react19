@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import type React from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { BehaviorSubject, skip, throttleTime } from 'rxjs';
 import { useIsomorphicEffect } from './useIsomorphicEffect.js';
 import { useWindowSize } from './useWindowSize.js';

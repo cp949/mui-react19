@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, type RefObject } from 'react';
+import { type RefObject, useEffect, useRef, useState } from 'react';
 import { useLatest } from '../../hooks/useLatest.js';
 import { useMutationObserver } from '../../hooks/useMutationObserver.js';
 import { useTimeout } from '../../hooks/useTimeout.js';

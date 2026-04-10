@@ -1,4 +1,4 @@
-import { useEffect, useState, type DependencyList, type EffectCallback } from 'react';
+import { type DependencyList, type EffectCallback, useEffect, useState } from 'react';
 import { useDebounceFn } from './useDebounceFn.js';
 import { useUpdateEffect } from './useUpdateEffect.js';
 

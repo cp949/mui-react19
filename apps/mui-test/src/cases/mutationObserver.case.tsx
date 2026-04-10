@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { Button, Stack, Typography } from '@mui/material';
 import { useMutationObserver } from '@cp949/mui-react19/hooks';
-import type { HookCase } from './types';
+import { Button, Stack, Typography } from '@mui/material';
+import { useEffect, useMemo, useRef } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
+import type { HookCase } from './types';
 
 function Preview() {
   const target = useMemo(() => document.createElement('div'), []);
@@ -19,10 +19,10 @@ function Preview() {
 
   return (
     <Stack spacing={1}>
-      <Typography variant="body2">MutationObserver (attributes)</Typography>
+      <Typography variant='body2'>MutationObserver (attributes)</Typography>
       <Button
-        size="small"
-        variant="outlined"
+        size='small'
+        variant='outlined'
         onClick={() => target.setAttribute('data-x', String(Date.now()))}
       >
         mutate

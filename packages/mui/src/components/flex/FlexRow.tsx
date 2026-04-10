@@ -61,11 +61,7 @@ const FlexRowBase = forwardRef<HTMLDivElement, FlexRowProps>(
     };
 
     return (
-      <Box
-        ref={ref}
-        sx={sxArray.length > 0 ? [baseStyle, ...sxArray] : baseStyle}
-        {...props}
-      />
+      <Box ref={ref} sx={sxArray.length > 0 ? [baseStyle, ...sxArray] : baseStyle} {...props} />
     );
   },
 ) as FlexRowComponent;

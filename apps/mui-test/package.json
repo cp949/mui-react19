@@ -4,34 +4,37 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "pnpm --filter @cp949/mui-react19 build",
     "dev": "vite",
+    "prebuild": "pnpm --filter @cp949/mui-react19 build",
     "build": "tsc -p tsconfig.json --noEmit && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --max-warnings 0",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "precheck-types": "pnpm --filter @cp949/mui-react19 build",
     "check-types": "tsc -p tsconfig.json --noEmit",
     "pretest": "pnpm --filter @cp949/mui-react19 build",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@cp949/mui-react19": "workspace:*",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@mui/material": "^7.3.6",
-    "@cp949/mui-react19": "workspace:*",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "@mui/material": "^9.0.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
   },
   "devDependencies": {
     "@cp949/web-logger": "^1.0.4",
-    "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.2",
-    "eslint": "^9.39.2",
-    "happy-dom": "^20.0.11",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.0",
-    "vitest": "^4.0.16"
+    "@vitejs/plugin-react": "^6.0.1",
+    "happy-dom": "^20.8.9",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.8",
+    "vitest": "^4.1.4"
   }
 }

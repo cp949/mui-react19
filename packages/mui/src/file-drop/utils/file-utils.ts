@@ -9,17 +9,17 @@ export class FilePathUtils {
   }
 
   static join(...segments: string[]): string {
-    return this.normalize(segments.filter(Boolean).join('/'));
+    return FilePathUtils.normalize(segments.filter(Boolean).join('/'));
   }
 
   static dirname(path: string): string {
-    const normalized = this.normalize(path);
+    const normalized = FilePathUtils.normalize(path);
     const lastSlash = normalized.lastIndexOf('/');
     return lastSlash <= 0 ? '/' : normalized.slice(0, lastSlash);
   }
 
   static basename(path: string, ext?: string): string {
-    const normalized = this.normalize(path);
+    const normalized = FilePathUtils.normalize(path);
     const name = normalized.split('/').pop() || '';
     if (ext && name.endsWith(ext)) {
       return name.slice(0, -ext.length);
@@ -28,14 +28,14 @@ export class FilePathUtils {
   }
 
   static extname(path: string): string {
-    const name = this.basename(path);
+    const name = FilePathUtils.basename(path);
     const lastDot = name.lastIndexOf('.');
     return lastDot > 0 ? name.slice(lastDot) : '';
   }
 
   static relative(from: string, to: string): string {
-    const fromParts = this.normalize(from).split('/').filter(Boolean);
-    const toParts = this.normalize(to).split('/').filter(Boolean);
+    const fromParts = FilePathUtils.normalize(from).split('/').filter(Boolean);
+    const toParts = FilePathUtils.normalize(to).split('/').filter(Boolean);
 
     let i = 0;
     while (i < fromParts.length && i < toParts.length && fromParts[i] === toParts[i]) {

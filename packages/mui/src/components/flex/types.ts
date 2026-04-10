@@ -1,4 +1,4 @@
-import { type BoxProps } from '@mui/material';
+import type { BoxProps } from '@mui/material';
 import type { CSSProperties } from 'react';
 
 export interface FlexBaseProps extends BoxProps {

@@ -1,7 +1,7 @@
 import type { SxProps, Theme, TypographyProps } from '@mui/material';
 import { Typography } from '@mui/material';
 import clsx from 'clsx';
-import { forwardRef, useMemo, type CSSProperties } from 'react';
+import { type CSSProperties, forwardRef, useMemo } from 'react';
 import { Mark } from '../Mark.js';
 import { highlighter } from './highlighter/highlighter.js';
 

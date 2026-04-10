@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, Stack, Typography } from '@mui/material';
 import { useInterval } from '@cp949/mui-react19/hooks';
-import type { HookCase } from './types';
+import { Button, Stack, Typography } from '@mui/material';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
+import type { HookCase } from './types';
 
 const INTERVAL_MS = 20;
 
@@ -14,15 +14,15 @@ function Preview() {
 
   return (
     <Stack spacing={1}>
-      <Typography variant="body2">interval: {INTERVAL_MS}ms</Typography>
-      <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+      <Typography variant='body2'>interval: {INTERVAL_MS}ms</Typography>
+      <Typography variant='body2' sx={{ fontFamily: 'monospace' }}>
         active: {String(active)} / count: {count}
       </Typography>
-      <Stack direction="row" spacing={1}>
-        <Button size="small" variant="outlined" onClick={() => start()}>
+      <Stack direction='row' spacing={1}>
+        <Button size='small' variant='outlined' onClick={() => start()}>
           start
         </Button>
-        <Button size="small" variant="outlined" onClick={() => stop()}>
+        <Button size='small' variant='outlined' onClick={() => stop()}>
           stop
         </Button>
       </Stack>

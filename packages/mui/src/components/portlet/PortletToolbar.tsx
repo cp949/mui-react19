@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export interface PortletToolbarProps {
   icon: ReactNode;
@@ -11,7 +11,7 @@ export function PortletToolbar(props: PortletToolbarProps) {
   const { children } = props;
   return (
     <div
-      className="PortletToolbar-root"
+      className='PortletToolbar-root'
       style={{
         justifyContent: 'flex-end',
         alignItems: 'center',

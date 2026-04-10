@@ -54,7 +54,7 @@ export function useImageLoadCallback(
   onErrorRef.current = options.onError;
 
   useEffect(() => {
-    if (!img || !img.src) return;
+    if (!img?.src) return;
 
     if (img.complete) {
       // 이미지가 이미 로드된 상태

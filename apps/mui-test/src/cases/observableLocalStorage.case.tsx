@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { Button, Stack, Typography } from '@mui/material';
 import { useObservableLocalStorage } from '@cp949/mui-react19/hooks';
-import type { HookCase } from './types';
+import { Button, Stack, Typography } from '@mui/material';
+import { useEffect, useRef } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
+import type { HookCase } from './types';
 
 const KEY = 'mui-test/useObservableLocalStorage';
 
@@ -12,15 +12,15 @@ function Preview() {
 
   return (
     <Stack spacing={1}>
-      <Typography variant="body2">key: {KEY}</Typography>
-      <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+      <Typography variant='body2'>key: {KEY}</Typography>
+      <Typography variant='body2' sx={{ fontFamily: 'monospace' }}>
         value: {JSON.stringify(value)}
       </Typography>
-      <Stack direction="row" spacing={1}>
-        <Button size="small" variant="outlined" onClick={() => setValue('next')}>
+      <Stack direction='row' spacing={1}>
+        <Button size='small' variant='outlined' onClick={() => setValue('next')}>
           set next
         </Button>
-        <Button size="small" variant="outlined" onClick={() => setValue(null)}>
+        <Button size='small' variant='outlined' onClick={() => setValue(null)}>
           set null
         </Button>
       </Stack>

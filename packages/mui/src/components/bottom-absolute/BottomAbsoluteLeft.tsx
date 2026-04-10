@@ -1,6 +1,5 @@
 import { Box, type BoxProps } from '@mui/material';
-import { forwardRef } from 'react';
-import { type CSSProperties } from 'react';
+import { type CSSProperties, forwardRef } from 'react';
 
 export interface BottomAbsoluteLeftProps extends BoxProps {
   fullWidth?: boolean;

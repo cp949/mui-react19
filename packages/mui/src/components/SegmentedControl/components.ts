@@ -1,5 +1,5 @@
 import type { Theme, TypographyProps } from '@mui/material';
-import { Box, styled, type BoxProps } from '@mui/material';
+import { Box, type BoxProps, styled } from '@mui/material';
 import type { ComponentType } from 'react';
 
 export const SegmentedControlRoot: ComponentType<BoxProps> = styled(Box)<BoxProps>(({ theme }) => {
@@ -132,60 +132,62 @@ export const SegmentedControlLabel: ComponentType<SegmentedControlLabelProps> = 
     prop !== 'transitionTimingFunction' &&
     prop !== 'primaryColor' &&
     prop !== 'secondaryColor',
-})<SegmentedControlLabelProps>(({
-  theme,
-  transitionDuration = 150,
-  transitionTimingFunction = 'ease',
-  primaryColor,
-  secondaryColor,
-}) => {
-  const _primaryColor = resolveColor(theme, primaryColor) ?? theme.palette.primary.main;
-  const _secondaryColor = resolveColor(theme, secondaryColor) ?? theme.palette.text.secondary;
+})<SegmentedControlLabelProps>(
+  ({
+    theme,
+    transitionDuration = 150,
+    transitionTimingFunction = 'ease',
+    primaryColor,
+    secondaryColor,
+  }) => {
+    const _primaryColor = resolveColor(theme, primaryColor) ?? theme.palette.primary.main;
+    const _secondaryColor = resolveColor(theme, secondaryColor) ?? theme.palette.text.secondary;
 
-  return {
-    fontWeight: 500,
-    display: 'block',
-    textAlign: 'center',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    userSelect: 'none',
-    borderRadius: 1,
-    padding: '0.3125rem 0.625rem',
-    fontSize: theme.typography.body1.fontSize,
-    cursor: 'pointer',
-    color: _secondaryColor,
-    transition: `color ${transitionDuration}ms ${transitionTimingFunction}`,
+    return {
+      fontWeight: 500,
+      display: 'block',
+      textAlign: 'center',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      userSelect: 'none',
+      borderRadius: 1,
+      padding: '0.3125rem 0.625rem',
+      fontSize: theme.typography.body1.fontSize,
+      cursor: 'pointer',
+      color: _secondaryColor,
+      transition: `color ${transitionDuration}ms ${transitionTimingFunction}`,
 
-    '.SegmentedControl-item.Mui-active > &&': {
-      color: _primaryColor,
-      '&::before': {
-        content: '""',
-        position: 'absolute',
-        inset: 0,
-        zIndex: 0,
+      '.SegmentedControl-item.Mui-active > &&': {
+        color: _primaryColor,
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          inset: 0,
+          zIndex: 0,
+        },
       },
-    },
 
-    '.SegmentedControl-item.Mui-readOnly > &&': {
-      cursor: 'default',
-    },
+      '.SegmentedControl-item.Mui-readOnly > &&': {
+        cursor: 'default',
+      },
 
-    '.SegmentedControl-item.Mui-disabled > &&': {
-      cursor: 'not-allowed',
-      color: theme.palette.text.disabled,
-      opacity: 0.7,
-    },
+      '.SegmentedControl-item.Mui-disabled > &&': {
+        cursor: 'not-allowed',
+        color: theme.palette.text.disabled,
+        opacity: 0.7,
+      },
 
-    '.SegmentedControl-root[data-size="small"] &': {
-      padding: '0.2rem 0.4rem',
-      fontSize: '0.7rem',
-    },
-    '.SegmentedControl-root[data-size="large"] &': {
-      padding: '0.4rem 0.8rem',
-      fontSize: theme.typography.subtitle1.fontSize,
-    },
-  };
-});
+      '.SegmentedControl-root[data-size="small"] &': {
+        padding: '0.2rem 0.4rem',
+        fontSize: '0.7rem',
+      },
+      '.SegmentedControl-root[data-size="large"] &': {
+        padding: '0.4rem 0.8rem',
+        fontSize: theme.typography.subtitle1.fontSize,
+      },
+    };
+  },
+);
 
 SegmentedControlLabel.displayName = 'SegmentedControlLabel';

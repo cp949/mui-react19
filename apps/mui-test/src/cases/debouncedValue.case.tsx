@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { Box, Stack, TextField, Typography } from '@mui/material';
 import { useDebouncedValue } from '@cp949/mui-react19/hooks';
+import { Box, Stack, TextField, Typography } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
 import type { HookCase } from './types';
@@ -14,18 +14,23 @@ function Preview() {
   return (
     <Stack spacing={1}>
       <TextField
-        label="value"
-        size="small"
+        label='value'
+        size='small'
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
       <Box sx={{ display: 'flex', gap: 1 }}>
-        <Typography variant="body2">debounced:</Typography>
-        <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+        <Typography variant='body2'>debounced:</Typography>
+        <Typography variant='body2' sx={{ fontFamily: 'monospace' }}>
           {JSON.stringify(debounced)}
         </Typography>
       </Box>
-      <Typography variant="caption" color="text.secondary">
+      <Typography
+        variant='caption'
+        sx={{
+          color: 'text.secondary',
+        }}
+      >
         Wait: {WAIT_MS}ms
       </Typography>
     </Stack>

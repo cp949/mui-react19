@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { Button, Stack, Typography } from '@mui/material';
 import { useClipboard } from '@cp949/mui-react19/hooks';
-import type { HookCase } from './types';
+import { Button, Stack, Typography } from '@mui/material';
+import { useEffect, useRef } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
+import type { HookCase } from './types';
 
 const TIMEOUT_MS = 40;
 
@@ -12,14 +12,14 @@ function Preview() {
 
   return (
     <Stack spacing={1}>
-      <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+      <Typography variant='body2' sx={{ fontFamily: 'monospace' }}>
         copied: {String(copied)} / error: {error ? error.message : 'null'}
       </Typography>
-      <Stack direction="row" spacing={1}>
-        <Button size="small" variant="outlined" onClick={() => copy('hello')}>
+      <Stack direction='row' spacing={1}>
+        <Button size='small' variant='outlined' onClick={() => copy('hello')}>
           copy
         </Button>
-        <Button size="small" variant="outlined" onClick={() => reset()}>
+        <Button size='small' variant='outlined' onClick={() => reset()}>
           reset
         </Button>
       </Stack>

@@ -15,13 +15,13 @@ export const isEscapeKeyEvent = (e: React.KeyboardEvent): boolean => {
 };
 
 export const isTouchEvent = (event: MouseEvent | TouchEvent): event is TouchEvent => {
-  return Boolean((event as TouchEvent).touches && (event as TouchEvent).touches.length);
+  return Boolean((event as TouchEvent).touches?.length);
 };
 
 export const isMouseEvent = (event: MouseEvent | TouchEvent): event is MouseEvent => {
   return Boolean(
     ((event as MouseEvent).clientX || (event as MouseEvent).clientX === 0) &&
-    ((event as MouseEvent).clientY || (event as MouseEvent).clientY === 0),
+      ((event as MouseEvent).clientY || (event as MouseEvent).clientY === 0),
   );
 };
 

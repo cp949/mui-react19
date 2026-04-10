@@ -105,86 +105,87 @@ type FileButtonComponent = (<Multiple extends boolean = false>(
  * </FileButton>
  * ```
  */
-export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, FileButtonProps<boolean>>(
-  (props, ref) => {
-    const {
-      onChange,
-      children,
-      multiple,
-      accept,
-      name,
-      form,
-      resetRef,
-      disabled,
-      capture,
-      inputProps,
-    } = props;
+export const FileButton: FileButtonComponent = forwardRef<
+  HTMLInputElement,
+  FileButtonProps<boolean>
+>((props, ref) => {
+  const {
+    onChange,
+    children,
+    multiple,
+    accept,
+    name,
+    form,
+    resetRef,
+    disabled,
+    capture,
+    inputProps,
+  } = props;
 
-    const inputRef = useRef<HTMLInputElement>(null);
-    const [openRequest, setOpenRequest] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [openRequest, setOpenRequest] = useState(0);
 
-    /**
-     * 파일 선택 다이얼로그를 엽니다.
-     */
-    const onClick = useCallback(() => {
-      if (disabled) return;
-      setOpenRequest((v) => v + 1);
-    }, [disabled]);
+  /**
+   * 파일 선택 다이얼로그를 엽니다.
+   */
+  const onClick = useCallback(() => {
+    if (disabled) return;
+    setOpenRequest((v) => v + 1);
+  }, [disabled]);
 
-    useEffect(() => {
-      if (openRequest === 0) return;
-      inputRef.current?.click();
-    }, [openRequest]);
+  useEffect(() => {
+    if (openRequest === 0) return;
+    inputRef.current?.click();
+  }, [openRequest]);
 
-    /**
-     * 파일 선택 후 호출됩니다.
-     * @param event - 파일 입력 변경 이벤트
-     */
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const files = event.currentTarget?.files;
-      if (!files) return;
-      if (multiple) {
-        onChange(Array.from(files));
-      } else {
-        const file = files[0];
-        if (file) {
-          onChange(file);
-        }
+  /**
+   * 파일 선택 후 호출됩니다.
+   * @param event - 파일 입력 변경 이벤트
+   */
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.currentTarget?.files;
+    if (!files) return;
+    if (multiple) {
+      onChange(Array.from(files));
+    } else {
+      const file = files[0];
+      if (file) {
+        onChange(file);
       }
+    }
+  };
+
+  // 파일 선택 상태를 초기화합니다.
+  const reset = useCallback(() => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!resetRef) return;
+    assignRef(resetRef, reset);
+    return () => {
+      assignRef(resetRef, () => {});
     };
-
-    // 파일 선택 상태를 초기화합니다.
-    const reset = useCallback(() => {
-      if (inputRef.current) {
-        inputRef.current.value = '';
-      }
-    }, []);
-
-    useEffect(() => {
-      if (!resetRef) return;
-      assignRef(resetRef, reset);
-      return () => {
-        assignRef(resetRef, () => {});
-      };
-    }, [resetRef, reset]);
-    return (
-      <>
-        {children({ onClick })}
-        <input
-          style={{ display: 'none' }}
-          type="file"
-          accept={accept}
-          multiple={multiple}
-          onChange={handleChange}
-          ref={useComposedRefs(ref, inputRef)}
-          name={name}
-          form={form}
-          capture={capture}
-          {...inputProps}
-        />
-      </>
-    );
-  },
-) as FileButtonComponent;
+  }, [resetRef, reset]);
+  return (
+    <>
+      {children({ onClick })}
+      <input
+        style={{ display: 'none' }}
+        type='file'
+        accept={accept}
+        multiple={multiple}
+        onChange={handleChange}
+        ref={useComposedRefs(ref, inputRef)}
+        name={name}
+        form={form}
+        capture={capture}
+        {...inputProps}
+      />
+    </>
+  );
+}) as FileButtonComponent;
 
 FileButton.displayName = 'FileButton';

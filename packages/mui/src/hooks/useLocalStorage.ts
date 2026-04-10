@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import { useIsomorphicEffect } from './useIsomorphicEffect.js';
 import { isBrowser, noop } from '../util/misc-utils.js';
+import { useIsomorphicEffect } from './useIsomorphicEffect.js';
 
 type parserOptions<T> =
   | {

@@ -1,6 +1,6 @@
 {
   "name": "@cp949/mui-react19",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "React UI components and hooks built on MUI (Material-UI)",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -14,9 +14,10 @@
   ],
   "scripts": {
     "build": "tsup --clean",
-    "dev": "npm run build -- --watch",
-    "lint": "eslint .",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "dev": "tsup --clean --watch",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
     "check-types": "tsc --pretty --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -28,25 +29,24 @@
     "lodash.throttle": "^4.1.1"
   },
   "devDependencies": {
-    "@mui/material": "^7.3.6",
-    "@mui/system": "^7.3.6",
+    "@mui/material": "^9.0.0",
+    "@mui/system": "^9.0.0",
     "@types/lodash.throttle": "^4.1.9",
-    "@types/node": "^25.0.3",
-    "@types/react": "^19.2.7",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@vitest/ui": "^4.0.16",
+    "@vitest/ui": "^4.1.4",
     "clsx": "^2.1.1",
-    "eslint": "^9.39.2",
-    "happy-dom": "^20.0.11",
-    "react": "^19.2.3",
+    "happy-dom": "^20.8.9",
+    "react": "^19.2.5",
     "rxjs": "^7.8.2",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.16"
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.4"
   },
   "peerDependencies": {
-    "@mui/material": "^7",
-    "@mui/system": "^7",
+    "@mui/material": "^9",
+    "@mui/system": "^9",
     "clsx": "^2",
     "react": "^18 || ^19",
     "rxjs": "^7"
@@ -71,44 +71,40 @@
   ],
   "exports": {
     ".": {
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      },
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
     },
     "./hooks": {
-      "require": {
-        "types": "./dist/hooks/index.d.cts",
-        "default": "./dist/hooks/index.cjs"
-      },
-      "import": {
-        "types": "./dist/hooks/index.d.ts",
-        "default": "./dist/hooks/index.js"
-      }
+      "types": "./dist/hooks/index.d.ts",
+      "require": "./dist/hooks/index.cjs",
+      "import": "./dist/hooks/index.js"
     },
     "./helper": {
-      "require": {
-        "types": "./dist/helper/index.d.cts",
-        "default": "./dist/helper/index.cjs"
-      },
-      "import": {
-        "types": "./dist/helper/index.d.ts",
-        "default": "./dist/helper/index.js"
-      }
+      "types": "./dist/helper/index.d.ts",
+      "require": "./dist/helper/index.cjs",
+      "import": "./dist/helper/index.js"
     },
     "./file-drop": {
-      "require": {
-        "types": "./dist/file-drop/index.d.cts",
-        "default": "./dist/file-drop/index.cjs"
-      },
-      "import": {
-        "types": "./dist/file-drop/index.d.ts",
-        "default": "./dist/file-drop/index.js"
-      }
+      "types": "./dist/file-drop/index.d.ts",
+      "require": "./dist/file-drop/index.cjs",
+      "import": "./dist/file-drop/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "hooks": [
+        "./dist/hooks/index.d.ts"
+      ],
+      "helper": [
+        "./dist/helper/index.d.ts"
+      ],
+      "file-drop": [
+        "./dist/file-drop/index.d.ts"
+      ],
+      "*": [
+        "./dist/index.d.ts"
+      ]
     }
   },
   "publishConfig": {

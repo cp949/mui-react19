@@ -1,6 +1,5 @@
 import { Box, type BoxProps } from '@mui/material';
-import { forwardRef } from 'react';
-import { type CSSProperties } from 'react';
+import { type CSSProperties, forwardRef } from 'react';
 
 /**
  * `TopAbsoluteLeft` 컴포넌트의 속성을 정의합니다.

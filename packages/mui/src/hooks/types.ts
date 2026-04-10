@@ -1,4 +1,4 @@
-import { type DependencyList } from 'react';
+import type { DependencyList } from 'react';
 
 export interface Observable<T> {
   subscribe: (listener: (value: T) => void) => {

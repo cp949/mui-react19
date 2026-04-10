@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import {
   logDebug,
   logError,
@@ -8,9 +7,10 @@ import {
   logMsg,
   logWarn,
 } from '@cp949/web-logger';
-import { cases } from '../cases';
-import type { CapturedConsoleEntry } from '../test-utils/captureConsole';
-import { withCapturedConsole } from '../test-utils/captureConsole';
+import { describe, expect, it } from 'vitest';
+import { cases } from '../src/cases';
+import type { CapturedConsoleEntry } from './test-utils/captureConsole';
+import { withCapturedConsole } from './test-utils/captureConsole';
 
 function formatArgs(args: unknown[]): string {
   return args

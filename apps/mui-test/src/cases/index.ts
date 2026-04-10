@@ -1,4 +1,4 @@
-import type { HookCase } from './types';
+import { allHookCases } from './allHooks.case';
 
 import { clipboardCase } from './clipboard.case';
 import { debouncedValueCase } from './debouncedValue.case';
@@ -15,9 +15,9 @@ import { sessionStorageStateCase } from './sessionStorageState.case';
 import { throttledValueCase } from './throttledValue.case';
 import { timeoutCase } from './timeout.case';
 import { timeoutDataCase } from './timeoutData.case';
+import type { HookCase } from './types';
 import { windowEventCase } from './windowEvent.case';
 import { windowSizeCase } from './windowSize.case';
-import { allHookCases } from './allHooks.case';
 
 export const cases: HookCase[] = [
   debouncedValueCase,

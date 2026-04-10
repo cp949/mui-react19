@@ -48,11 +48,12 @@ export function overrideProps<T extends Record<string, any>, R extends Record<st
   );
 
   // 모든 overrides를 순차적으로 병합
-  const filteredOverrides = overrides.reduce((acc, current) => {
+  const filteredOverrides = overrides.reduce<Record<string, unknown>>((acc, current) => {
     const filteredCurrent = Object.fromEntries(
       Object.entries(current).filter(([_, value]) => value !== undefined),
     );
-    return { ...acc, ...filteredCurrent };
+    Object.assign(acc, filteredCurrent);
+    return acc;
   }, {});
 
   // 최종 병합된 결과 반환

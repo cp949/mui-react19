@@ -1,21 +1,13 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { handleFileTreeDropEvent } from '../../src/file-drop/handle-file-tree-drop.js';
 
-type MockDragEvent = {
-  dataTransfer: {
-    files: FileList;
-    items: DataTransferItem[];
-  };
-  preventDefault: () => void;
-};
-
 // Mock React DragEvent
 const createMockDragEvent = (options: {
   files?: File[];
   items?: DataTransferItem[];
   supportsFileSystemAccessAPI?: boolean;
   supportsWebkitGetAsEntry?: boolean;
-}) => {
+}): React.DragEvent<HTMLElement> => {
   // Create proper File array-like object
   const filesArray = options.files || [];
   const mockFiles = {
@@ -58,7 +50,7 @@ const createMockDragEvent = (options: {
   return {
     dataTransfer: mockDataTransfer,
     preventDefault: vi.fn(),
-  } as unknown as DragEvent;
+  } as unknown as React.DragEvent<HTMLElement>;
 };
 
 const createMockFile = (name: string, content: string = 'test'): File => {
@@ -96,7 +88,7 @@ describe('handleFileTreeDropEvent', () => {
         supportsWebkitGetAsEntry: false,
       });
 
-      const result = await handleFileTreeDropEvent(event as unknown as React.DragEvent);
+      const result = await handleFileTreeDropEvent(event);
 
       expect(result).toHaveLength(2);
       expect(result[0]).toEqual({
@@ -127,8 +119,7 @@ describe('handleFileTreeDropEvent', () => {
         supportsFileSystemAccessAPI: false,
         supportsWebkitGetAsEntry: false,
       });
-
-      const result = await handleFileTreeDropEvent(event as unknown as React.DragEvent);
+      const result = await handleFileTreeDropEvent(event);
 
       expect(result).toHaveLength(1);
       expect(result[0].type).toBe('file');
@@ -162,10 +153,7 @@ describe('handleFileTreeDropEvent', () => {
       });
 
       // .js 파일만 허용하는 필터
-      const result = await handleFileTreeDropEvent(
-        event as unknown as React.DragEvent,
-        (file) => file.name.endsWith('.js'),
-      );
+      const result = await handleFileTreeDropEvent(event, (file) => file.name.endsWith('.js'));
 
       expect(result).toHaveLength(1);
       expect(result[0].path).toBe('test.js');
@@ -184,7 +172,7 @@ describe('handleFileTreeDropEvent', () => {
       });
 
       const result = await handleFileTreeDropEvent(
-        event as unknown as React.DragEvent,
+        event,
         () => false, // 모든 파일 거부
       );
 
@@ -200,7 +188,7 @@ describe('handleFileTreeDropEvent', () => {
         supportsWebkitGetAsEntry: false,
       });
 
-      const result = await handleFileTreeDropEvent(event as unknown as React.DragEvent);
+      const result = await handleFileTreeDropEvent(event);
 
       expect(result).toHaveLength(2);
     });

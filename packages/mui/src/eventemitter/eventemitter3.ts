@@ -65,7 +65,7 @@ export class EventEmitter<EventTypes extends ValidEventTypes = string | symbol, 
 
     const events = this._events;
     for (const name in events) {
-      if (Object.prototype.hasOwnProperty.call(events, name)) {
+      if (Object.hasOwn(events, name)) {
         names.push(name as any);
       }
     }
@@ -87,7 +87,7 @@ export class EventEmitter<EventTypes extends ValidEventTypes = string | symbol, 
     const handlers = this._events[evt];
 
     if (!handlers) return [];
-    if ('fn' in handlers) return [handlers['fn'] as any];
+    if ('fn' in handlers) return [handlers.fn as any];
 
     const ee = new Array(handlers.length);
     for (let i = 0; i < handlers.length; i++) {

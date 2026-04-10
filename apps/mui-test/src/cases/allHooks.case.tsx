@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { Stack, Typography } from '@mui/material';
 import * as hooks from '@cp949/mui-react19/hooks';
-import type { HookCase } from './types';
+import { Stack, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import { runReactTest } from '../test-utils/runReactTest';
+import type { HookCase } from './types';
 
 function safeLabel(value: unknown): string {
   if (value == null) return String(value);
@@ -189,10 +189,16 @@ function makeHookCase(name: string, hookFn: unknown): HookCase {
 
     return (
       <Stack spacing={1}>
-        <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+        <Typography variant='body2' sx={{ fontFamily: 'monospace' }}>
           {name}({args.map(safeLabel).join(', ')})
         </Typography>
-        <Typography variant="caption" color="text.secondary" sx={{ fontFamily: 'monospace' }}>
+        <Typography
+          variant='caption'
+          sx={{
+            color: 'text.secondary',
+            fontFamily: 'monospace',
+          }}
+        >
           result: {safeLabel(result)}
         </Typography>
       </Stack>

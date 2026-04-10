@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { Button, Stack, Typography } from '@mui/material';
 import { useLocalStorageState } from '@cp949/mui-react19/hooks';
+import { Button, Stack, Typography } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
 import type { HookCase } from './types';
@@ -12,15 +12,15 @@ function Preview() {
 
   return (
     <Stack spacing={1}>
-      <Typography variant="body2">key: {KEY}</Typography>
-      <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+      <Typography variant='body2'>key: {KEY}</Typography>
+      <Typography variant='body2' sx={{ fontFamily: 'monospace' }}>
         value: {JSON.stringify(value)}
       </Typography>
-      <Stack direction="row" spacing={1}>
-        <Button size="small" variant="outlined" onClick={() => setValue('next')}>
+      <Stack direction='row' spacing={1}>
+        <Button size='small' variant='outlined' onClick={() => setValue('next')}>
           set next
         </Button>
-        <Button size="small" variant="outlined" onClick={() => setValue(null)}>
+        <Button size='small' variant='outlined' onClick={() => setValue(null)}>
           set null
         </Button>
       </Stack>
@@ -99,7 +99,12 @@ export const localStorageStateCase: HookCase = {
         }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
         return (
-          <Typography variant="caption" color="text.secondary">
+          <Typography
+            variant='caption'
+            sx={{
+              color: 'text.secondary',
+            }}
+          >
             phase: {phase} / value: {JSON.stringify(value)}
           </Typography>
         );

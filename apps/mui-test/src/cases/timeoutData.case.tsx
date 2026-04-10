@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { Button, Stack, Typography } from '@mui/material';
 import { useTimeoutData } from '@cp949/mui-react19/hooks';
-import type { HookCase } from './types';
+import { Button, Stack, Typography } from '@mui/material';
+import { useEffect, useRef } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
+import type { HookCase } from './types';
 
 const WAIT_MS = 40;
 
@@ -12,15 +12,15 @@ function Preview() {
 
   return (
     <Stack spacing={1}>
-      <Typography variant="body2">timeout: {WAIT_MS}ms</Typography>
-      <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+      <Typography variant='body2'>timeout: {WAIT_MS}ms</Typography>
+      <Typography variant='body2' sx={{ fontFamily: 'monospace' }}>
         msg: {JSON.stringify(msg)}
       </Typography>
-      <Stack direction="row" spacing={1}>
-        <Button size="small" variant="outlined" onClick={() => setMsg('hello')}>
+      <Stack direction='row' spacing={1}>
+        <Button size='small' variant='outlined' onClick={() => setMsg('hello')}>
           set
         </Button>
-        <Button size="small" variant="outlined" onClick={() => setMsg(null)}>
+        <Button size='small' variant='outlined' onClick={() => setMsg(null)}>
           clear
         </Button>
       </Stack>

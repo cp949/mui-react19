@@ -1,20 +1,20 @@
-import { useEffect, useRef } from 'react';
-import { Alert, Stack, Typography } from '@mui/material';
 import { useResizeObserver } from '@cp949/mui-react19/hooks';
-import type { HookCase } from './types';
+import { Alert, Stack, Typography } from '@mui/material';
+import { useEffect, useRef } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
+import type { HookCase } from './types';
 
 function Preview() {
   const [ref, rect] = useResizeObserver<HTMLDivElement>();
 
   if (typeof ResizeObserver === 'undefined') {
-    return <Alert severity="warning">ResizeObserver is not available in this environment</Alert>;
+    return <Alert severity='warning'>ResizeObserver is not available in this environment</Alert>;
   }
 
   return (
     <Stack spacing={1}>
-      <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+      <Typography variant='body2' sx={{ fontFamily: 'monospace' }}>
         rect: {JSON.stringify({ width: rect.width, height: rect.height })}
       </Typography>
       <div ref={ref} style={{ width: 10, height: 10 }} />

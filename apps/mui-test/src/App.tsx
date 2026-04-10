@@ -1,4 +1,3 @@
-import { useMemo, useState } from 'react';
 import {
   Alert,
   Box,
@@ -12,6 +11,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useMemo, useState } from 'react';
 import { cases } from './cases';
 import type { CaseId, HookCase, RunStatus, RunSummary } from './cases/types';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -86,17 +86,23 @@ export function App() {
   return (
     <Box sx={{ p: 2, height: '100vh', boxSizing: 'border-box' }}>
       <Stack spacing={2} sx={{ height: '100%' }}>
-        <Stack direction="row" spacing={2} alignItems="center">
-          <Typography variant="h5" sx={{ flex: 1 }}>
+        <Stack
+          direction='row'
+          spacing={2}
+          sx={{
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant='h5' sx={{ flex: 1 }}>
             @cp949/mui-react19 hooks test
           </Typography>
 
           <Chip
             label={`pass ${summary.pass} / fail ${summary.fail} / skipped ${summary.skipped} / total ${summary.total}`}
-            variant="outlined"
+            variant='outlined'
           />
 
-          <Button variant="contained" onClick={runAll} disabled={runAllStatus === 'running'}>
+          <Button variant='contained' onClick={runAll} disabled={runAllStatus === 'running'}>
             Run all
           </Button>
         </Stack>
@@ -104,7 +110,7 @@ export function App() {
         <Divider />
 
         <Box sx={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: 2, flex: 1 }}>
-          <Paper variant="outlined" sx={{ overflow: 'auto' }}>
+          <Paper variant='outlined' sx={{ overflow: 'auto' }}>
             <List dense disablePadding>
               {cases.map((c) => {
                 const r = results[c.id]?.status ?? 'idle';
@@ -125,21 +131,27 @@ export function App() {
             </List>
           </Paper>
 
-          <Paper variant="outlined" sx={{ p: 2, overflow: 'auto' }}>
+          <Paper variant='outlined' sx={{ p: 2, overflow: 'auto' }}>
             {selected ? (
               <Stack spacing={2}>
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <Typography variant="h6" sx={{ flex: 1 }}>
+                <Stack
+                  direction='row'
+                  spacing={1}
+                  sx={{
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography variant='h6' sx={{ flex: 1 }}>
                     {selected.name}
                   </Typography>
                   <Chip
-                    size="small"
+                    size='small'
                     label={results[selected.id]?.status ?? 'idle'}
-                    variant="outlined"
+                    variant='outlined'
                   />
                   <Button
-                    size="small"
-                    variant="contained"
+                    size='small'
+                    variant='contained'
                     onClick={() => runOne(selected)}
                     disabled={results[selected.id]?.status === 'running'}
                   >
@@ -148,21 +160,32 @@ export function App() {
                 </Stack>
 
                 {selected.description ? (
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant='body2'
+                    sx={{
+                      color: 'text.secondary',
+                    }}
+                  >
                     {selected.description}
                   </Typography>
                 ) : null}
 
                 {results[selected.id]?.status === 'fail' ? (
-                  <Alert severity="error" sx={{ whiteSpace: 'pre-wrap' }}>
+                  <Alert severity='error' sx={{ whiteSpace: 'pre-wrap' }}>
                     {results[selected.id]?.error ?? 'Unknown error'}
                   </Alert>
                 ) : null}
 
                 {selected.tags?.length ? (
-                  <Stack direction="row" spacing={1} flexWrap="wrap">
+                  <Stack
+                    direction='row'
+                    spacing={1}
+                    sx={{
+                      flexWrap: 'wrap',
+                    }}
+                  >
                     {selected.tags.map((t) => (
-                      <Chip key={t} size="small" label={t} variant="outlined" />
+                      <Chip key={t} size='small' label={t} variant='outlined' />
                     ))}
                   </Stack>
                 ) : null}
@@ -170,13 +193,13 @@ export function App() {
                 <Divider />
 
                 <Box>
-                  <Typography variant="subtitle2" gutterBottom>
+                  <Typography variant='subtitle2' gutterBottom>
                     Preview
                   </Typography>
                   <Box sx={{ p: 2, border: '1px dashed', borderColor: 'divider' }}>
                     <ErrorBoundary
                       fallback={(error) => (
-                        <Alert severity="error" sx={{ whiteSpace: 'pre-wrap' }}>
+                        <Alert severity='error' sx={{ whiteSpace: 'pre-wrap' }}>
                           {error instanceof Error
                             ? `${error.name}: ${error.message}`
                             : String(error)}
@@ -189,7 +212,13 @@ export function App() {
                 </Box>
               </Stack>
             ) : (
-              <Typography color="text.secondary">No cases</Typography>
+              <Typography
+                sx={{
+                  color: 'text.secondary',
+                }}
+              >
+                No cases
+              </Typography>
             )}
           </Paper>
         </Box>

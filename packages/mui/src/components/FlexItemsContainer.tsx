@@ -80,7 +80,7 @@ export function FlexItemsContainer<TItem>(
     <Grid
       className={clsx('FlexItemsContainer-root', className)}
       container
-      role="grid"
+      role='grid'
       {...restProps}
     >
       {createItems<TItem>({
@@ -134,7 +134,7 @@ function createItems<TItem>(props: CreateItemsProps<TItem>): ReactElement[] {
 
   const elements: ReactElement[] = [];
   let lineStarting = true;
-  let previousGroup: unknown = undefined;
+  let previousGroup: unknown;
 
   items.forEach((item, i) => {
     if (isLineBreakItem?.(item, i)) {
@@ -207,8 +207,8 @@ function getLineBreakNode(i: number, keyPrefix: string, height: number | string)
   return (
     <Grid
       key={`FlexItemsContainer:${keyPrefix}:${i}`}
-      className="FlexItemsContainer-emptyLine"
-      size="auto"
+      className='FlexItemsContainer-emptyLine'
+      size='auto'
       style={{
         flexBasis: '100%',
         width: 0,

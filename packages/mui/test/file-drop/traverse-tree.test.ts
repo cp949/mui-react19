@@ -1,7 +1,22 @@
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { PathHolder } from '../../src/file-drop/internal/path-util.js';
 import { traverseTree } from '../../src/file-drop/internal/traverse-tree.js';
 import type { PathAndEntry } from '../../src/file-drop/internal/visit-file-system/internal-types.js';
+
+const { visitByFileSystemEntryMock, visitByFileSystemHandleMock } = vi.hoisted(() => {
+  return {
+    visitByFileSystemEntryMock: vi.fn(),
+    visitByFileSystemHandleMock: vi.fn(),
+  };
+});
+
+vi.mock('../../src/file-drop/internal/visit-file-system/visit-file-system-entry.js', () => ({
+  visitByFileSystemEntry: visitByFileSystemEntryMock,
+}));
+
+vi.mock('../../src/file-drop/internal/visit-file-system/visit-file-system-handle.js', () => ({
+  visitByFileSystemHandle: visitByFileSystemHandleMock,
+}));
 
 const createMockFile = (name: string): File => {
   return new File(['test content'], name, { type: 'text/plain' });
@@ -33,6 +48,11 @@ const createMockFileSystemHandle = (options: {
 };
 
 describe('traverseTree', () => {
+  beforeEach(() => {
+    visitByFileSystemEntryMock.mockReset();
+    visitByFileSystemHandleMock.mockReset();
+  });
+
   test('File 객체 처리', async () => {
     const output: PathAndEntry[] = [];
     const parent = PathHolder.from('parent');
@@ -63,7 +83,6 @@ describe('traverseTree', () => {
   });
 
   test('FileSystemEntry 감지 및 처리', async () => {
-    // FileSystemEntry mock
     const output: PathAndEntry[] = [];
     const parent = PathHolder.EMPTY;
     const entry = createMockFileSystemEntry({
@@ -73,18 +92,18 @@ describe('traverseTree', () => {
     });
     const callbackAccept = vi.fn();
 
-    // visitByFileSystemEntry mock 필요
-    vi.mock('../src/internal/visit-file-system/visit-file-system-entry.js', () => ({
-      visitByFileSystemEntry: vi.fn(),
-    }));
-
     await traverseTree(parent, entry, output, callbackAccept);
 
-    // FileSystemEntry 인터페이스의 속성들이 감지되는지 확인
-    expect(entry).toHaveProperty('filesystem');
-    expect(entry).toHaveProperty('fullPath');
-    expect(entry).toHaveProperty('isDirectory');
-    expect(entry).toHaveProperty('isFile');
+    expect(visitByFileSystemEntryMock).toHaveBeenCalledWith(
+      parent,
+      entry,
+      output,
+      callbackAccept,
+      'none',
+      true,
+      4,
+    );
+    expect(visitByFileSystemHandleMock).not.toHaveBeenCalled();
   });
 
   test('FileSystemHandle 감지 및 처리', async () => {
@@ -96,16 +115,18 @@ describe('traverseTree', () => {
     });
     const callbackAccept = vi.fn();
 
-    // visitByFileSystemHandle mock 필요
-    vi.mock('../../src/file-drop/internal/visit-file-system/visit-file-system-handle.js', () => ({
-      visitByFileSystemHandle: vi.fn(),
-    }));
-
     await traverseTree(parent, handle, output, callbackAccept);
 
-    // FileSystemHandle 인터페이스의 속성들이 감지되는지 확인
-    expect(handle).toHaveProperty('kind');
-    expect(handle).toHaveProperty('isSameEntry');
+    expect(visitByFileSystemHandleMock).toHaveBeenCalledWith(
+      parent,
+      handle,
+      output,
+      callbackAccept,
+      'none',
+      true,
+      4,
+    );
+    expect(visitByFileSystemEntryMock).not.toHaveBeenCalled();
   });
 
   test('속성 감지 로직 - hasProps 함수', async () => {

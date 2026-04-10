@@ -20,7 +20,7 @@ export const useWindowSize = ({
     height: isBrowser ? window.innerHeight : initialHeight,
   });
 
-  useEffect((): (() => void) | void => {
+  useEffect((): (() => void) | undefined => {
     // Only run the effect on the browser (to avoid issues with SSR)
     if (isBrowser) {
       const handler = () => {

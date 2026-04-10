@@ -29,7 +29,10 @@ function setRef<T>(ref: PossibleRef<T>, value: T | null) {
  * Accepts callback refs and RefObject(s)
  */
 function composeRefs<T>(...refs: PossibleRef<T>[]) {
-  return (node: T | null) => refs.forEach((ref) => setRef(ref, node));
+  return (node: T | null) =>
+    refs.forEach((ref) => {
+      setRef(ref, node);
+    });
 }
 
 /**

@@ -1,4 +1,4 @@
-import { type DependencyList } from 'react';
+import type { DependencyList } from 'react';
 import { deepEq } from '../misc/deepEq.js';
 import { useCustomCompareMemo } from './useCustomCompareMemo.js';
 

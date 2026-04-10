@@ -23,7 +23,9 @@ import { useResizeObserver } from './useResizeObserver.js';
  * );
  * ```
  */
-export function useElementSize<T extends HTMLElement = HTMLElement>(options?: ResizeObserverOptions) {
+export function useElementSize<T extends HTMLElement = HTMLElement>(
+  options?: ResizeObserverOptions,
+) {
   const [ref, { width, height }] = useResizeObserver<T>(options);
   return { ref, width, height };
 }

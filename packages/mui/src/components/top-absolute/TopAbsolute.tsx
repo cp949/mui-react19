@@ -1,6 +1,6 @@
 import { Box, type BoxProps } from '@mui/material';
-import { forwardRef } from 'react';
 import type { CSSProperties } from 'react';
+import { forwardRef } from 'react';
 import { TopAbsoluteCenter } from './TopAbsoluteCenter.js';
 import { TopAbsoluteLeft } from './TopAbsoluteLeft.js';
 import { TopAbsoluteRight } from './TopAbsoluteRight.js';
