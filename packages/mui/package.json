@@ -1,6 +1,6 @@
 {
   "name": "@cp949/mui-react19",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "React UI components and hooks built on MUI (Material-UI)",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

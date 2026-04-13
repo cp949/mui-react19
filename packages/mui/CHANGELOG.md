@@ -1,5 +1,11 @@
 # @cp949/mui-react19
 
+## 2.0.1
+
+### Patch Changes
+
+- Add the `useRefEffect` hook and a dedicated `mui-test` case for attach and cleanup behavior.
+
 ## 2.0.0
 
 ### Major Changes
