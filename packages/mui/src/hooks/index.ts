@@ -44,6 +44,7 @@ export * from './useObservableSessionStorage.js';
 export * from './useOs.js';
 export * from './useRafState.js';
 export * from './useResizeObserver.js';
+export * from './useRefEffect.js';
 export * from './useScript.js';
 export * from './useSessionStorage.js';
 export * from './useSessionStorageState.js';

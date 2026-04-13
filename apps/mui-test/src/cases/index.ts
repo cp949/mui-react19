@@ -16,6 +16,7 @@ import { throttledValueCase } from './throttledValue.case';
 import { timeoutCase } from './timeout.case';
 import { timeoutDataCase } from './timeoutData.case';
 import type { HookCase } from './types';
+import { useRefEffectCase } from './useRefEffect.case';
 import { windowEventCase } from './windowEvent.case';
 import { windowSizeCase } from './windowSize.case';
 
@@ -37,5 +38,6 @@ export const cases: HookCase[] = [
   observableSessionStorageCase,
   throttledValueCase,
   timeoutDataCase,
+  useRefEffectCase,
   ...allHookCases,
 ];
