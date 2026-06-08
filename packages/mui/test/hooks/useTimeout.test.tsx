@@ -45,4 +45,35 @@ describe('useTimeout', () => {
     expect(callback).not.toHaveBeenCalled();
     hook.unmount();
   });
+
+  test('start에 전달된 인자를 callback으로 전개해 전달', () => {
+    vi.useFakeTimers();
+    const callback = vi.fn();
+    const hook = renderHook(() => useTimeout(callback, 100), undefined);
+
+    act(() => {
+      hook.result.current.start('a', 'b');
+      vi.advanceTimersByTime(100);
+    });
+
+    expect(callback).toHaveBeenCalledWith('a', 'b');
+    hook.unmount();
+  });
+
+  test('unmount 시 예약된 timeout을 정리', () => {
+    vi.useFakeTimers();
+    const callback = vi.fn();
+    const hook = renderHook(() => useTimeout(callback, 100), undefined);
+
+    act(() => {
+      hook.result.current.start();
+    });
+    hook.unmount();
+
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+
+    expect(callback).not.toHaveBeenCalled();
+  });
 });

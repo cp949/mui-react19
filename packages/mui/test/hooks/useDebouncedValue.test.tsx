@@ -43,4 +43,44 @@ describe('useDebouncedValue', () => {
     expect(hook.result.current[0]).toBe('first');
     hook.unmount();
   });
+
+  test('cancel 이후에도 다음 value 변경은 정상 예약', () => {
+    vi.useFakeTimers();
+
+    const hook = renderHook(({ value }: { value: string }) => useDebouncedValue(value, 100), {
+      value: 'first',
+    });
+
+    hook.rerender({ value: 'second' });
+
+    act(() => {
+      hook.result.current[1]();
+    });
+
+    hook.rerender({ value: 'third' });
+
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+
+    expect(hook.result.current[0]).toBe('third');
+    hook.unmount();
+  });
+
+  test('unmount 시 예약된 갱신 타이머를 정리', () => {
+    vi.useFakeTimers();
+    const clearSpy = vi.spyOn(window, 'clearTimeout');
+
+    const hook = renderHook(({ value }: { value: string }) => useDebouncedValue(value, 100), {
+      value: 'first',
+    });
+
+    hook.rerender({ value: 'second' });
+    clearSpy.mockClear();
+
+    hook.unmount();
+
+    expect(clearSpy).toHaveBeenCalledTimes(1);
+    clearSpy.mockRestore();
+  });
 });

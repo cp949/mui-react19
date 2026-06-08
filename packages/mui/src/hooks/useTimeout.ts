@@ -45,8 +45,8 @@ export function useTimeout(
     (...callbackParams: unknown[]) => {
       if (!timeoutRef.current) {
         timeoutRef.current = window.setTimeout(() => {
-          // 지정된 콜백 실행
-          callback(callbackParams);
+          // 지정된 콜백 실행 (start에 전달된 인자를 그대로 전개해 전달)
+          callback(...callbackParams);
 
           // 실행 완료 후 타이머 ID 초기화
           timeoutRef.current = null;
