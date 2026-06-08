@@ -82,6 +82,7 @@ export function useInterval(
       start();
     }
     return stop;
+    // callback은 ref로 최신 값을 유지하므로 effect deps에는 타이머 재시작 조건만 둔다.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fn, active, interval]);
 
