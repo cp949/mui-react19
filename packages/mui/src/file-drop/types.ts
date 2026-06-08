@@ -349,7 +349,8 @@ export interface FileDropOptions {
   signal?: AbortSignal;
   /**
    * 디버그 로그 출력 레벨
-   * - 'none': 로그 비활성화 (기본값)
+   * - 'none': 로그 비활성화
+   * - 'warn': 경고 로그만 출력 (기본값)
    * - 'info': 주요 단계와 요약 정보만 출력
    * - 'verbose': 파일/디렉터리 단위의 상세 로그 포함
    *
@@ -359,7 +360,7 @@ export interface FileDropOptions {
 }
 
 /** 디버그 로그 출력 레벨 */
-export type DebugLevel = 'none' | 'info' | 'verbose';
+export type DebugLevel = 'none' | 'warn' | 'info' | 'verbose';
 
 /**
  * 파일 트리 처리 성공 결과

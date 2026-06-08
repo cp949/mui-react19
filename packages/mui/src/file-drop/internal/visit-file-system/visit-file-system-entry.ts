@@ -1,4 +1,5 @@
 import type { DebugLevel } from '../../types.js';
+import { createFileDropLogger } from '../debug-logger.js';
 import type { PathHolder } from '../path-util.js';
 import { errmsg } from '../util.js';
 import type { PathAndEntry } from './internal-types.js';
@@ -15,15 +16,12 @@ export async function visitByFileSystemEntry(
   parallel = true,
   concurrency = 4,
 ) {
-  const isInfoEnabled = debugLevel !== 'none';
-  const isVerboseEnabled = debugLevel === 'verbose';
+  const logger = createFileDropLogger(debugLevel);
 
   if (item.isFile) {
     const file = await getFile(item as FileSystemFileEntry);
     if (!file) {
-      if (isVerboseEnabled) {
-        console.debug('FileSystemEntry.getFile() error', item);
-      }
+      logger.debug('FileSystemEntry.getFile() error', item);
       return;
     }
     if (callbackAccept(file)) {
@@ -47,23 +45,15 @@ export async function visitByFileSystemEntry(
   });
 
   const newParent = parent.join(item.name);
-  if (isInfoEnabled) {
-    console.log(
-      `🔍 Traversing directory (Entry API): ${item.name} at path: ${newParent.toString()}`,
-    );
-  }
+  logger.info(`🔍 Traversing directory (Entry API): ${item.name} at path: ${newParent.toString()}`);
 
-  // 디렉토리 내부의 모든 엔트리를 재귀적으로 읽음
+  // 디렉터리 내부의 모든 엔트리를 재귀적으로 읽는다.
   const children = await readEntries(item as FileSystemDirectoryEntry, debugLevel);
-  if (isVerboseEnabled) {
-    console.log(`  📊 Total children found: ${children.length}`);
-  }
+  logger.verbose(`  📊 Total children found: ${children.length}`);
 
-  if (isVerboseEnabled) {
-    children.forEach((child, index) => {
-      console.log(`  📄 Found [${index}]: ${child.name} (${child.isFile ? 'file' : 'directory'})`);
-    });
-  }
+  children.forEach((child, index) => {
+    logger.verbose(`  📄 Found [${index}]: ${child.name} (${child.isFile ? 'file' : 'directory'})`);
+  });
 
   // 자체 구현한 parallelMap을 사용하여 성능 최적화
   const { simpleParallelMap } = await import('../../utils/parallel-map.js');
@@ -72,12 +62,10 @@ export async function visitByFileSystemEntry(
   const shouldParallel = parallel && normalizedConcurrency > 1 && children.length > 1;
 
   if (shouldParallel) {
-    // 여러 파일/디렉토리가 있으면 병렬 처리로 성능 향상
-    if (isInfoEnabled) {
-      console.log(
-        `  ⚡ Processing ${children.length} items in parallel (custom implementation, concurrency=${normalizedConcurrency})`,
-      );
-    }
+    // 여러 파일/디렉터리가 있으면 병렬 처리로 순회 시간을 줄인다.
+    logger.info(
+      `  ⚡ Processing ${children.length} items in parallel (custom implementation, concurrency=${normalizedConcurrency})`,
+    );
     await simpleParallelMap(
       children,
       async (entry: FileSystemEntry) => {
@@ -97,9 +85,7 @@ export async function visitByFileSystemEntry(
     ); // 최대 4개씩 동시 처리
   } else {
     // 단일 항목은 직접 처리 (오버헤드 방지)
-    if (isInfoEnabled) {
-      console.log(`  📝 Processing ${children.length} item directly`);
-    }
+    logger.info(`  📝 Processing ${children.length} item directly`);
     for (const entry of children) {
       if (entry.isFile || entry.isDirectory) {
         await visitByFileSystemEntry(
@@ -137,12 +123,12 @@ async function readEntries(
   item: FileSystemDirectoryEntry,
   debugLevel: DebugLevel = 'none',
 ): Promise<FileSystemEntry[]> {
+  const logger = createFileDropLogger(debugLevel);
+
   try {
     return await readAllEntries(item, debugLevel);
   } catch (err) {
-    if (debugLevel === 'verbose') {
-      console.debug(errmsg(err));
-    }
+    logger.debug(errmsg(err));
     return [];
   }
 }
@@ -150,6 +136,7 @@ async function readAllEntries(
   item: FileSystemDirectoryEntry,
   debugLevel: DebugLevel = 'none',
 ): Promise<FileSystemEntry[]> {
+  const logger = createFileDropLogger(debugLevel);
   const dirReader = item.createReader();
   let allEntries: FileSystemEntry[] = [];
 
@@ -167,9 +154,7 @@ async function readAllEntries(
           }
         },
         (err) => {
-          if (debugLevel !== 'none') {
-            console.warn('XXX readEntries() error', err);
-          }
+          logger.warn('readEntries() error', err);
           reject(err);
         },
       );

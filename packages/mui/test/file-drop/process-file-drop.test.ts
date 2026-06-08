@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import type { FileDropOptions, ProcessResult } from '../../src/file-drop/index.js';
 import {
   FileDropError,
@@ -22,7 +22,7 @@ const createMockFileList = (files: File[]): FileList => {
     },
   } as FileList & { [index: number]: File };
 
-  // Add indexable properties
+  // FileList처럼 인덱스로 접근할 수 있게 보정한다.
   files.forEach((file, index) => {
     fileList[index] = file;
   });
@@ -30,9 +30,31 @@ const createMockFileList = (files: File[]): FileList => {
   return fileList;
 };
 
+const createMockDirectoryHandle = (files: File[]): FileSystemDirectoryHandle => {
+  const fileHandles = files.map((file) => ({
+    kind: 'file',
+    name: file.name,
+    getFile: async () => file,
+  }));
+
+  return {
+    kind: 'directory',
+    name: 'root',
+    async *values() {
+      for (const handle of fileHandles) {
+        yield handle;
+      }
+    },
+  } as unknown as FileSystemDirectoryHandle;
+};
+
 describe('processFileTreeDrop', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   describe('기본 파일 처리', () => {
@@ -202,6 +224,54 @@ describe('processFileTreeDrop', () => {
           name: 'large.txt',
         }),
       );
+    });
+  });
+
+  describe('디버그 로깅', () => {
+    test('기본 옵션에서는 warn만 출력', async () => {
+      const invalidDirectoryHandle = {
+        kind: 'directory',
+        name: 'broken',
+        isSameEntry: async () => false,
+        values() {
+          throw new Error('read failed');
+        },
+      } as unknown as FileSystemDirectoryHandle;
+      const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+      const debugSpy = vi.spyOn(console, 'debug').mockImplementation(() => {});
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+      await processFileTreeDrop([invalidDirectoryHandle]);
+
+      expect(logSpy).not.toHaveBeenCalled();
+      expect(debugSpy).not.toHaveBeenCalled();
+      expect(warnSpy).toHaveBeenCalled();
+      expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    test('debug false 옵션에서는 콘솔 로그를 출력하지 않음', async () => {
+      const files = [createMockFile('test.txt')];
+      const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+      const debugSpy = vi.spyOn(console, 'debug').mockImplementation(() => {});
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+      await processFileTreeDrop(files, { debug: false });
+
+      expect(logSpy).not.toHaveBeenCalled();
+      expect(debugSpy).not.toHaveBeenCalled();
+      expect(warnSpy).not.toHaveBeenCalled();
+      expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    test('verbose 옵션에서는 상세 로그를 출력', async () => {
+      const handles = [createMockDirectoryHandle([createMockFile('test.txt')])];
+      const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+
+      await processFileTreeDrop(handles, { debug: 'verbose' });
+
+      expect(logSpy).toHaveBeenCalled();
     });
   });
 

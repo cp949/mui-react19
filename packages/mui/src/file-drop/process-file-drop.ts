@@ -1,3 +1,4 @@
+import { createFileDropLogger } from './internal/debug-logger.js';
 import { PathHolder } from './internal/path-util.js';
 import { traverseTree } from './internal/traverse-tree.js';
 import type { PathAndEntry } from './internal/visit-file-system/internal-types.js';
@@ -99,7 +100,7 @@ async function processFileTree(
   tracker: ProgressTracker,
   callbacks: FileDropOptions['callbacks'] = {},
   signal?: AbortSignal,
-  debugLevel: DebugLevel = 'none',
+  debugLevel: DebugLevel = 'warn',
   processing?: ProcessingOptions,
 ): Promise<{ items: ProcessedFile[]; directories: ProcessedDirectory[]; errors: FileDropError[] }> {
   const output: PathAndEntry[] = [];
@@ -111,8 +112,7 @@ async function processFileTree(
 
   const normalizedConcurrency = Math.max(1, processing?.concurrency ?? 4);
   const enableParallel = processing?.parallel ?? true;
-  const isInfoEnabled = debugLevel !== 'none';
-  const isVerboseEnabled = debugLevel === 'verbose';
+  const logger = createFileDropLogger(debugLevel);
 
   const processHandle = async (handle: FileSystemHandle | FileSystemEntry | File) => {
     if (signal?.aborted) {
@@ -160,16 +160,12 @@ async function processFileTree(
   const shouldProcessInParallel = enableParallel && normalizedConcurrency > 1 && handles.length > 1;
 
   if (shouldProcessInParallel) {
-    if (isInfoEnabled) {
-      console.log(
-        `🚀 Processing ${handles.length} handles in parallel (custom implementation, concurrency=${normalizedConcurrency})`,
-      );
-    }
+    logger.info(
+      `🚀 Processing ${handles.length} handles in parallel (custom implementation, concurrency=${normalizedConcurrency})`,
+    );
     await simpleParallelMap(handles, processHandle, normalizedConcurrency);
   } else {
-    if (isInfoEnabled) {
-      console.log(`📝 Processing ${handles.length} handle directly`);
-    }
+    logger.info(`📝 Processing ${handles.length} handle directly`);
     for (const handle of handles) {
       await processHandle(handle);
     }
@@ -181,9 +177,7 @@ async function processFileTree(
 
   tracker.updateTotalItems(totalFilesEncountered);
 
-  if (isInfoEnabled) {
-    console.log(`🔄 Processing ${output.length} total items from traversal`);
-  }
+  logger.info(`🔄 Processing ${output.length} total items from traversal`);
 
   for (const entry of output) {
     if (entry.type === 'file') {
@@ -195,9 +189,7 @@ async function processFileTree(
       items.push(processedFile);
       callbacks.onFile?.(processedFile);
       tracker.completeItem();
-      if (isVerboseEnabled) {
-        console.log(`  ✅ File: ${entry.path.toString()}`);
-      }
+      logger.verbose(`  ✅ File: ${entry.path.toString()}`);
     } else {
       const directory: ProcessedDirectory = {
         type: 'directory',
@@ -207,15 +199,11 @@ async function processFileTree(
         relativePath: entry.path.toString(),
       };
       directories.push(directory);
-      if (isVerboseEnabled) {
-        console.log(`  📁 Directory: ${entry.path.toString()}`);
-      }
+      logger.verbose(`  📁 Directory: ${entry.path.toString()}`);
     }
   }
 
-  if (isInfoEnabled) {
-    console.log(`📊 Final results: ${items.length} files, ${directories.length} directories`);
-  }
+  logger.info(`📊 Final results: ${items.length} files, ${directories.length} directories`);
 
   return { items, directories, errors };
 }
@@ -475,6 +463,7 @@ export async function processFileTreeDropSafe(
 
 function normalizeDebugLevel(debug: FileDropOptions['debug']): DebugLevel {
   if (debug === true) return 'verbose';
-  if (debug === false || debug === undefined) return 'none';
+  if (debug === false) return 'none';
+  if (debug === undefined) return 'warn';
   return debug;
 }

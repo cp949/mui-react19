@@ -1,4 +1,5 @@
 import type { DebugLevel } from '../../types.js';
+import { createFileDropLogger } from '../debug-logger.js';
 import type { PathHolder } from '../path-util.js';
 import type { PathAndEntry } from './internal-types.js';
 
@@ -11,8 +12,7 @@ export async function visitByFileSystemHandle(
   parallel = true,
   concurrency = 4,
 ) {
-  const isInfoEnabled = debugLevel !== 'none';
-  const isVerboseEnabled = debugLevel === 'verbose';
+  const logger = createFileDropLogger(debugLevel);
 
   if (handle.kind === 'file') {
     const file = (await (handle as FileSystemFileHandle).getFile()) as File | null;
@@ -30,7 +30,7 @@ export async function visitByFileSystemHandle(
   }
 
   if (handle.kind !== 'directory') {
-    // ignore not file or directory
+    // 파일이나 디렉터리가 아닌 핸들은 순회 대상에서 제외한다.
     return;
   }
 
@@ -49,23 +49,17 @@ export async function visitByFileSystemHandle(
     };
     const iterator = directoryHandle.values();
 
-    if (isInfoEnabled) {
-      console.log(`🔍 Traversing directory: ${handle.name} at path: ${newParent.toString()}`);
-    }
+    logger.info(`🔍 Traversing directory: ${handle.name} at path: ${newParent.toString()}`);
 
     // async iterator를 배열로 변환
     for await (const entry of iterator) {
       if (entry) {
         children.push(entry);
-        if (isVerboseEnabled) {
-          console.log(`  📄 Found: ${entry.name} (${entry.kind})`);
-        }
+        logger.verbose(`  📄 Found: ${entry.name} (${entry.kind})`);
       }
     }
 
-    if (isVerboseEnabled) {
-      console.log(`  📊 Total children found: ${children.length}`);
-    }
+    logger.verbose(`  📊 Total children found: ${children.length}`);
 
     // 자체 구현한 parallelMap 사용
     const { simpleParallelMap } = await import('../../utils/parallel-map.js');
@@ -75,11 +69,9 @@ export async function visitByFileSystemHandle(
 
     if (shouldParallel) {
       // 병렬 처리
-      if (isInfoEnabled) {
-        console.log(
-          `  ⚡ Processing ${children.length} items in parallel (custom implementation, concurrency=${normalizedConcurrency})`,
-        );
-      }
+      logger.info(
+        `  ⚡ Processing ${children.length} items in parallel (custom implementation, concurrency=${normalizedConcurrency})`,
+      );
       await simpleParallelMap(
         children,
         async (entry: FileSystemHandle) => {
@@ -99,9 +91,7 @@ export async function visitByFileSystemHandle(
       );
     } else {
       // 단일 항목은 직접 처리
-      if (isInfoEnabled) {
-        console.log(`  📝 Processing ${children.length} item directly`);
-      }
+      logger.info(`  📝 Processing ${children.length} item directly`);
       for (const entry of children) {
         if (entry.kind === 'file' || entry.kind === 'directory') {
           await visitByFileSystemHandle(
@@ -117,8 +107,6 @@ export async function visitByFileSystemHandle(
       }
     }
   } catch (err) {
-    if (isInfoEnabled) {
-      console.error(`❌ Directory traversal error for ${handle.name}:`, err);
-    }
+    logger.warn(`Directory traversal warning for ${handle.name}:`, err);
   }
 }
