@@ -22,19 +22,19 @@
     "@cp949/mui-react19": "workspace:*",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@mui/material": "^9.0.0",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "@mui/material": "^9.0.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
   },
   "devDependencies": {
-    "@cp949/web-logger": "^1.0.4",
+    "@cp949/web-logger": "^1.0.5",
     "@repo/typescript-config": "workspace:*",
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "happy-dom": "^20.8.9",
-    "typescript": "^6.0.2",
-    "vite": "^8.0.8",
-    "vitest": "^4.1.4"
+    "@vitejs/plugin-react": "^6.0.2",
+    "happy-dom": "^20.10.2",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.8"
   }
 }

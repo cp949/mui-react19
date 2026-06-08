@@ -1,3 +1,5 @@
+.planning/
+
 _works/*
 !_works/README.md
 CLAUDE.md
