@@ -25,13 +25,9 @@
     "prepack": "pnpm build",
     "publish:npm": "npm publish"
   },
-  "dependencies": {
-    "lodash.throttle": "^4.1.1"
-  },
   "devDependencies": {
     "@mui/material": "^9.0.1",
     "@mui/system": "^9.0.1",
-    "@types/lodash.throttle": "^4.1.9",
     "@types/node": "^25.9.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",

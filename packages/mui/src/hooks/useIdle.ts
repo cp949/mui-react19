@@ -1,7 +1,7 @@
 // copy from https://github.com/streamich/react-use/tree/master
 
-import throttle from 'lodash.throttle';
 import { useEffect, useState } from 'react';
+import { throttle } from '../misc/debounce.js';
 
 const DEFAULT_EVENTS = ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel'];
 
@@ -38,7 +38,7 @@ const ONE_MINUTE = 60e3;
  * @why
  * - 사용자의 비활성 상태를 감지하여 자동 로그아웃, 화면 잠금, 에너지 절약 모드 전환 등의 기능을 구현할 때 유용합니다.
  * - 기본적으로 여러 사용자 입력 이벤트를 감지하며, 필요에 따라 감지할 이벤트를 커스터마이징할 수 있습니다.
- * - `lodash.throttle`를 사용하여 이벤트 핸들러 호출 빈도를 줄여 성능을 최적화합니다.
+ * - 내부 `throttle` 유틸을 사용하여 이벤트 핸들러 호출 빈도를 줄여 성능을 최적화합니다.
  *
  * @internalDetails
  * - 이벤트 핸들러는 `throttle`을 사용하여 50ms 간격으로 호출됩니다.
@@ -99,6 +99,8 @@ export const useIdle = (
         window.removeEventListener(events[i], onEvent);
       }
       document.removeEventListener('visibilitychange', onVisibility);
+      onEvent.cancel();
+      clearTimeout(timeout);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ms, events]);
