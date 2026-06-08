@@ -8,7 +8,7 @@ describe('useThrottledCallback', () => {
     vi.useRealTimers();
   });
 
-  test('wait 간격 안에서 호출을 제한', () => {
+  test('leading 호출은 즉시 실행하고 trailing 호출은 최신 callback을 사용', () => {
     vi.useFakeTimers();
     const calls: string[] = [];
 
@@ -20,13 +20,25 @@ describe('useThrottledCallback', () => {
       { label: 'first' },
     );
 
+    // leading 호출은 즉시 실행된다
     act(() => {
       hook.result.current();
+    });
+    expect(calls).toEqual(['first']);
+
+    // wait 구간 안의 추가 호출은 trailing으로 지연된다
+    hook.rerender({ label: 'second' });
+    act(() => {
       hook.result.current();
+    });
+    expect(calls).toEqual(['first']);
+
+    // wait 경과 후 trailing 호출은 최신 callback(label='second')을 사용한다
+    act(() => {
       vi.advanceTimersByTime(100);
     });
+    expect(calls).toEqual(['first', 'second']);
 
-    expect(calls.length).toBeLessThanOrEqual(2);
     hook.unmount();
   });
 });

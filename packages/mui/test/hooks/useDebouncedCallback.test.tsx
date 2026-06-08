@@ -32,4 +32,19 @@ describe('useDebouncedCallback', () => {
     expect(calls).toEqual(['second']);
     hook.unmount();
   });
+
+  test('cancel은 대기 중인 trailing 호출을 취소', () => {
+    vi.useFakeTimers();
+    const callback = vi.fn();
+    const hook = renderHook(() => useDebouncedCallback(callback, 100), undefined);
+
+    act(() => {
+      hook.result.current();
+      hook.result.current.cancel();
+      vi.advanceTimersByTime(100);
+    });
+
+    expect(callback).not.toHaveBeenCalled();
+    hook.unmount();
+  });
 });
