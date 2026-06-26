@@ -26,7 +26,7 @@ export type CleanupCallback = () => void;
  * ```
  */
 export function useRefEffect<RefElement extends HTMLElement = HTMLElement>(
-  callback: (element: RefElement) => CleanupCallback | void,
+  callback: (element: RefElement) => CleanupCallback | undefined,
   deps: DependencyList,
 ): (element: RefElement | null) => void {
   const stableCallback = useCallbackRef(callback);
