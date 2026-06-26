@@ -1,8 +1,7 @@
 import type { SxProps } from '@mui/material';
 import { Box } from '@mui/material';
 import clsx from 'clsx';
-import type { ReactNode } from 'react';
-import { forwardRef } from 'react';
+import type { ReactNode, Ref } from 'react';
 
 export interface MarkProps {
   sx?: SxProps;
@@ -14,11 +13,13 @@ export interface MarkProps {
   bgcolor?: string;
 
   children?: ReactNode;
+
+  ref?: Ref<HTMLElement>;
 }
 
-export const Mark = forwardRef<HTMLElement, MarkProps>((props, ref) => {
+export const Mark = (props: MarkProps) => {
   // restProps는 data-xxx를 적용하기 위해 필요함
-  const { sx, className, color = '#000', bgcolor = '#ff0', children, ...restProps } = props;
+  const { sx, className, color = '#000', bgcolor = '#ff0', children, ref, ...restProps } = props;
   return (
     <Box
       className={clsx('Mark-root', className)}
@@ -37,6 +38,6 @@ export const Mark = forwardRef<HTMLElement, MarkProps>((props, ref) => {
       {children}
     </Box>
   );
-});
+};
 
 Mark.displayName = 'Mark';

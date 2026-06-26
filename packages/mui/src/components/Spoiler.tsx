@@ -3,8 +3,7 @@
 import type { BoxProps, LinkProps, SxProps } from '@mui/material';
 import { Box, Link, styled } from '@mui/material';
 import clsx from 'clsx';
-import type { CSSProperties, ReactNode } from 'react';
-import { forwardRef } from 'react';
+import type { CSSProperties, ReactNode, Ref } from 'react';
 import { useElementSize } from '../hooks/useElementSize.js';
 import { useId } from '../hooks/useId.js';
 import { useUncontrolled } from '../hooks/useUncontrolled.js';
@@ -43,9 +42,11 @@ export interface SpoilerProps {
   transitionDuration?: number;
 
   children?: ReactNode;
+
+  ref?: Ref<HTMLElement>;
 }
 
-export const Spoiler = forwardRef<HTMLElement, SpoilerProps>((props, ref) => {
+export const Spoiler = (props: SpoilerProps) => {
   const {
     sx,
     className,
@@ -60,6 +61,7 @@ export const Spoiler = forwardRef<HTMLElement, SpoilerProps>((props, ref) => {
     controlRef,
     children,
     transitionDuration = 100,
+    ref,
     ...restProps
   } = props;
 
@@ -112,7 +114,7 @@ export const Spoiler = forwardRef<HTMLElement, SpoilerProps>((props, ref) => {
       </StyledContent>
     </RootBox>
   );
-});
+};
 
 Spoiler.displayName = 'Spoiler';
 

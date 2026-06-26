@@ -1,7 +1,7 @@
 import type { SxProps, Theme, TypographyProps } from '@mui/material';
 import { Typography } from '@mui/material';
 import clsx from 'clsx';
-import { type CSSProperties, forwardRef, useMemo } from 'react';
+import { type CSSProperties, type Ref, useMemo } from 'react';
 import { Mark } from '../Mark.js';
 import { highlighter } from './highlighter/highlighter.js';
 
@@ -74,6 +74,8 @@ export interface HighlightProps {
    * @default false
    */
   includeDataAttribute?: boolean;
+
+  ref?: Ref<HTMLElement>;
 }
 
 /**
@@ -97,7 +99,7 @@ export interface HighlightProps {
  * </Highlight>
  * ```
  */
-export const Highlight = forwardRef<HTMLElement, HighlightProps>((props, ref) => {
+export const Highlight = (props: HighlightProps) => {
   const {
     sx,
     className,
@@ -109,6 +111,7 @@ export const Highlight = forwardRef<HTMLElement, HighlightProps>((props, ref) =>
     ignorecase = false,
     includeDataAttribute = false,
     children,
+    ref,
     ...restProps
   } = props;
 
@@ -143,6 +146,6 @@ export const Highlight = forwardRef<HTMLElement, HighlightProps>((props, ref) =>
       )}
     </Typography>
   );
-});
+};
 
 Highlight.displayName = 'Highlight';
