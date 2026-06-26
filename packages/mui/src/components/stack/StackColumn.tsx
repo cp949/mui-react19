@@ -1,6 +1,5 @@
 import type { StackProps } from '@mui/material';
 import { Stack } from '@mui/material';
-import { forwardRef } from 'react';
 import { createComponent } from './create-component.js';
 
 export interface StackColumnProps extends Omit<StackProps, 'direction'> {
@@ -33,7 +32,7 @@ const StackColumnEvenly = createComponent('StackColumn.Evenly', 'column', {
   justifyContent: 'space-evenly',
 });
 
-interface StackColumnComponent extends React.ForwardRefExoticComponent<StackColumnProps> {
+interface StackColumnComponent extends React.FunctionComponent<StackColumnProps> {
   Start: typeof StackColumnStart;
   End: typeof StackColumnEnd;
   Between: typeof StackColumnBetween;
@@ -42,26 +41,31 @@ interface StackColumnComponent extends React.ForwardRefExoticComponent<StackColu
   Evenly: typeof StackColumnEvenly;
 }
 
-export const StackColumn = forwardRef<HTMLDivElement, StackColumnProps>(
-  ({ center = false, alignItems, justifyContent, children, ...props }, ref) => {
-    return (
-      <Stack
-        direction='column'
-        {...props}
-        ref={ref}
-        sx={[
-          {
-            alignItems: center ? 'center' : alignItems,
-            justifyContent: center ? 'center' : justifyContent,
-          },
-          ...(Array.isArray(props.sx) ? props.sx : [props.sx ?? false]),
-        ]}
-      >
-        {children}
-      </Stack>
-    );
-  },
-) as StackColumnComponent;
+export const StackColumn = (({
+  center = false,
+  alignItems,
+  justifyContent,
+  children,
+  ref,
+  ...props
+}: StackColumnProps) => {
+  return (
+    <Stack
+      direction='column'
+      {...props}
+      ref={ref}
+      sx={[
+        {
+          alignItems: center ? 'center' : alignItems,
+          justifyContent: center ? 'center' : justifyContent,
+        },
+        ...(Array.isArray(props.sx) ? props.sx : [props.sx ?? false]),
+      ]}
+    >
+      {children}
+    </Stack>
+  );
+}) as StackColumnComponent;
 
 StackColumn.displayName = 'StackColumn';
 StackColumn.Start = StackColumnStart;

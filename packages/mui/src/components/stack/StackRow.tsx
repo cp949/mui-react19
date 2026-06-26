@@ -1,6 +1,5 @@
 import type { StackProps } from '@mui/material';
 import { Stack } from '@mui/material';
-import { forwardRef } from 'react';
 import { createComponent } from './create-component.js';
 
 export interface StackRowProps extends Omit<StackProps, 'direction'> {
@@ -33,7 +32,7 @@ const StackRowEvenly = createComponent('StackRow.Evenly', 'row', {
   justifyContent: 'space-evenly',
 });
 
-interface StackRowComponent extends React.ForwardRefExoticComponent<StackRowProps> {
+interface StackRowComponent extends React.FunctionComponent<StackRowProps> {
   Start: typeof StackRowStart;
   End: typeof StackRowEnd;
   Between: typeof StackRowBetween;
@@ -42,26 +41,31 @@ interface StackRowComponent extends React.ForwardRefExoticComponent<StackRowProp
   Evenly: typeof StackRowEvenly;
 }
 
-export const StackRow = forwardRef<HTMLDivElement, StackRowProps>(
-  ({ center = false, alignItems, justifyContent, children, ...props }, ref) => {
-    return (
-      <Stack
-        direction='row'
-        {...props}
-        ref={ref}
-        sx={[
-          {
-            alignItems: center ? 'center' : alignItems,
-            justifyContent: center ? 'center' : justifyContent,
-          },
-          ...(Array.isArray(props.sx) ? props.sx : [props.sx ?? false]),
-        ]}
-      >
-        {children}
-      </Stack>
-    );
-  },
-) as StackRowComponent;
+export const StackRow = (({
+  center = false,
+  alignItems,
+  justifyContent,
+  children,
+  ref,
+  ...props
+}: StackRowProps) => {
+  return (
+    <Stack
+      direction='row'
+      {...props}
+      ref={ref}
+      sx={[
+        {
+          alignItems: center ? 'center' : alignItems,
+          justifyContent: center ? 'center' : justifyContent,
+        },
+        ...(Array.isArray(props.sx) ? props.sx : [props.sx ?? false]),
+      ]}
+    >
+      {children}
+    </Stack>
+  );
+}) as StackRowComponent;
 
 StackRow.displayName = 'StackRow';
 StackRow.Start = StackRowStart;
