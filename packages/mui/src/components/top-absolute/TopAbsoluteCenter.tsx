@@ -37,7 +37,13 @@ export interface TopAbsoluteCenterProps extends BoxProps {
  * </TopAbsolute.Center>
  * ```
  */
-export const TopAbsoluteCenter = ({ fullWidth, top, sx, ref, ...props }: TopAbsoluteCenterProps) => {
+export const TopAbsoluteCenter = ({
+  fullWidth,
+  top,
+  sx,
+  ref,
+  ...props
+}: TopAbsoluteCenterProps) => {
   return (
     <Box
       ref={ref}

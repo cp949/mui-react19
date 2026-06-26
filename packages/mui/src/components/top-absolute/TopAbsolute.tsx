@@ -40,7 +40,14 @@ interface TopAbsoluteComponent extends React.FunctionComponent<TopAbsoluteProps>
   Center: typeof TopAbsoluteCenter;
 }
 
-const TopAbsoluteBase = (({ top = 0, left = 0, right = 0, sx, ref, ...props }: TopAbsoluteProps) => {
+const TopAbsoluteBase = (({
+  top = 0,
+  left = 0,
+  right = 0,
+  sx,
+  ref,
+  ...props
+}: TopAbsoluteProps) => {
   return (
     <Box
       ref={ref}
