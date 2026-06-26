@@ -8,7 +8,7 @@
 // const ref = useComposedRefs(ref1,ref2)
 //
 
-import { useCallback } from 'react';
+import { useCallback, type RefObject } from 'react';
 
 type PossibleRef<T> = React.Ref<T> | undefined;
 
@@ -20,7 +20,7 @@ function setRef<T>(ref: PossibleRef<T>, value: T | null) {
   if (typeof ref === 'function') {
     ref(value);
   } else if (ref !== null && ref !== undefined) {
-    (ref as React.MutableRefObject<T | null>).current = value;
+    (ref as RefObject<T | null>).current = value;
   }
 }
 
