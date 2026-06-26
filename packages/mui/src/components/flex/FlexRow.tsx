@@ -1,5 +1,4 @@
 import { Box } from '@mui/material';
-import { forwardRef } from 'react';
 import { overrideProps } from '../../util/override-props.js';
 import { createFlexComponent } from './create-component.js';
 import type { FlexBaseProps } from './types.js';
@@ -32,7 +31,7 @@ export interface FlexRowProps extends FlexBaseProps {
   center?: boolean;
 }
 
-interface FlexRowComponent extends React.ForwardRefExoticComponent<FlexRowProps> {
+interface FlexRowComponent extends React.FunctionComponent<FlexRowProps> {
   Start: typeof FlexRowStart;
   End: typeof FlexRowEnd;
   Center: typeof FlexRowCenter;
@@ -41,30 +40,35 @@ interface FlexRowComponent extends React.ForwardRefExoticComponent<FlexRowProps>
   Evenly: typeof FlexRowEvenly;
 }
 
-const FlexRowBase = forwardRef<HTMLDivElement, FlexRowProps>(
-  ({ center, inlineFlex = false, justifyContent, alignItems, flexWrap, sx, ...props }, ref) => {
-    // undefined/null/false 완전히 제거하여 hydration error 방지
-    const sxArray = Array.isArray(sx) ? sx.filter(Boolean) : sx ? [sx] : [];
+const FlexRowBase = (({
+  center,
+  inlineFlex = false,
+  justifyContent,
+  alignItems,
+  flexWrap,
+  sx,
+  ref,
+  ...props
+}: FlexRowProps) => {
+  // undefined/null/false 완전히 제거하여 hydration error 방지
+  const sxArray = Array.isArray(sx) ? sx.filter(Boolean) : sx ? [sx] : [];
 
-    const baseStyle = {
-      display: inlineFlex ? 'inline-flex' : 'flex',
-      flexDirection: 'row' as const,
-      ...overrideProps(
-        center
-          ? {
-              justifyContent: 'center' as const,
-              alignItems: 'center' as const,
-            }
-          : {},
-        { justifyContent, alignItems, flexWrap },
-      ),
-    };
+  const baseStyle = {
+    display: inlineFlex ? 'inline-flex' : 'flex',
+    flexDirection: 'row' as const,
+    ...overrideProps(
+      center
+        ? {
+            justifyContent: 'center' as const,
+            alignItems: 'center' as const,
+          }
+        : {},
+      { justifyContent, alignItems, flexWrap },
+    ),
+  };
 
-    return (
-      <Box ref={ref} sx={sxArray.length > 0 ? [baseStyle, ...sxArray] : baseStyle} {...props} />
-    );
-  },
-) as FlexRowComponent;
+  return <Box ref={ref} sx={sxArray.length > 0 ? [baseStyle, ...sxArray] : baseStyle} {...props} />;
+}) as FlexRowComponent;
 FlexRowBase.displayName = 'FlexRowBase';
 
 export const FlexRow = FlexRowBase;
