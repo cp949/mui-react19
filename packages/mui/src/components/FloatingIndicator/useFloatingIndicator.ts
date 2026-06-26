@@ -47,7 +47,7 @@ interface UseFloatingIndicatorInput {
   parent: HTMLElement | null | undefined;
 
   /** 인디케이터 DOM 참조 */
-  indicatorRef: RefObject<HTMLDivElement>;
+  indicatorRef: RefObject<HTMLDivElement | null>;
 
   /** 인디케이터 크기 계산 시 대상 요소의 보더 두께를 제외할지 여부 */
   excludeTargetBorderWidth?: boolean;

@@ -87,7 +87,7 @@ function assignRef<T>(ref: React.Ref<T> | undefined, value: T) {
   if (typeof ref === 'function') {
     ref(value);
   } else if (typeof ref === 'object' && ref !== null && 'current' in ref) {
-    (ref as React.RefObject<T>).current = value;
+    (ref as React.RefObject<T | null>).current = value;
   }
 }
 
