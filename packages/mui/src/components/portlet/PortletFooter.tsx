@@ -1,13 +1,12 @@
 import { Box, type BoxProps } from '@mui/material';
 import { clsx } from 'clsx';
-import { forwardRef } from 'react';
 
 export interface PortletFooterProps extends BoxProps {
   noDivider?: boolean;
 }
 
-export const PortletFooter = forwardRef<HTMLDivElement, PortletFooterProps>((props, ref) => {
-  const { noDivider, sx, className, children, ...rest } = props;
+export const PortletFooter = (props: PortletFooterProps) => {
+  const { noDivider, sx, className, children, ref, ...rest } = props;
   return (
     <Box
       {...rest}
@@ -31,6 +30,6 @@ export const PortletFooter = forwardRef<HTMLDivElement, PortletFooterProps>((pro
       {children}
     </Box>
   );
-});
+};
 
 PortletFooter.displayName = 'PortletFooter';

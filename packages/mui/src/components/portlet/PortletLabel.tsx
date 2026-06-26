@@ -1,5 +1,4 @@
 import { Box, type BoxProps, Typography } from '@mui/material';
-import { forwardRef } from 'react';
 
 export interface PortletLabelProps extends BoxProps {
   icon?: React.ReactNode;
@@ -7,8 +6,8 @@ export interface PortletLabelProps extends BoxProps {
   subtitle?: string;
 }
 
-export const PortletLabel = forwardRef<HTMLDivElement, PortletLabelProps>((props, ref) => {
-  const { icon, title, subtitle, sx, ...rest } = props;
+export const PortletLabel = (props: PortletLabelProps) => {
+  const { icon, title, subtitle, sx, ref, ...rest } = props;
   return (
     <Box
       {...rest}
@@ -60,6 +59,6 @@ export const PortletLabel = forwardRef<HTMLDivElement, PortletLabelProps>((props
       )}
     </Box>
   );
-});
+};
 
 PortletLabel.displayName = 'PortletLabel';

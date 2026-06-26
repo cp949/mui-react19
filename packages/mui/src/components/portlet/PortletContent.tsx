@@ -1,13 +1,12 @@
 import { Box, type BoxProps } from '@mui/material';
 import { clsx } from 'clsx';
-import { forwardRef } from 'react';
 
 export interface PortletContentProps extends BoxProps {
   noPadding?: boolean;
 }
 
-export const PortletContent = forwardRef<HTMLDivElement, PortletContentProps>((props, ref) => {
-  const { noPadding = false, className, sx, children, ...restProps } = props;
+export const PortletContent = (props: PortletContentProps) => {
+  const { noPadding = false, className, sx, children, ref, ...restProps } = props;
   return (
     <Box
       {...restProps}
@@ -29,6 +28,6 @@ export const PortletContent = forwardRef<HTMLDivElement, PortletContentProps>((p
       {children}
     </Box>
   );
-});
+};
 
 PortletContent.displayName = 'PortletContent';
