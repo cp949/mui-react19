@@ -48,6 +48,13 @@ export interface CopyButtonWrapperProps {
    * @default 1000
    */
   timeout?: number;
+
+  /**
+   * 클립보드 복사가 성공했을 때 호출되는 콜백 함수입니다.
+   *
+   * @param value - 클립보드에 복사된 문자열
+   */
+  onCopySuccess?: (value: string) => void;
 }
 
 /**
@@ -68,14 +75,18 @@ export interface CopyButtonWrapperProps {
  * ```
  */
 export function CopyButtonWrapper(props: CopyButtonWrapperProps) {
-  const { children, value, timeout = 1000 } = props;
+  const { children, onCopySuccess, value, timeout = 1000 } = props;
   const clipboard = useClipboard({ timeout });
 
   // 클립보드에 값을 복사합니다. `value`가 함수인 경우 값을 동적으로 평가합니다.
   const copy = () => {
     const v = typeof value === 'function' ? value() : value;
     if (typeof v === 'string' && v.length > 0) {
-      clipboard.copy(v);
+      void clipboard.copy(v).then((copied) => {
+        if (copied) {
+          onCopySuccess?.(v);
+        }
+      });
     }
   };
 

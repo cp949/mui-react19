@@ -7,7 +7,7 @@ import { useState } from 'react';
  * @param options - 옵션 객체입니다.
  * @param options.timeout - 복사 완료 상태가 유지되는 시간(밀리초)입니다. 기본값은 2000ms입니다.
  * @returns
- * - `copy`: 문자열을 클립보드에 복사하는 함수
+ * - `copy`: 문자열을 클립보드에 복사하고 성공 여부를 반환하는 함수
  * - `reset`: 상태를 초기화하는 함수
  * - `error`: 클립보드 복사 중 발생한 오류
  * - `copied`: 복사 성공 여부
@@ -49,16 +49,21 @@ export function useClipboard({ timeout = 1000 } = {}) {
    *
    * @param valueToCopy - 복사할 문자열
    */
-  const copy = (valueToCopy: string) => {
+  const copy = async (valueToCopy: string) => {
     if ('clipboard' in navigator) {
-      // navigator.clipboard API를 사용하여 텍스트를 복사
-      navigator.clipboard
-        .writeText(valueToCopy)
-        .then(() => handleCopyResult(true))
-        .catch((err) => setError(err)); // 오류 발생 시 상태 업데이트
+      try {
+        // navigator.clipboard API를 사용하여 텍스트를 복사
+        await navigator.clipboard.writeText(valueToCopy);
+        handleCopyResult(true);
+        return true;
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error(String(err))); // 오류 발생 시 상태 업데이트
+        return false;
+      }
     } else {
       // 브라우저가 clipboard API를 지원하지 않을 경우 오류 처리
       setError(new Error('useClipboard: navigator.clipboard is not supported'));
+      return false;
     }
   };
 
