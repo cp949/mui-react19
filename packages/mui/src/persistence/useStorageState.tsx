@@ -1,6 +1,7 @@
 'use client';
 
-import * as React from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import { useCallback, useMemo, useState, useSyncExternalStore } from 'react';
 import type { Codec } from './codec.js';
 import { CODEC_STRING } from './codec.js';
 
@@ -99,10 +100,7 @@ function setValue(area: Storage, key: string | null, value: string | null) {
 
 export type StorageStateInitializer<T> = () => T | null;
 
-export type UseStorageStateHookResult<T> = [
-  T | null,
-  React.Dispatch<React.SetStateAction<T | null>>,
-];
+export type UseStorageStateHookResult<T> = [T | null, Dispatch<SetStateAction<T | null>>];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const serverValue: UseStorageStateHookResult<any> = [null, () => {}];
@@ -160,35 +158,29 @@ export function useStorageState<T = string>(
 ): UseStorageStateHookResult<T> {
   const codec = (options?.codec ?? CODEC_STRING) as Codec<T>;
 
-  const [initialValue] = React.useState(initializer);
-  const encodedInitialValue = React.useMemo(
-    () => encode(codec, initialValue),
-    [codec, initialValue],
-  );
+  const [initialValue] = useState(initializer);
+  const encodedInitialValue = useMemo(() => encode(codec, initialValue), [codec, initialValue]);
 
-  const subscribeKey = React.useCallback(
+  const subscribeKey = useCallback(
     (callback: () => void) => subscribe(area, key, callback),
     [area, key],
   );
 
-  const getKeySnapshot = React.useCallback<() => string | null>(
+  const getKeySnapshot = useCallback<() => string | null>(
     () => getSnapshot(area, key) ?? encodedInitialValue,
     [area, encodedInitialValue, key],
   );
 
-  const encodedStoredValue = React.useSyncExternalStore(
+  const encodedStoredValue = useSyncExternalStore(
     subscribeKey,
     getKeySnapshot,
     getKeyServerSnapshot,
   );
 
-  const storedValue = React.useMemo(
-    () => decode(codec, encodedStoredValue),
-    [codec, encodedStoredValue],
-  );
+  const storedValue = useMemo(() => decode(codec, encodedStoredValue), [codec, encodedStoredValue]);
 
-  const setStoredValue = React.useCallback(
-    (value: React.SetStateAction<T | null>) => {
+  const setStoredValue = useCallback(
+    (value: SetStateAction<T | null>) => {
       const valueToStore = value instanceof Function ? value(storedValue) : value;
       const encodedValueToStore = encode(codec, valueToStore);
       setValue(area, key, encodedValueToStore);
@@ -196,7 +188,7 @@ export function useStorageState<T = string>(
     [area, codec, storedValue, key],
   );
 
-  const [nonStoredValue, setNonStoredValue] = React.useState(initialValue);
+  const [nonStoredValue, setNonStoredValue] = useState(initialValue);
 
   if (!key) {
     return [nonStoredValue, setNonStoredValue];
