@@ -1,6 +1,6 @@
 {
   "name": "@cp949/mui-react19",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "React UI components and hooks built on MUI (Material-UI)",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -45,7 +45,7 @@
     "@mui/material": "^9",
     "@mui/system": "^9",
     "clsx": "^2",
-    "react": "^18 || ^19",
+    "react": "^19",
     "rxjs": "^7"
   },
   "author": "jjfive",
