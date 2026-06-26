@@ -1,6 +1,5 @@
 import { Box, type BoxProps } from '@mui/material';
 import type { CSSProperties } from 'react';
-import { forwardRef } from 'react';
 import { TopAbsoluteCenter } from './TopAbsoluteCenter.js';
 import { TopAbsoluteLeft } from './TopAbsoluteLeft.js';
 import { TopAbsoluteRight } from './TopAbsoluteRight.js';
@@ -35,31 +34,29 @@ export interface TopAbsoluteProps extends BoxProps {
   right?: CSSProperties['right'];
 }
 
-interface TopAbsoluteComponent extends React.ForwardRefExoticComponent<TopAbsoluteProps> {
+interface TopAbsoluteComponent extends React.FunctionComponent<TopAbsoluteProps> {
   Left: typeof TopAbsoluteLeft;
   Right: typeof TopAbsoluteRight;
   Center: typeof TopAbsoluteCenter;
 }
 
-const TopAbsoluteBase = forwardRef<HTMLDivElement, TopAbsoluteProps>(
-  ({ top = 0, left = 0, right = 0, sx, ...props }, ref) => {
-    return (
-      <Box
-        ref={ref}
-        sx={[
-          {
-            position: 'absolute',
-            top,
-            left,
-            right,
-          },
-          ...(Array.isArray(sx) ? sx : [sx]),
-        ]}
-        {...props}
-      />
-    );
-  },
-) as TopAbsoluteComponent;
+const TopAbsoluteBase = (({ top = 0, left = 0, right = 0, sx, ref, ...props }: TopAbsoluteProps) => {
+  return (
+    <Box
+      ref={ref}
+      sx={[
+        {
+          position: 'absolute',
+          top,
+          left,
+          right,
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
+      {...props}
+    />
+  );
+}) as TopAbsoluteComponent;
 TopAbsoluteBase.displayName = 'TopAbsoluteBase';
 
 export const TopAbsolute = TopAbsoluteBase;

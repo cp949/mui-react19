@@ -1,5 +1,5 @@
 import { Box, type BoxProps } from '@mui/material';
-import { type CSSProperties, forwardRef } from 'react';
+import type { CSSProperties } from 'react';
 
 /**
  * `TopAbsoluteCenter` 컴포넌트의 속성을 정의합니다.
@@ -37,28 +37,26 @@ export interface TopAbsoluteCenterProps extends BoxProps {
  * </TopAbsolute.Center>
  * ```
  */
-export const TopAbsoluteCenter = forwardRef<HTMLDivElement, TopAbsoluteCenterProps>(
-  ({ fullWidth, top, sx, ...props }, ref) => {
-    return (
-      <Box
-        ref={ref}
-        sx={[
-          {
-            position: 'absolute', // 절대 위치 설정
-            top, // 사용자 정의 top 값
-            left: '50%', // 수평 중앙 위치
-            transform: 'translate(-50%, -50%)', // 수평 중앙 정렬
-            ...(fullWidth && {
-              width: '100%', // 전체 너비 설정
-            }),
-          },
-          ...(Array.isArray(sx) ? sx : [sx]),
-        ]}
-        {...props}
-      />
-    );
-  },
-);
+export const TopAbsoluteCenter = ({ fullWidth, top, sx, ref, ...props }: TopAbsoluteCenterProps) => {
+  return (
+    <Box
+      ref={ref}
+      sx={[
+        {
+          position: 'absolute', // 절대 위치 설정
+          top, // 사용자 정의 top 값
+          left: '50%', // 수평 중앙 위치
+          transform: 'translate(-50%, -50%)', // 수평 중앙 정렬
+          ...(fullWidth && {
+            width: '100%', // 전체 너비 설정
+          }),
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
+      {...props}
+    />
+  );
+};
 
 // 컴포넌트 디스플레이 이름 설정
 TopAbsoluteCenter.displayName = 'TopAbsolute.Center';

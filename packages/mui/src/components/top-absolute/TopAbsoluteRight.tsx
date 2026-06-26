@@ -1,5 +1,5 @@
 import { Box, type BoxProps } from '@mui/material';
-import { type CSSProperties, forwardRef } from 'react';
+import type { CSSProperties } from 'react';
 
 /**
  * `TopAbsoluteRight` 컴포넌트의 속성을 정의합니다.
@@ -44,27 +44,32 @@ export interface TopAbsoluteRightProps extends BoxProps {
  * </TopAbsolute.Right>
  * ```
  */
-export const TopAbsoluteRight = forwardRef<HTMLDivElement, TopAbsoluteRightProps>(
-  ({ fullWidth, right = 0, top = 0, sx, ...props }, ref) => {
-    return (
-      <Box
-        ref={ref}
-        sx={[
-          {
-            position: 'absolute', // 절대 위치 설정
-            right, // 사용자 정의 right 값
-            top, // 사용자 정의 top 값
-            ...(fullWidth && {
-              width: '100%', // 전체 너비 설정
-            }),
-          },
-          ...(Array.isArray(sx) ? sx : [sx]),
-        ]}
-        {...props}
-      />
-    );
-  },
-);
+export const TopAbsoluteRight = ({
+  fullWidth,
+  right = 0,
+  top = 0,
+  sx,
+  ref,
+  ...props
+}: TopAbsoluteRightProps) => {
+  return (
+    <Box
+      ref={ref}
+      sx={[
+        {
+          position: 'absolute', // 절대 위치 설정
+          right, // 사용자 정의 right 값
+          top, // 사용자 정의 top 값
+          ...(fullWidth && {
+            width: '100%', // 전체 너비 설정
+          }),
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
+      {...props}
+    />
+  );
+};
 
 // 컴포넌트 디스플레이 이름 설정
 TopAbsoluteRight.displayName = 'TopAbsolute.Right';
