@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useComposedRefs } from '../hooks/useComposedRefs.js';
 
 export interface FileButtonProps<Multiple extends boolean = false> {
@@ -70,6 +70,11 @@ export interface FileButtonProps<Multiple extends boolean = false> {
    * 파일 입력 요소에 전달할 추가 속성입니다.
    */
   inputProps?: React.ComponentPropsWithoutRef<'input'>;
+
+  /**
+   * 내부 파일 입력(`<input type="file">`) 요소로 전달되는 참조입니다.
+   */
+  ref?: React.Ref<HTMLInputElement>;
 }
 
 /**
@@ -105,11 +110,9 @@ type FileButtonComponent = (<Multiple extends boolean = false>(
  * </FileButton>
  * ```
  */
-export const FileButton: FileButtonComponent = forwardRef<
-  HTMLInputElement,
-  FileButtonProps<boolean>
->((props, ref) => {
+export const FileButton: FileButtonComponent = ((props: FileButtonProps<boolean>) => {
   const {
+    ref,
     onChange,
     children,
     multiple,
