@@ -3,7 +3,7 @@
 import type { BoxProps } from '@mui/material';
 import { Box } from '@mui/material';
 import clsx from 'clsx';
-import { forwardRef, useRef } from 'react';
+import { useRef } from 'react';
 import { useComposedRefs } from '../../hooks/useComposedRefs.js';
 import { useFloatingIndicator } from './useFloatingIndicator.js';
 
@@ -34,7 +34,7 @@ export interface FloatingIndicatorProps extends BoxProps {
  * 주어진 `target`과 `parent` 요소를 기준으로 인디케이터를 화면에 표시하는 컴포넌트입니다.
  * 인디케이터는 부모 요소를 기준으로 `absolute` 위치로 배치되며, 다양한 전환 효과를 지원합니다.
  */
-export const FloatingIndicator = forwardRef<HTMLElement, FloatingIndicatorProps>((props, ref) => {
+export const FloatingIndicator = (props: FloatingIndicatorProps) => {
   const {
     target,
     parent,
@@ -43,6 +43,7 @@ export const FloatingIndicator = forwardRef<HTMLElement, FloatingIndicatorProps>
     displayAfterTransitionEnd,
     sx,
     className,
+    ref,
     ...restProps
   } = props;
 
@@ -84,6 +85,4 @@ export const FloatingIndicator = forwardRef<HTMLElement, FloatingIndicatorProps>
       {...restProps} // 나머지 속성들
     />
   );
-});
-
-FloatingIndicator.displayName = 'FloatingIndicator';
+};
