@@ -1,34 +1,21 @@
-import React, { useState } from 'react';
-import { useIsomorphicEffect } from './useIsomorphicEffect.js';
+import { useId as useReactId } from 'react';
 
-const __useId: () => string | undefined =
-  (React as unknown as Record<string, () => string | undefined>)['useId'.toString()] ||
-  (() => undefined);
-
-function useReactId() {
-  const id = __useId();
-  return id ? `mantine-${id.replace(/:/g, '')}` : '';
-}
-
-function randomId(prefix = 'rand-'): string {
-  return `${prefix}${Math.random().toString(36).slice(2, 11)}`;
-}
-
+/**
+ * React 19 네이티브 `useId`를 사용해 안정적인 고유 id를 생성한다.
+ *
+ * - `staticId`가 string이면 그대로 반환한다(override).
+ * - 인자가 없으면 네이티브 id에서 콜론(`:`)만 제거해 반환한다(파생 id의 querySelector 안전).
+ *
+ * @param staticId 고정 id. string이면 그대로 반환된다.
+ * @returns 고정 id 또는 콜론이 제거된 네이티브 id.
+ */
 export function useId(staticId?: string) {
-  const reactId = useReactId();
-  const [uuid, setUuid] = useState(reactId);
-
-  useIsomorphicEffect(() => {
-    setUuid(randomId());
-  }, []);
+  // rules-of-hooks: 네이티브 useId는 가드보다 먼저 무조건 호출한다.
+  const id = useReactId();
 
   if (typeof staticId === 'string') {
     return staticId;
   }
 
-  if (typeof window === 'undefined') {
-    return reactId;
-  }
-
-  return uuid;
+  return id.replace(/:/g, '');
 }
