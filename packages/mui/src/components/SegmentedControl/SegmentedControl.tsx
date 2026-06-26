@@ -1,8 +1,8 @@
 import type { SxProps, Theme, TypographyProps } from '@mui/material';
 import { Box } from '@mui/material';
 import clsx from 'clsx';
-import type { CSSProperties, ReactNode } from 'react';
-import { forwardRef, useState } from 'react';
+import type { CSSProperties, ReactNode, Ref } from 'react';
+import { useState } from 'react';
 import { useComposedRefs } from '../../hooks/useComposedRefs.js';
 import { useId } from '../../hooks/useId.js';
 import { useUncontrolled } from '../../hooks/useUncontrolled.js';
@@ -35,6 +35,9 @@ export interface SegmentedControlItem {
 }
 
 export interface SegmentedControlProps {
+  /** 루트 DOM 요소로 전달되는 ref (MUI 미상속 인터페이스라 명시 선언) */
+  ref?: Ref<HTMLDivElement>;
+
   sx?: SxProps<Theme>;
 
   className?: string;
@@ -92,7 +95,7 @@ export interface SegmentedControlProps {
  * @param props 세그먼트 컨트롤의 다양한 설정을 정의하는 props
  * @returns 세그먼트 컨트롤 컴포넌트
  */
-export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps>((props, ref) => {
+export const SegmentedControl = (props: SegmentedControlProps) => {
   const {
     sx,
     className,
@@ -112,6 +115,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     readOnly,
     size = 'medium',
     indicator,
+    ref,
   } = props;
 
   // data 항목이 문자열이면 객체로 변환하여 처리
@@ -232,6 +236,4 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       ))}
     </SegmentedControlRoot>
   );
-});
-
-SegmentedControl.displayName = 'SegmentedControl';
+};
