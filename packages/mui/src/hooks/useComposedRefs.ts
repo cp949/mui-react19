@@ -8,7 +8,7 @@
 // const ref = useComposedRefs(ref1,ref2)
 //
 
-import { useCallback, type RefObject } from 'react';
+import { type RefObject, useCallback } from 'react';
 
 type PossibleRef<T> = React.Ref<T> | undefined;
 

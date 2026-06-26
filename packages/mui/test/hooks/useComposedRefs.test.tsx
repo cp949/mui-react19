@@ -28,10 +28,7 @@ describe('useComposedRefs', () => {
       const refObject: { current: HTMLDivElement | null } = { current: null };
 
       const Comp = () => {
-        const composed = useComposedRefs<HTMLDivElement>(
-          (node) => received.push(node),
-          refObject,
-        );
+        const composed = useComposedRefs<HTMLDivElement>((node) => received.push(node), refObject);
         return <div ref={composed} data-testid='target' />;
       };
 
@@ -54,10 +51,7 @@ describe('useComposedRefs', () => {
       const refObject: { current: HTMLDivElement | null } = { current: null };
 
       const Comp = () => {
-        const composed = useComposedRefs<HTMLDivElement>(
-          (node) => received.push(node),
-          refObject,
-        );
+        const composed = useComposedRefs<HTMLDivElement>((node) => received.push(node), refObject);
         return <div ref={composed} />;
       };
 
