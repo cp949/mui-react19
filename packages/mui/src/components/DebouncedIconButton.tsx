@@ -2,7 +2,7 @@
 
 import { IconButton, type IconButtonProps } from '@mui/material';
 import type { MouseEvent } from 'react';
-import { forwardRef, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export interface DebouncedIconButtonProps extends IconButtonProps {
   /**
@@ -11,36 +11,38 @@ export interface DebouncedIconButtonProps extends IconButtonProps {
   debounce?: number;
 }
 
-export const DebouncedIconButton = forwardRef<HTMLButtonElement, DebouncedIconButtonProps>(
-  ({ debounce = 700, onClick, disabled, ...props }, ref) => {
-    const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+export const DebouncedIconButton = ({
+  debounce = 700,
+  onClick,
+  disabled,
+  ref,
+  ...props
+}: DebouncedIconButtonProps) => {
+  const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // Cleanup timer on unmount
-    useEffect(() => {
-      return () => {
-        if (debounceTimeout.current) {
-          clearTimeout(debounceTimeout.current);
-        }
-      };
-    }, []);
-
-    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  // 언마운트 시 타이머 정리
+  useEffect(() => {
+    return () => {
       if (debounceTimeout.current) {
         clearTimeout(debounceTimeout.current);
       }
-      debounceTimeout.current = setTimeout(() => {
-        if (!disabled && onClick) {
-          onClick(event);
-        }
-      }, debounce);
     };
+  }, []);
 
-    return (
-      <IconButton {...props} ref={ref} onClick={handleClick} disabled={disabled}>
-        {props.children}
-      </IconButton>
-    );
-  },
-);
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+    debounceTimeout.current = setTimeout(() => {
+      if (!disabled && onClick) {
+        onClick(event);
+      }
+    }, debounce);
+  };
 
-DebouncedIconButton.displayName = 'DebouncedIconButton';
+  return (
+    <IconButton {...props} ref={ref} onClick={handleClick} disabled={disabled}>
+      {props.children}
+    </IconButton>
+  );
+};
