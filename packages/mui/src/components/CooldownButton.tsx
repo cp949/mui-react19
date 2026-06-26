@@ -2,7 +2,7 @@
 
 import { Button, type ButtonProps } from '@mui/material';
 import type { MouseEvent } from 'react';
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { useState } from 'react';
 
 export interface CooldownButtonProps extends ButtonProps {
   /**
@@ -11,27 +11,28 @@ export interface CooldownButtonProps extends ButtonProps {
   cooldown?: number;
 }
 
-export const CooldownButton = forwardRef<HTMLButtonElement, CooldownButtonProps>(
-  ({ cooldown = 1000, onClick, disabled, ...props }, ref) => {
-    const [isCooldown, setIsCooldown] = useState(false);
-    const internalRef = useRef<HTMLButtonElement>(null);
+export const CooldownButton = ({
+  cooldown = 1000,
+  onClick,
+  disabled,
+  ref,
+  ...props
+}: CooldownButtonProps) => {
+  const [isCooldown, setIsCooldown] = useState(false);
 
-    useImperativeHandle(ref, () => internalRef.current!);
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (!isCooldown && onClick) {
+      onClick(event);
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), cooldown);
+    }
+  };
 
-    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-      if (!isCooldown && onClick) {
-        onClick(event);
-        setIsCooldown(true);
-        setTimeout(() => setIsCooldown(false), cooldown);
-      }
-    };
-
-    return (
-      <Button {...props} ref={internalRef} onClick={handleClick} disabled={disabled || isCooldown}>
-        {props.children}
-      </Button>
-    );
-  },
-);
+  return (
+    <Button {...props} ref={ref} onClick={handleClick} disabled={disabled || isCooldown}>
+      {props.children}
+    </Button>
+  );
+};
 
 CooldownButton.displayName = 'CooldownButton';
