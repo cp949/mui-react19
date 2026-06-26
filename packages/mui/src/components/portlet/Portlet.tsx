@@ -1,5 +1,5 @@
 import { Paper, type PaperProps } from '@mui/material';
-import { forwardRef, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { PortletContent } from './PortletContent.js';
 import { PortletFooter } from './PortletFooter.js';
 import { PortletHeader } from './PortletHeader.js';
@@ -16,14 +16,14 @@ export interface PortletProps extends Omit<PaperProps, 'elevation' | 'component'
   children?: ReactNode;
 }
 
-interface PortletComponent extends React.ForwardRefExoticComponent<PortletProps> {
+interface PortletComponent extends React.FunctionComponent<PortletProps> {
   Content: typeof PortletContent;
   Header: typeof PortletHeader;
   Footer: typeof PortletFooter;
 }
 
-export const Portlet = forwardRef<HTMLDivElement, PortletProps>((props, ref) => {
-  const { sx, className, children, ...restProps } = props;
+export const Portlet = ((props: PortletProps) => {
+  const { sx, className, children, ref, ...restProps } = props;
   return (
     <Paper
       {...defaultProps}
