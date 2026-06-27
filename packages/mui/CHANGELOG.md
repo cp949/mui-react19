@@ -1,5 +1,13 @@
 # @cp949/mui-react19
 
+## 2.0.2
+
+### Patch Changes
+
+- Use React 19 native `useId` directly while preserving the `staticId` override behavior.
+- Remove stale `useId` fallback and colon-normalization code paths.
+- Resolve `pnpm audit` findings by pinning patched transitive dependency versions.
+
 ## 2.0.1
 
 ### Patch Changes
