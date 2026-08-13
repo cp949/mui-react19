@@ -141,4 +141,11 @@ describe('BottomAbsolute 패밀리 (characterization)', () => {
       expect(style.width).toBe('100%');
     });
   });
+
+  it('displayName이 유지된다', () => {
+    expect(BottomAbsolute.displayName).toBe('BottomAbsolute');
+    expect(BottomAbsolute.Left.displayName).toBe('BottomAbsolute.Left');
+    expect(BottomAbsolute.Right.displayName).toBe('BottomAbsolute.Right');
+    expect(BottomAbsolute.Center.displayName).toBe('BottomAbsolute.Center');
+  });
 });

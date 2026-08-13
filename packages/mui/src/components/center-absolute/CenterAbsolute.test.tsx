@@ -139,4 +139,11 @@ describe('CenterAbsolute 패밀리 (characterization)', () => {
       expect(style.width).toBe('100%');
     });
   });
+
+  it('displayName이 유지된다', () => {
+    expect(CenterAbsolute.displayName).toBe('CenterAbsolute');
+    expect(CenterAbsolute.Left.displayName).toBe('CenterAbsolute.Left');
+    expect(CenterAbsolute.Right.displayName).toBe('CenterAbsolute.Right');
+    expect(CenterAbsolute.Center.displayName).toBe('CenterAbsolute.Center');
+  });
 });

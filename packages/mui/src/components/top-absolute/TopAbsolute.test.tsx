@@ -139,4 +139,11 @@ describe('TopAbsolute 패밀리 (characterization)', () => {
       expect(style.width).toBe('100%');
     });
   });
+
+  it('displayName이 유지된다', () => {
+    expect(TopAbsolute.displayName).toBe('TopAbsolute');
+    expect(TopAbsolute.Left.displayName).toBe('TopAbsolute.Left');
+    expect(TopAbsolute.Right.displayName).toBe('TopAbsolute.Right');
+    expect(TopAbsolute.Center.displayName).toBe('TopAbsolute.Center');
+  });
 });

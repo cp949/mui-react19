@@ -131,4 +131,48 @@ describe('createAbsoluteBox', () => {
     });
     expect(callbackRef).toHaveBeenCalledWith(expect.any(HTMLElement));
   });
+
+  it('sx prop(단일 객체)이 axis 기본값을 덮어쓴다', async () => {
+    const Probe = createAbsoluteBox({
+      displayName: 'Probe',
+      axes: [{ cssProp: 'top', defaultValue: 0 }],
+      supportsFullWidth: false,
+    });
+    const el = await renderInto((ref) => (
+      <Probe ref={ref} sx={{ top: '40px' }}>
+        x
+      </Probe>
+    ));
+    expect(getComputedStyle(el).top).toBe('40px');
+  });
+
+  it('sx prop(배열)이 중첩되지 않고 평탄하게 스프레드된다', async () => {
+    const Probe = createAbsoluteBox({
+      displayName: 'Probe',
+      axes: [{ cssProp: 'top', defaultValue: 0 }],
+      supportsFullWidth: false,
+    });
+    const el = await renderInto((ref) => (
+      <Probe ref={ref} sx={[{ top: '40px' }, { left: '5px' }]}>
+        x
+      </Probe>
+    ));
+    const style = getComputedStyle(el);
+    expect(style.top).toBe('40px');
+    expect(style.left).toBe('5px');
+  });
+
+  it('fullWidth로 계산된 width:100%를 사용자 sx.width가 덮어쓴다', async () => {
+    const Probe = createAbsoluteBox({
+      displayName: 'Probe',
+      axes: [],
+      supportsFullWidth: true,
+    });
+    const el = await renderInto((ref) => (
+      <Probe ref={ref} fullWidth sx={{ width: '200px' }}>
+        x
+      </Probe>
+    ));
+    expect(getComputedStyle(el).width).toBe('200px');
+  });
 });
