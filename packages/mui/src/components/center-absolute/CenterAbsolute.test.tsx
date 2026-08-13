@@ -62,6 +62,16 @@ describe('CenterAbsolute 패밀리 (characterization)', () => {
       });
       expect(callbackRef).toHaveBeenCalledWith(expect.any(HTMLElement));
     });
+
+    it('fullWidth를 전달해도 width에 영향 없다 (base는 fullWidth 미지원)', async () => {
+      const el = await renderInto((ref) => (
+        // @ts-expect-error base는 fullWidth를 지원하지 않음 — 타입 위반을 강제해 런타임 동작을 특성화한다
+        <CenterAbsolute ref={ref} fullWidth>
+          x
+        </CenterAbsolute>
+      ));
+      expect(getComputedStyle(el).width).not.toBe('100%');
+    });
   });
 
   describe('CenterAbsolute.Left', () => {
@@ -87,7 +97,9 @@ describe('CenterAbsolute 패밀리 (characterization)', () => {
 
   describe('CenterAbsolute.Right', () => {
     it('기본값: right=0px, top=50%, translateY(-50%)', async () => {
-      const el = await renderInto((ref) => <CenterAbsolute.Right ref={ref}>x</CenterAbsolute.Right>);
+      const el = await renderInto((ref) => (
+        <CenterAbsolute.Right ref={ref}>x</CenterAbsolute.Right>
+      ));
       const style = getComputedStyle(el);
       expect(style.right).toBe('0px');
       expect(style.top).toBe('50%');
@@ -108,7 +120,9 @@ describe('CenterAbsolute 패밀리 (characterization)', () => {
 
   describe('CenterAbsolute.Center', () => {
     it('위치 조정 prop 없이 top/left 50%, translate(-50%, -50%) 고정', async () => {
-      const el = await renderInto((ref) => <CenterAbsolute.Center ref={ref}>x</CenterAbsolute.Center>);
+      const el = await renderInto((ref) => (
+        <CenterAbsolute.Center ref={ref}>x</CenterAbsolute.Center>
+      ));
       const style = getComputedStyle(el);
       expect(style.top).toBe('50%');
       expect(style.left).toBe('50%');

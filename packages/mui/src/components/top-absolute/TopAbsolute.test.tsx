@@ -62,6 +62,16 @@ describe('TopAbsolute 패밀리 (characterization)', () => {
       });
       expect(callbackRef).toHaveBeenCalledWith(expect.any(HTMLElement));
     });
+
+    it('fullWidth를 전달해도 width에 영향 없다 (base는 fullWidth 미지원)', async () => {
+      const el = await renderInto((ref) => (
+        // @ts-expect-error base는 fullWidth를 지원하지 않음 — 타입 위반을 강제해 런타임 동작을 특성화한다
+        <TopAbsolute ref={ref} fullWidth>
+          x
+        </TopAbsolute>
+      ));
+      expect(getComputedStyle(el).width).not.toBe('100%');
+    });
   });
 
   describe('TopAbsolute.Left', () => {

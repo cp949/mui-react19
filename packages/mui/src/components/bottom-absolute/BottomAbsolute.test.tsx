@@ -62,6 +62,16 @@ describe('BottomAbsolute 패밀리 (characterization)', () => {
       });
       expect(callbackRef).toHaveBeenCalledWith(expect.any(HTMLElement));
     });
+
+    it('fullWidth를 전달해도 width에 영향 없다 (base는 fullWidth 미지원)', async () => {
+      const el = await renderInto((ref) => (
+        // @ts-expect-error base는 fullWidth를 지원하지 않음 — 타입 위반을 강제해 런타임 동작을 특성화한다
+        <BottomAbsolute ref={ref} fullWidth>
+          x
+        </BottomAbsolute>
+      ));
+      expect(getComputedStyle(el).width).not.toBe('100%');
+    });
   });
 
   describe('BottomAbsolute.Left', () => {
@@ -88,7 +98,9 @@ describe('BottomAbsolute 패밀리 (characterization)', () => {
 
   describe('BottomAbsolute.Right', () => {
     it('기본값: right=0px, bottom=0px', async () => {
-      const el = await renderInto((ref) => <BottomAbsolute.Right ref={ref}>x</BottomAbsolute.Right>);
+      const el = await renderInto((ref) => (
+        <BottomAbsolute.Right ref={ref}>x</BottomAbsolute.Right>
+      ));
       const style = getComputedStyle(el);
       expect(style.right).toBe('0px');
       expect(style.bottom).toBe('0px');
@@ -109,7 +121,9 @@ describe('BottomAbsolute 패밀리 (characterization)', () => {
 
   describe('BottomAbsolute.Center', () => {
     it('기본값: bottom=0px (TopAbsoluteCenter의 top과 달리 기본값이 존재)', async () => {
-      const el = await renderInto((ref) => <BottomAbsolute.Center ref={ref}>x</BottomAbsolute.Center>);
+      const el = await renderInto((ref) => (
+        <BottomAbsolute.Center ref={ref}>x</BottomAbsolute.Center>
+      ));
       const style = getComputedStyle(el);
       expect(style.bottom).toBe('0px');
       expect(style.left).toBe('50%');
