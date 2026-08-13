@@ -1,5 +1,6 @@
-import { Box, type BoxProps } from '@mui/material';
+import type { BoxProps } from '@mui/material';
 import type { CSSProperties } from 'react';
+import { createAbsoluteBox } from '../absolute-box/create-absolute-box.js';
 import { TopAbsoluteCenter } from './TopAbsoluteCenter.js';
 import { TopAbsoluteLeft } from './TopAbsoluteLeft.js';
 import { TopAbsoluteRight } from './TopAbsoluteRight.js';
@@ -40,34 +41,17 @@ interface TopAbsoluteComponent extends React.FunctionComponent<TopAbsoluteProps>
   Center: typeof TopAbsoluteCenter;
 }
 
-const TopAbsoluteBase = (({
-  top = 0,
-  left = 0,
-  right = 0,
-  sx,
-  ref,
-  ...props
-}: TopAbsoluteProps) => {
-  return (
-    <Box
-      ref={ref}
-      sx={[
-        {
-          position: 'absolute',
-          top,
-          left,
-          right,
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...props}
-    />
-  );
+const TopAbsoluteBase = createAbsoluteBox({
+  displayName: 'TopAbsolute',
+  axes: [
+    { cssProp: 'top', defaultValue: 0 },
+    { cssProp: 'left', defaultValue: 0 },
+    { cssProp: 'right', defaultValue: 0 },
+  ],
+  supportsFullWidth: false,
 }) as TopAbsoluteComponent;
-TopAbsoluteBase.displayName = 'TopAbsoluteBase';
 
 export const TopAbsolute = TopAbsoluteBase;
-TopAbsolute.displayName = 'TopAbsolute';
 TopAbsolute.Left = TopAbsoluteLeft;
 TopAbsolute.Right = TopAbsoluteRight;
 TopAbsolute.Center = TopAbsoluteCenter;

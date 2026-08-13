@@ -1,5 +1,6 @@
-import { Box, type BoxProps } from '@mui/material';
-import type { CSSProperties } from 'react';
+import type { BoxProps } from '@mui/material';
+import type { CSSProperties, FunctionComponent } from 'react';
+import { createAbsoluteBox } from '../absolute-box/create-absolute-box.js';
 
 /**
  * `TopAbsoluteLeft` 컴포넌트의 속성을 정의합니다.
@@ -44,32 +45,11 @@ export interface TopAbsoluteLeftProps extends BoxProps {
  * </TopAbsolute.Left>
  * ```
  */
-export const TopAbsoluteLeft = ({
-  fullWidth,
-  left = 0,
-  top = 0,
-  sx,
-  ref,
-  ...props
-}: TopAbsoluteLeftProps) => {
-  return (
-    <Box
-      ref={ref}
-      sx={[
-        {
-          position: 'absolute', // 절대 위치 설정
-          left, // 사용자 정의 left 값
-          top, // 사용자 정의 top 값
-          ...(fullWidth && {
-            width: '100%', // 전체 너비 설정
-          }),
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...props}
-    />
-  );
-};
-
-// 컴포넌트 디스플레이 이름 설정
-TopAbsoluteLeft.displayName = 'TopAbsolute.Left';
+export const TopAbsoluteLeft = createAbsoluteBox({
+  displayName: 'TopAbsolute.Left',
+  axes: [
+    { cssProp: 'left', defaultValue: 0 },
+    { cssProp: 'top', defaultValue: 0 },
+  ],
+  supportsFullWidth: true,
+}) as FunctionComponent<TopAbsoluteLeftProps>;
