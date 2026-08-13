@@ -14,17 +14,16 @@
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.16",
-    "@changesets/cli": "^2.31.0",
-    "turbo": "^2.9.16",
+    "@biomejs/biome": "^2.5.8",
+    "@changesets/cli": "^3.0.0",
+    "turbo": "2.10.9",
     "typescript": "6.0.3",
     "yaml": "^2.9.0"
   },
   "packageManager": "pnpm@10.26.0",
   "pnpm": {
     "overrides": {
-      "esbuild": "0.28.1",
-      "read-yaml-file": "2.1.0"
+      "esbuild": "0.28.2"
     }
   },
   "engines": {
