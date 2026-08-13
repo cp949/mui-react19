@@ -1,36 +1,15 @@
-import { Box, type BoxProps } from '@mui/material';
-import type { CSSProperties } from 'react';
+import type { BoxProps } from '@mui/material';
+import type { CSSProperties, FunctionComponent } from 'react';
+import { createAbsoluteBox } from '../absolute-box/create-absolute-box.js';
 
 export interface CenterAbsoluteRightProps extends BoxProps {
   right?: CSSProperties['right'];
   fullWidth?: boolean;
 }
 
-export const CenterAbsoluteRight = ({
-  fullWidth,
-  right = 0,
-  sx,
-  ref,
-  ...props
-}: CenterAbsoluteRightProps) => {
-  return (
-    <Box
-      ref={ref}
-      sx={[
-        {
-          position: 'absolute',
-          top: '50%',
-          right,
-          transform: 'translateY(-50%)',
-          ...(fullWidth && {
-            width: '100%',
-          }),
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...props}
-    />
-  );
-};
-
-CenterAbsoluteRight.displayName = 'CenterAbsolute.Right';
+export const CenterAbsoluteRight = createAbsoluteBox({
+  displayName: 'CenterAbsolute.Right',
+  axes: [{ cssProp: 'right', defaultValue: 0 }],
+  fixedStyle: { top: '50%', transform: 'translateY(-50%)' },
+  supportsFullWidth: true,
+}) as FunctionComponent<CenterAbsoluteRightProps>;

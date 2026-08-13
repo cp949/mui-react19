@@ -1,5 +1,6 @@
-import { Box, type BoxProps } from '@mui/material';
+import type { BoxProps } from '@mui/material';
 import type { CSSProperties } from 'react';
+import { createAbsoluteBox } from '../absolute-box/create-absolute-box.js';
 import { CenterAbsoluteCenter } from './CenterAbsoluteCenter.js';
 import { CenterAbsoluteLeft } from './CenterAbsoluteLeft.js';
 import { CenterAbsoluteRight } from './CenterAbsoluteRight.js';
@@ -19,29 +20,17 @@ interface CenterAbsoluteComponent extends React.FunctionComponent<CenterAbsolute
   Center: typeof CenterAbsoluteCenter;
 }
 
-const CenterAbsoluteBase = (({ left = 0, right = 0, sx, ref, ...props }: CenterAbsoluteProps) => {
-  return (
-    <Box
-      ref={ref}
-      sx={[
-        {
-          position: 'absolute',
-          top: '50%',
-          left,
-          right,
-          transform: 'translateY(-50%)',
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...props}
-    />
-  );
+const CenterAbsoluteBase = createAbsoluteBox({
+  displayName: 'CenterAbsolute',
+  axes: [
+    { cssProp: 'left', defaultValue: 0 },
+    { cssProp: 'right', defaultValue: 0 },
+  ],
+  fixedStyle: { top: '50%', transform: 'translateY(-50%)' },
+  supportsFullWidth: false,
 }) as CenterAbsoluteComponent;
 
-CenterAbsoluteBase.displayName = 'CenterAbsoluteBase';
-
 export const CenterAbsolute = CenterAbsoluteBase;
-CenterAbsolute.displayName = 'CenterAbsolute';
 CenterAbsolute.Left = CenterAbsoluteLeft;
 CenterAbsolute.Right = CenterAbsoluteRight;
 CenterAbsolute.Center = CenterAbsoluteCenter;
