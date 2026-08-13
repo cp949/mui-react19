@@ -1,36 +1,15 @@
-import { Box, type BoxProps } from '@mui/material';
-import type { CSSProperties } from 'react';
+import type { BoxProps } from '@mui/material';
+import type { CSSProperties, FunctionComponent } from 'react';
+import { createAbsoluteBox } from '../absolute-box/create-absolute-box.js';
 
 export interface BottomAbsoluteCenterProps extends BoxProps {
   fullWidth?: boolean;
   bottom?: CSSProperties['bottom'];
 }
 
-export const BottomAbsoluteCenter = ({
-  fullWidth,
-  bottom = 0,
-  sx,
-  ref,
-  ...props
-}: BottomAbsoluteCenterProps) => {
-  return (
-    <Box
-      ref={ref}
-      sx={[
-        {
-          position: 'absolute',
-          bottom,
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          ...(fullWidth && {
-            width: '100%',
-          }),
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...props}
-    />
-  );
-};
-
-BottomAbsoluteCenter.displayName = 'BottomAbsolute.Center';
+export const BottomAbsoluteCenter = createAbsoluteBox({
+  displayName: 'BottomAbsolute.Center',
+  axes: [{ cssProp: 'bottom', defaultValue: 0 }],
+  fixedStyle: { left: '50%', transform: 'translate(-50%, -50%)' },
+  supportsFullWidth: true,
+}) as FunctionComponent<BottomAbsoluteCenterProps>;

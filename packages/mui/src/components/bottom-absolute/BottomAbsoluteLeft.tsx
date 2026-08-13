@@ -1,5 +1,6 @@
-import { Box, type BoxProps } from '@mui/material';
-import type { CSSProperties } from 'react';
+import type { BoxProps } from '@mui/material';
+import type { CSSProperties, FunctionComponent } from 'react';
+import { createAbsoluteBox } from '../absolute-box/create-absolute-box.js';
 
 export interface BottomAbsoluteLeftProps extends BoxProps {
   fullWidth?: boolean;
@@ -7,31 +8,11 @@ export interface BottomAbsoluteLeftProps extends BoxProps {
   left?: CSSProperties['left'];
 }
 
-export const BottomAbsoluteLeft = ({
-  fullWidth,
-  left = 0,
-  bottom = 0,
-  sx,
-  ref,
-  ...props
-}: BottomAbsoluteLeftProps) => {
-  return (
-    <Box
-      ref={ref}
-      sx={[
-        {
-          position: 'absolute',
-          left,
-          bottom,
-          ...(fullWidth && {
-            width: '100%',
-          }),
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...props}
-    />
-  );
-};
-
-BottomAbsoluteLeft.displayName = 'BottomAbsolute.Left';
+export const BottomAbsoluteLeft = createAbsoluteBox({
+  displayName: 'BottomAbsolute.Left',
+  axes: [
+    { cssProp: 'left', defaultValue: 0 },
+    { cssProp: 'bottom', defaultValue: 0 },
+  ],
+  supportsFullWidth: true,
+}) as FunctionComponent<BottomAbsoluteLeftProps>;

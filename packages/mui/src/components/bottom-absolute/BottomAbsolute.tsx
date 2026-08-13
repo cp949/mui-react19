@@ -1,5 +1,6 @@
-import { Box, type BoxProps } from '@mui/material';
+import type { BoxProps } from '@mui/material';
 import type { CSSProperties } from 'react';
+import { createAbsoluteBox } from '../absolute-box/create-absolute-box.js';
 import { BottomAbsoluteCenter } from './BottomAbsoluteCenter.js';
 import { BottomAbsoluteLeft } from './BottomAbsoluteLeft.js';
 import { BottomAbsoluteRight } from './BottomAbsoluteRight.js';
@@ -20,35 +21,17 @@ interface BottomAbsoluteComponent extends React.FunctionComponent<BottomAbsolute
   Center: typeof BottomAbsoluteCenter;
 }
 
-const BottomAbsoluteBase = (({
-  bottom = 0,
-  left = 0,
-  right = 0,
-  sx,
-  ref,
-  ...props
-}: BottomAbsoluteProps) => {
-  return (
-    <Box
-      ref={ref}
-      sx={[
-        {
-          position: 'absolute',
-          bottom,
-          left,
-          right,
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...props}
-    />
-  );
+const BottomAbsoluteBase = createAbsoluteBox({
+  displayName: 'BottomAbsolute',
+  axes: [
+    { cssProp: 'bottom', defaultValue: 0 },
+    { cssProp: 'left', defaultValue: 0 },
+    { cssProp: 'right', defaultValue: 0 },
+  ],
+  supportsFullWidth: false,
 }) as BottomAbsoluteComponent;
 
-BottomAbsoluteBase.displayName = 'BottomAbsoluteBase';
-
 export const BottomAbsolute = BottomAbsoluteBase;
-BottomAbsolute.displayName = 'BottomAbsolute';
 BottomAbsolute.Left = BottomAbsoluteLeft;
 BottomAbsolute.Right = BottomAbsoluteRight;
 BottomAbsolute.Center = BottomAbsoluteCenter;
