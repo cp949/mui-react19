@@ -1,5 +1,5 @@
+import { absoluteBoxFamilyCase } from './absoluteBoxFamily.case';
 import { allHookCases } from './allHooks.case';
-
 import { clipboardCase } from './clipboard.case';
 import { debouncedValueCase } from './debouncedValue.case';
 import { eventListenerCase } from './eventListener.case';
@@ -23,6 +23,7 @@ import { windowEventCase } from './windowEvent.case';
 import { windowSizeCase } from './windowSize.case';
 
 export const cases: HookCase[] = [
+  absoluteBoxFamilyCase,
   debouncedValueCase,
   clipboardCase,
   timeoutCase,
