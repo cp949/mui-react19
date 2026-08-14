@@ -1,5 +1,5 @@
-// copy from mantine
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
+import { useLatest } from './useLatest.js';
 
 /**
  * React 컴포넌트에서 최신의 콜백을 안전하게 참조하기 위한 커스텀 훅.
@@ -33,12 +33,7 @@ import { useEffect, useMemo, useRef } from 'react';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
   // 콜백 함수의 최신 참조를 저장하기 위한 ref
-  const callbackRef = useRef(callback);
-
-  // `callback` 값이 변경될 때마다 최신 값을 ref에 저장
-  useEffect(() => {
-    callbackRef.current = callback;
-  });
+  const callbackRef = useLatest(callback);
 
   // 메모이제이션된 함수 반환
   return useMemo(
