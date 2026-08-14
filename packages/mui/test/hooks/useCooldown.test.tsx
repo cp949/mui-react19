@@ -76,6 +76,29 @@ describe('useCooldown', () => {
     hook.unmount();
   });
 
+  test('콜백이 예외를 던지면 쿨다운을 시작하지 않아 다음 호출을 허용한다', () => {
+    vi.useFakeTimers();
+    const callback = vi.fn().mockImplementationOnce(() => {
+      throw new Error('callback failed');
+    });
+
+    const hook = renderHook(() => useCooldown(callback, 1000), undefined);
+
+    expect(() => {
+      act(() => {
+        hook.result.current.trigger();
+      });
+    }).toThrow('callback failed');
+
+    act(() => {
+      hook.result.current.trigger();
+    });
+
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(hook.result.current.isCooldown).toBe(true);
+    hook.unmount();
+  });
+
   test('언마운트 시 타이머를 정리한다', () => {
     vi.useFakeTimers();
     const clearSpy = vi.spyOn(window, 'clearTimeout');
@@ -94,30 +117,25 @@ describe('useCooldown', () => {
     clearSpy.mockRestore();
   });
 
-  test('같은 틱 안에서 trigger가 두 번 연속 호출되면 기존 타이머를 정리한 뒤 재등록한다', () => {
+  test('같은 틱 안에서 trigger가 두 번 연속 호출돼도 콜백은 한 번만 실행한다', () => {
     vi.useFakeTimers();
-    const clearSpy = vi.spyOn(window, 'clearTimeout');
     const callback = vi.fn();
 
     const hook = renderHook(() => useCooldown(callback, 1000), undefined);
 
-    // isCooldown state가 아직 반영되지 않은 상태에서 동일 act 블록 안에 연속 호출
     act(() => {
       hook.result.current.trigger();
       hook.result.current.trigger();
     });
 
-    // 두 번째 trigger 호출 시점에 첫 번째 타이머 핸들이 정리되어야 함
-    expect(clearSpy).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(1);
 
     act(() => {
       vi.advanceTimersByTime(1000);
     });
 
-    // 정리되지 않은 채 남아 isCooldown을 고착시키는 타이머가 없어야 함
     expect(hook.result.current.isCooldown).toBe(false);
 
-    clearSpy.mockRestore();
     hook.unmount();
   });
 });

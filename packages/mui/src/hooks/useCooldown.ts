@@ -25,6 +25,7 @@ export function useCooldown<T extends (...args: any[]) => void = () => void>(
 ): { isCooldown: boolean; trigger: (...args: Parameters<T>) => void } {
   // 쿨다운 상태
   const [isCooldown, setIsCooldown] = useState(false);
+  const isCooldownRef = useRef(false);
 
   // 쿨다운 타이머 ID를 저장하는 참조
   const timeoutRef = useRef<number | null>(null);
@@ -40,23 +41,26 @@ export function useCooldown<T extends (...args: any[]) => void = () => void>(
 
   const trigger = useCallback(
     (...args: Parameters<T>) => {
-      if (isCooldown || !callback) return;
+      if (isCooldownRef.current || !callback) return;
 
-      callback(...args);
-      setIsCooldown(true);
+      isCooldownRef.current = true;
 
-      // 동일 틱 내 재진입(state 반영 전 재호출)으로 기존 타이머 핸들이 있으면
-      // 덮어쓰기 전에 먼저 정리해 타이머 누수를 방지
-      if (timeoutRef.current !== null) {
-        window.clearTimeout(timeoutRef.current);
+      try {
+        callback(...args);
+      } catch (error) {
+        isCooldownRef.current = false;
+        throw error;
       }
 
+      setIsCooldown(true);
+
       timeoutRef.current = window.setTimeout(() => {
+        isCooldownRef.current = false;
         setIsCooldown(false);
         timeoutRef.current = null;
       }, cooldown);
     },
-    [isCooldown, callback, cooldown],
+    [callback, cooldown],
   );
 
   return { isCooldown, trigger };
