@@ -7,6 +7,7 @@ export * from './useClipboard.js';
 export * from './useClosableEffect.js';
 export * from './useComposedRefs.js';
 export * from './useConstant.js';
+export * from './useCooldown.js';
 export * from './useCustomCompareEffect.js';
 export * from './useCustomCompareMemo.js';
 export * from './useDebouncedCallback.js';

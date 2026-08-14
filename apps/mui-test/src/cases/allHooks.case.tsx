@@ -43,6 +43,8 @@ function argsForHook(name: string, arity: number): unknown[] {
       return [() => {}, []];
     case 'useConstant':
       return [() => 1];
+    case 'useCooldown':
+      return [() => {}, 10];
     case 'useCustomCompareEffect':
       return [
         () => {},
