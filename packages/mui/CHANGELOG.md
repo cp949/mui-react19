@@ -1,5 +1,11 @@
 # @cp949/mui-react19
 
+## 2.0.3
+
+### Patch Changes
+
+- 8d0f35c: debounce 훅의 타이밍 엔진을 통합하고 `leading` 단일 호출이 trailing 시점에 중복 실행되는 문제를 수정합니다.
+
 ## 2.0.2
 
 ### Patch Changes
