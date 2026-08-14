@@ -26,6 +26,32 @@ describe('useDebouncedValue', () => {
     hook.unmount();
   });
 
+  test('leading:true면 마운트 이후 첫 value 변경을 즉시 반영', () => {
+    vi.useFakeTimers();
+
+    const hook = renderHook(
+      ({ value }: { value: string }) => useDebouncedValue(value, 100, { leading: true }),
+      { value: 'first' },
+    );
+
+    hook.rerender({ value: 'second' });
+
+    expect(hook.result.current[0]).toBe('second');
+    hook.unmount();
+  });
+
+  test('입력이 같으면 반환 튜플의 참조를 유지', () => {
+    const hook = renderHook(({ value }: { value: string }) => useDebouncedValue(value, 100), {
+      value: 'first',
+    });
+    const firstResult = hook.result.current;
+
+    hook.rerender({ value: 'first' });
+
+    expect(hook.result.current).toBe(firstResult);
+    hook.unmount();
+  });
+
   test('cancel은 예약된 value 갱신을 취소', () => {
     vi.useFakeTimers();
 

@@ -33,6 +33,23 @@ describe('useDebouncedCallback', () => {
     hook.unmount();
   });
 
+  test('leading 호출 이후 추가 호출이 없으면 trailing에서 중복 실행되지 않는다', () => {
+    vi.useFakeTimers();
+    const callback = vi.fn();
+    const hook = renderHook(
+      () => useDebouncedCallback(callback, 100, { leading: true }),
+      undefined,
+    );
+
+    act(() => {
+      hook.result.current();
+      vi.advanceTimersByTime(100);
+    });
+
+    expect(callback).toHaveBeenCalledTimes(1);
+    hook.unmount();
+  });
+
   test('cancel은 대기 중인 trailing 호출을 취소', () => {
     vi.useFakeTimers();
     const callback = vi.fn();

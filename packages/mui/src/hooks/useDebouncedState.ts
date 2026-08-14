@@ -1,6 +1,6 @@
-// copy from mantine
 import type { SetStateAction } from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { debounce } from '../misc/debounce.js';
 
 /**
  * 상태 업데이트를 지연시키는 커스텀 훅.
@@ -37,47 +37,20 @@ export function useDebouncedState<T>(
   // 현재 상태 값을 관리하는 state
   const [value, setValue] = useState(defaultValue);
 
-  // 타이머 ID를 저장하는 ref
-  const timeoutRef = useRef<number | null>(null);
+  const leading = options.leading ?? false;
 
-  // `leading` 옵션 활성화 여부를 추적하는 ref
-  const leadingRef = useRef(true);
-
-  /**
-   * 현재 설정된 타이머를 정리하는 함수.
-   * - `clearTimeout`은 타이머를 초기화하여 상태 업데이트를 취소합니다.
-   */
-  const clearTimeout = () => window.clearTimeout(timeoutRef.current!);
-
-  // 컴포넌트 언마운트 시 타이머를 정리.
-  useEffect(() => clearTimeout, []);
-
-  /**
-   * 상태 값을 업데이트하는 디바운스된 함수.
-   * - `leading` 옵션이 활성화된 경우, 첫 번째 업데이트는 즉시 발생.
-   * - 이후 업데이트는 `wait` 시간만큼 지연.
-   */
-  const debouncedSetValue = useCallback(
-    (newValue: SetStateAction<T>) => {
-      clearTimeout(); // 기존 타이머를 정리.
-
-      // `leading` 옵션이 활성화된 경우, 즉시 업데이트를 처리.
-      if (leadingRef.current && options.leading) {
-        setValue(newValue);
-      } else {
-        // `wait` 시간만큼 지연 후 상태 업데이트 처리.
-        timeoutRef.current = window.setTimeout(() => {
-          leadingRef.current = true; // 다음 업데이트를 위한 준비.
-          setValue(newValue); // 상태 값 업데이트.
-        }, wait);
-      }
-
-      // 첫 업데이트 이후 `leading`을 비활성화하여 지연 처리 시작.
-      leadingRef.current = false;
-    },
-    [options.leading, wait], // 의존성: `leading` 옵션과 `wait` 시간.
+  // wait/leading이 바뀔 때만 디바운스 인스턴스를 새로 만든다.
+  const debounced = useMemo(
+    () => debounce((next: SetStateAction<T>) => setValue(next), wait, { leading }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [wait, leading],
   );
 
-  // 현재 상태 값과 디바운스된 업데이트 함수를 반환.
+  // 인스턴스가 교체되거나 컴포넌트가 언마운트될 때 예약된 타이머를 정리한다.
+  useEffect(() => debounced.cancel, [debounced]);
+
+  // cancel/flush를 노출하지 않기 위해 순수 호출부만 감싼 함수를 반환한다.
+  const debouncedSetValue = useCallback((next: SetStateAction<T>) => debounced(next), [debounced]);
+
   return [value, debouncedSetValue] as const;
 }

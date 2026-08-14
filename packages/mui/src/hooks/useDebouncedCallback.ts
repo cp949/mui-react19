@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
+import { debounce } from '../misc/debounce.js';
+import { useLatest } from './useLatest.js';
 
 interface UseDebouncedCallbackOptions {
   leading?: boolean; // 첫 호출 시 즉시 실행 여부
@@ -42,74 +44,25 @@ export function useDebouncedCallback<T extends (...args: any[]) => void>(
 ): T & { cancel: () => void } {
   const { leading = false, trailing = true } = options;
 
-  // 디바운스 타이머 ID를 저장하는 ref
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // 항상 최신 콜백을 참조하도록 ref로 감싼다.
+  const callbackRef = useLatest(callback);
 
-  // 마지막으로 전달된 인자를 저장하는 ref
-  const lastArgsRef = useRef<Parameters<T> | null>(null);
-
-  // leading 호출이 이미 실행되었는지 여부를 기록하는 ref
-  const leadingCalledRef = useRef(false);
-
-  // 디바운싱된 콜백 함수
-  const debouncedCallback = useCallback(
-    (...args: Parameters<T>) => {
-      // 마지막 인자를 업데이트
-      lastArgsRef.current = args;
-
-      // 콜백을 호출하는 내부 함수
-      const invoke = () => {
-        if ((trailing || (leading && !leadingCalledRef.current)) && lastArgsRef.current) {
-          callback(...lastArgsRef.current); // 콜백 실행
-        }
-        leadingCalledRef.current = false; // 호출 상태 초기화
-      };
-
-      // 기존 타이머 제거
-      if (timeoutRef.current !== null) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      // leading 옵션에 따라 즉시 실행
-      if (leading && !leadingCalledRef.current) {
-        callback(...args); // 즉시 콜백 호출
-        leadingCalledRef.current = true; // 호출 기록
-      }
-
-      // 대기 시간이 끝난 후 콜백 실행
-      timeoutRef.current = setTimeout(() => {
-        invoke(); // 마지막 콜백 실행
-        timeoutRef.current = null; // 타이머 초기화
-      }, wait);
-    },
-    [callback, leading, trailing, wait],
+  // wait/leading/trailing이 바뀔 때만 디바운스 인스턴스를 새로 만든다.
+  const debounced = useMemo(
+    () =>
+      debounce(
+        (...args: Parameters<T>) => {
+          callbackRef.current(...args);
+        },
+        wait,
+        { leading, trailing },
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [wait, leading, trailing],
   );
 
-  // 디바운스 타이머를 취소하는 함수
-  const cancel = useCallback(() => {
-    if (timeoutRef.current !== null) {
-      clearTimeout(timeoutRef.current); // 타이머 제거
-      timeoutRef.current = null;
-    }
-    leadingCalledRef.current = false; // 호출 상태 초기화
-  }, []);
+  // 인스턴스가 교체되거나 컴포넌트가 언마운트될 때 예약된 타이머를 정리한다.
+  useEffect(() => debounced.cancel, [debounced]);
 
-  // 컴포넌트 언마운트 시 정리
-  useEffect(() => {
-    return () => {
-      cancel(); // 타이머 정리
-    };
-  }, [cancel]);
-
-  // 디바운스된 콜백과 cancel을 함께 반환
-  // - 함수 객체를 직접 mutate 하지 않기 위해(cancel 프로퍼티 대입 금지) Proxy로 cancel을 노출합니다.
-  return useMemo(() => {
-    // eslint-disable-next-line react-hooks/refs
-    return new Proxy(debouncedCallback as T, {
-      get(target, prop, receiver) {
-        if (prop === 'cancel') return cancel;
-        return Reflect.get(target, prop, receiver);
-      },
-    }) as T & { cancel: () => void };
-  }, [debouncedCallback, cancel]);
+  return debounced as unknown as T & { cancel: () => void };
 }
