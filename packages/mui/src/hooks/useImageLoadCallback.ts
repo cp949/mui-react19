@@ -1,5 +1,6 @@
 import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLatest } from './useLatest.js';
 
 /**
  * 이미지 로드 상태를 감지하고 로드 또는 실패 시 콜백을 호출하는 React 훅입니다.
@@ -33,7 +34,7 @@ import { useEffect, useRef, useState } from 'react';
  * - `keepListening` 설정에 따라 로드 상태를 지속적으로 감시할 수 있습니다.
  *
  * @dependencies
- * - React: `useEffect`, `useRef`, `useState`
+ * - React: `useEffect`, `useState`
  * - DOM API: `addEventListener`, `removeEventListener`, `MutationObserver`
  */
 export function useImageLoadCallback(
@@ -47,11 +48,8 @@ export function useImageLoadCallback(
 ): void {
   const { keepListening = false } = options;
   const [refreshToken, setRefreshToken] = useState(0);
-  const onLoadedRef = useRef(options.onLoaded);
-  onLoadedRef.current = options.onLoaded;
-
-  const onErrorRef = useRef(options.onError);
-  onErrorRef.current = options.onError;
+  const onLoadedRef = useLatest(options.onLoaded);
+  const onErrorRef = useLatest(options.onError);
 
   useEffect(() => {
     if (!img?.src) return;

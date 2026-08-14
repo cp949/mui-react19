@@ -1,15 +1,15 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Closables } from '../util/closables.js';
+import { useLatest } from './useLatest.js';
 
 type Callback =
   | ((closable: Closables) => VoidFunction | undefined)
   | ((closable: Closables) => void);
 
 export function useClosableEffect(callback: Callback, deps: unknown[]) {
-  const callbackRef = useRef(callback);
-  callbackRef.current = callback;
+  const callbackRef = useLatest(callback);
 
   useEffect(() => {
     const closables = new Closables();

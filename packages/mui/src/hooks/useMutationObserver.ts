@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDeepCompareMemo } from './useDeepCompareMemo.js';
+import { useLatest } from './useLatest.js';
 
 /**
  * DOM의 변화를 감지하고 콜백을 실행하는 React 훅
@@ -33,8 +34,7 @@ export function useMutationObserver<T extends HTMLElement = HTMLElement>(
   const observer = useRef<MutationObserver | null>(null);
   const ref = useRef<T | null>(null);
   const initOptions = useDeepCompareMemo(() => options, [options]);
-  const callbackRef = useRef(callback);
-  callbackRef.current = callback;
+  const callbackRef = useLatest(callback);
 
   useEffect(() => {
     // target이 함수라면 실행하여 요소를 가져옴

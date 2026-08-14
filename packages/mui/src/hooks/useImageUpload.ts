@@ -1,5 +1,6 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDebounceEffect } from './useDebounceEffect.js';
+import { useLatest } from './useLatest.js';
 
 /**
  * 파일 업로드의 결과를 나타내는 데이터 구조.
@@ -102,11 +103,8 @@ export function useImageUpload(
   const targetFile = file ?? null;
   const [loading, setLoading] = useState(false);
 
-  const handleFileUploadRef = useRef(handleFileUpload);
-  handleFileUploadRef.current = handleFileUpload;
-
-  const callbackRef = useRef(callback);
-  callbackRef.current = callback;
+  const handleFileUploadRef = useLatest(handleFileUpload);
+  const callbackRef = useLatest(callback);
 
   const doUploadImageFile = useCallback(
     async (ctx: { canceled: boolean }, src: Blob): Promise<FileUploadResult | null> => {
