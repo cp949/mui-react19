@@ -1,8 +1,7 @@
 'use client';
 
 import { ButtonBase, type ButtonBaseProps } from '@mui/material';
-import type { MouseEvent } from 'react';
-import { useState } from 'react';
+import { useCooldown } from '../hooks/useCooldown.js';
 
 export interface CooldownButtonBaseProps extends ButtonBaseProps {
   /**
@@ -18,18 +17,10 @@ export const CooldownButtonBase = ({
   ref,
   ...props
 }: CooldownButtonBaseProps) => {
-  const [isCooldown, setIsCooldown] = useState(false);
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (!isCooldown && onClick) {
-      onClick(event);
-      setIsCooldown(true);
-      setTimeout(() => setIsCooldown(false), cooldown);
-    }
-  };
+  const { isCooldown, trigger } = useCooldown(onClick, cooldown);
 
   return (
-    <ButtonBase {...props} ref={ref} onClick={handleClick} disabled={disabled || isCooldown}>
+    <ButtonBase {...props} ref={ref} onClick={trigger} disabled={disabled || isCooldown}>
       {props.children}
     </ButtonBase>
   );

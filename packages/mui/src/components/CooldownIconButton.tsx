@@ -1,8 +1,7 @@
 'use client';
 
 import { IconButton, type IconButtonProps } from '@mui/material';
-import type { MouseEvent } from 'react';
-import { useState } from 'react';
+import { useCooldown } from '../hooks/useCooldown.js';
 
 export interface CooldownIconButtonProps extends IconButtonProps {
   /**
@@ -18,18 +17,10 @@ export const CooldownIconButton = ({
   ref,
   ...props
 }: CooldownIconButtonProps) => {
-  const [isCooldown, setIsCooldown] = useState(false);
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (!isCooldown && onClick) {
-      onClick(event);
-      setIsCooldown(true);
-      setTimeout(() => setIsCooldown(false), cooldown);
-    }
-  };
+  const { isCooldown, trigger } = useCooldown(onClick, cooldown);
 
   return (
-    <IconButton {...props} ref={ref} onClick={handleClick} disabled={disabled || isCooldown}>
+    <IconButton {...props} ref={ref} onClick={trigger} disabled={disabled || isCooldown}>
       {props.children}
     </IconButton>
   );
