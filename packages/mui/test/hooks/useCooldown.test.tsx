@@ -93,4 +93,31 @@ describe('useCooldown', () => {
     expect(clearSpy).toHaveBeenCalledTimes(1);
     clearSpy.mockRestore();
   });
+
+  test('같은 틱 안에서 trigger가 두 번 연속 호출되면 기존 타이머를 정리한 뒤 재등록한다', () => {
+    vi.useFakeTimers();
+    const clearSpy = vi.spyOn(window, 'clearTimeout');
+    const callback = vi.fn();
+
+    const hook = renderHook(() => useCooldown(callback, 1000), undefined);
+
+    // isCooldown state가 아직 반영되지 않은 상태에서 동일 act 블록 안에 연속 호출
+    act(() => {
+      hook.result.current.trigger();
+      hook.result.current.trigger();
+    });
+
+    // 두 번째 trigger 호출 시점에 첫 번째 타이머 핸들이 정리되어야 함
+    expect(clearSpy).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      vi.advanceTimersByTime(1000);
+    });
+
+    // 정리되지 않은 채 남아 isCooldown을 고착시키는 타이머가 없어야 함
+    expect(hook.result.current.isCooldown).toBe(false);
+
+    clearSpy.mockRestore();
+    hook.unmount();
+  });
 });

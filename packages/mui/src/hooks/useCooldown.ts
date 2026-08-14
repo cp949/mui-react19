@@ -32,7 +32,7 @@ export function useCooldown<T extends (...args: any[]) => void = () => void>(
   // 컴포넌트 언마운트 시 타이머 정리
   useEffect(() => {
     return () => {
-      if (timeoutRef.current) {
+      if (timeoutRef.current !== null) {
         window.clearTimeout(timeoutRef.current);
       }
     };
@@ -44,6 +44,13 @@ export function useCooldown<T extends (...args: any[]) => void = () => void>(
 
       callback(...args);
       setIsCooldown(true);
+
+      // 동일 틱 내 재진입(state 반영 전 재호출)으로 기존 타이머 핸들이 있으면
+      // 덮어쓰기 전에 먼저 정리해 타이머 누수를 방지
+      if (timeoutRef.current !== null) {
+        window.clearTimeout(timeoutRef.current);
+      }
+
       timeoutRef.current = window.setTimeout(() => {
         setIsCooldown(false);
         timeoutRef.current = null;
