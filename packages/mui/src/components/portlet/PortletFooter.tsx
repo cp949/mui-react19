@@ -5,6 +5,16 @@ export interface PortletFooterProps extends BoxProps {
   noDivider?: boolean;
 }
 
+/**
+ * Portlet의 하단 영역을 렌더링합니다.
+ *
+ * @param props Box 속성과 구분선 설정
+ * @returns 하단 레이아웃이 적용된 Box
+ * @example
+ * ```tsx
+ * <Portlet.Footer noDivider>하단 내용</Portlet.Footer>
+ * ```
+ */
 export const PortletFooter = (props: PortletFooterProps) => {
   const { noDivider, sx, className, children, ref, ...rest } = props;
   return (

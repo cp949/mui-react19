@@ -5,6 +5,16 @@ export interface PortletContentProps extends BoxProps {
   noPadding?: boolean;
 }
 
+/**
+ * Portlet의 본문 영역을 렌더링합니다.
+ *
+ * @param props Box 속성과 여백 설정
+ * @returns 본문 레이아웃이 적용된 Box
+ * @example
+ * ```tsx
+ * <Portlet.Content noPadding>내용</Portlet.Content>
+ * ```
+ */
 export const PortletContent = (props: PortletContentProps) => {
   const { noPadding = false, className, sx, children, ref, ...restProps } = props;
   return (

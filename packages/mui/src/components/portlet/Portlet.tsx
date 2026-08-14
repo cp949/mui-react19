@@ -1,5 +1,6 @@
 import { Paper, type PaperProps } from '@mui/material';
-import type { ReactNode } from 'react';
+import { clsx } from 'clsx';
+import type { FunctionComponent, ReactNode } from 'react';
 import { PortletContent } from './PortletContent.js';
 import { PortletFooter } from './PortletFooter.js';
 import { PortletHeader } from './PortletHeader.js';
@@ -20,7 +21,7 @@ export interface PortletProps extends Omit<PaperProps, 'elevation' | 'component'
   children?: ReactNode;
 }
 
-interface PortletComponent extends React.FunctionComponent<PortletProps> {
+interface PortletComponent extends FunctionComponent<PortletProps> {
   Content: typeof PortletContent;
   Header: typeof PortletHeader;
   Footer: typeof PortletFooter;
@@ -28,6 +29,22 @@ interface PortletComponent extends React.FunctionComponent<PortletProps> {
   Toolbar: typeof PortletToolbar;
 }
 
+/**
+ * Label, Toolbar, Content, Footer를 조립하는 카드형 컨테이너입니다.
+ *
+ * @param props Paper 속성과 Portlet 자식 요소
+ * @returns 테두리와 세로 레이아웃이 적용된 Portlet
+ * @example
+ * ```tsx
+ * <Portlet>
+ *   <Portlet.Header>
+ *     <Portlet.Label title='상태' />
+ *     <Portlet.Toolbar>도구</Portlet.Toolbar>
+ *   </Portlet.Header>
+ *   <Portlet.Content>내용</Portlet.Content>
+ * </Portlet>
+ * ```
+ */
 export const Portlet = ((props: PortletProps) => {
   const { sx, className, children, ref, ...restProps } = props;
   return (
@@ -37,7 +54,7 @@ export const Portlet = ((props: PortletProps) => {
       elevation={0}
       ref={ref}
       component='div'
-      className={className ? `Portlet-root ${className}` : 'Portlet-root'}
+      className={clsx('Portlet-root', className)}
       sx={[
         {
           display: 'flex',

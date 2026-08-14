@@ -6,6 +6,19 @@ export interface PortletHeaderProps extends BoxProps {
   noPadding?: boolean;
 }
 
+/**
+ * Portlet의 Label과 Toolbar를 배치하는 상단 영역을 렌더링합니다.
+ *
+ * @param props Box 속성과 여백·구분선 설정
+ * @returns 상단 레이아웃이 적용된 Box
+ * @example
+ * ```tsx
+ * <Portlet.Header>
+ *   <Portlet.Label title='제목' />
+ *   <Portlet.Toolbar>도구</Portlet.Toolbar>
+ * </Portlet.Header>
+ * ```
+ */
 export const PortletHeader = (props: PortletHeaderProps) => {
   const { children, noDivider, className, noPadding = false, sx, ref, ...rest } = props;
 
