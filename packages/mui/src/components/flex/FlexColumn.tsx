@@ -1,31 +1,48 @@
-import { Box } from '@mui/material';
-import { overrideProps } from '../../util/override-props.js';
-import { createFlexComponent } from './create-component.js';
+import type { FunctionComponent } from 'react';
+import { createLayoutComponent } from '../layout/create-layout-component.js';
 import type { FlexBaseProps } from './types.js';
 
-const FlexColumnStart = createFlexComponent('FlexColumn.Start', 'column', {
-  justifyContent: 'flex-start',
-});
+const FlexColumnStart = createLayoutComponent({
+  displayName: 'FlexColumn.Start',
+  base: 'box',
+  direction: 'column',
+  defaultProps: { justifyContent: 'flex-start' },
+}) as FunctionComponent<FlexBaseProps>;
 
-const FlexColumnEnd = createFlexComponent('FlexColumn.End', 'column', {
-  justifyContent: 'flex-end',
-});
+const FlexColumnEnd = createLayoutComponent({
+  displayName: 'FlexColumn.End',
+  base: 'box',
+  direction: 'column',
+  defaultProps: { justifyContent: 'flex-end' },
+}) as FunctionComponent<FlexBaseProps>;
 
-const FlexColumnCenter = createFlexComponent('FlexColumn.Center', 'column', {
-  justifyContent: 'center',
-});
+const FlexColumnCenter = createLayoutComponent({
+  displayName: 'FlexColumn.Center',
+  base: 'box',
+  direction: 'column',
+  defaultProps: { justifyContent: 'center' },
+}) as FunctionComponent<FlexBaseProps>;
 
-const FlexColumnAround = createFlexComponent('FlexColumn.Around', 'column', {
-  justifyContent: 'space-around',
-});
+const FlexColumnAround = createLayoutComponent({
+  displayName: 'FlexColumn.Around',
+  base: 'box',
+  direction: 'column',
+  defaultProps: { justifyContent: 'space-around' },
+}) as FunctionComponent<FlexBaseProps>;
 
-const FlexColumnBetween = createFlexComponent('FlexColumn.Between', 'column', {
-  justifyContent: 'space-between',
-});
+const FlexColumnBetween = createLayoutComponent({
+  displayName: 'FlexColumn.Between',
+  base: 'box',
+  direction: 'column',
+  defaultProps: { justifyContent: 'space-between' },
+}) as FunctionComponent<FlexBaseProps>;
 
-const FlexColumnEvenly = createFlexComponent('FlexColumn.Evenly', 'column', {
-  justifyContent: 'space-evenly',
-});
+const FlexColumnEvenly = createLayoutComponent({
+  displayName: 'FlexColumn.Evenly',
+  base: 'box',
+  direction: 'column',
+  defaultProps: { justifyContent: 'space-evenly' },
+}) as FunctionComponent<FlexBaseProps>;
 
 export interface FlexColumnProps extends FlexBaseProps {
   center?: boolean;
@@ -40,43 +57,14 @@ interface FlexColumnComponent extends React.FunctionComponent<FlexColumnProps> {
   Evenly: typeof FlexColumnEvenly;
 }
 
-const FlexColumnBase = (({
-  center,
-  inlineFlex,
-  justifyContent,
-  alignItems,
-  flexWrap,
-  sx,
-  ref,
-  ...props
-}: FlexColumnProps) => {
-  return (
-    <Box
-      ref={ref}
-      sx={[
-        {
-          display: inlineFlex ? 'inline-flex' : 'flex',
-          flexDirection: 'column',
-          ...overrideProps(
-            center
-              ? {
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }
-              : {},
-            { justifyContent, alignItems, flexWrap },
-          ),
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...props}
-    />
-  );
+const FlexColumnBase = createLayoutComponent({
+  displayName: 'FlexColumn',
+  base: 'box',
+  direction: 'column',
+  supportsCenterProp: true,
 }) as FlexColumnComponent;
-FlexColumnBase.displayName = 'FlexColumnBase';
 
 export const FlexColumn = FlexColumnBase;
-FlexColumn.displayName = 'FlexColumn';
 FlexColumn.Start = FlexColumnStart;
 FlexColumn.End = FlexColumnEnd;
 FlexColumn.Center = FlexColumnCenter;

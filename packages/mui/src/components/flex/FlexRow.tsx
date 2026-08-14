@@ -1,31 +1,48 @@
-import { Box } from '@mui/material';
-import { overrideProps } from '../../util/override-props.js';
-import { createFlexComponent } from './create-component.js';
+import type { FunctionComponent } from 'react';
+import { createLayoutComponent } from '../layout/create-layout-component.js';
 import type { FlexBaseProps } from './types.js';
 
-const FlexRowStart = createFlexComponent('FlexRow.Start', 'row', {
-  justifyContent: 'flex-start',
-});
+const FlexRowStart = createLayoutComponent({
+  displayName: 'FlexRow.Start',
+  base: 'box',
+  direction: 'row',
+  defaultProps: { justifyContent: 'flex-start' },
+}) as FunctionComponent<FlexBaseProps>;
 
-const FlexRowEnd = createFlexComponent('FlexRow.End', 'row', {
-  justifyContent: 'flex-end',
-});
+const FlexRowEnd = createLayoutComponent({
+  displayName: 'FlexRow.End',
+  base: 'box',
+  direction: 'row',
+  defaultProps: { justifyContent: 'flex-end' },
+}) as FunctionComponent<FlexBaseProps>;
 
-const FlexRowAround = createFlexComponent('FlexRow.Around', 'row', {
-  justifyContent: 'space-around',
-});
+const FlexRowAround = createLayoutComponent({
+  displayName: 'FlexRow.Around',
+  base: 'box',
+  direction: 'row',
+  defaultProps: { justifyContent: 'space-around' },
+}) as FunctionComponent<FlexBaseProps>;
 
-const FlexRowBetween = createFlexComponent('FlexRow.Between', 'row', {
-  justifyContent: 'space-between',
-});
+const FlexRowBetween = createLayoutComponent({
+  displayName: 'FlexRow.Between',
+  base: 'box',
+  direction: 'row',
+  defaultProps: { justifyContent: 'space-between' },
+}) as FunctionComponent<FlexBaseProps>;
 
-const FlexRowEvenly = createFlexComponent('FlexRow.Evenly', 'row', {
-  justifyContent: 'space-evenly',
-});
+const FlexRowEvenly = createLayoutComponent({
+  displayName: 'FlexRow.Evenly',
+  base: 'box',
+  direction: 'row',
+  defaultProps: { justifyContent: 'space-evenly' },
+}) as FunctionComponent<FlexBaseProps>;
 
-const FlexRowCenter = createFlexComponent('FlexRow.Center', 'row', {
-  justifyContent: 'center',
-});
+const FlexRowCenter = createLayoutComponent({
+  displayName: 'FlexRow.Center',
+  base: 'box',
+  direction: 'row',
+  defaultProps: { justifyContent: 'center' },
+}) as FunctionComponent<FlexBaseProps>;
 
 export interface FlexRowProps extends FlexBaseProps {
   center?: boolean;
@@ -40,39 +57,14 @@ interface FlexRowComponent extends React.FunctionComponent<FlexRowProps> {
   Evenly: typeof FlexRowEvenly;
 }
 
-const FlexRowBase = (({
-  center,
-  inlineFlex = false,
-  justifyContent,
-  alignItems,
-  flexWrap,
-  sx,
-  ref,
-  ...props
-}: FlexRowProps) => {
-  // undefined/null/false 완전히 제거하여 hydration error 방지
-  const sxArray = Array.isArray(sx) ? sx.filter(Boolean) : sx ? [sx] : [];
-
-  const baseStyle = {
-    display: inlineFlex ? 'inline-flex' : 'flex',
-    flexDirection: 'row' as const,
-    ...overrideProps(
-      center
-        ? {
-            justifyContent: 'center' as const,
-            alignItems: 'center' as const,
-          }
-        : {},
-      { justifyContent, alignItems, flexWrap },
-    ),
-  };
-
-  return <Box ref={ref} sx={sxArray.length > 0 ? [baseStyle, ...sxArray] : baseStyle} {...props} />;
+const FlexRowBase = createLayoutComponent({
+  displayName: 'FlexRow',
+  base: 'box',
+  direction: 'row',
+  supportsCenterProp: true,
 }) as FlexRowComponent;
-FlexRowBase.displayName = 'FlexRowBase';
 
 export const FlexRow = FlexRowBase;
-FlexRow.displayName = 'FlexRow';
 FlexRow.Start = FlexRowStart;
 FlexRow.End = FlexRowEnd;
 FlexRow.Center = FlexRowCenter;
