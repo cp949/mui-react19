@@ -1,6 +1,6 @@
 import type { StackProps } from '@mui/material';
-import { Stack } from '@mui/material';
-import { createComponent } from './create-component.js';
+import type { FunctionComponent } from 'react';
+import { createLayoutComponent } from '../layout/create-layout-component.js';
 
 export interface StackRowProps extends Omit<StackProps, 'direction'> {
   center?: boolean;
@@ -8,29 +8,52 @@ export interface StackRowProps extends Omit<StackProps, 'direction'> {
   justifyContent?: React.CSSProperties['justifyContent'];
 }
 
-const StackRowCenter = createComponent('StackRow.Center', 'row', {
-  justifyContent: 'center',
-});
+interface StackRowSubVariantProps extends StackProps {
+  alignItems?: React.CSSProperties['alignItems'];
+  justifyContent?: React.CSSProperties['justifyContent'];
+}
 
-const StackRowStart = createComponent('StackRow.Start', 'row', {
-  justifyContent: 'flex-start',
-});
+const StackRowCenter = createLayoutComponent({
+  displayName: 'StackRow.Center',
+  base: 'stack',
+  direction: 'row',
+  defaultProps: { justifyContent: 'center' },
+}) as FunctionComponent<StackRowSubVariantProps>;
 
-const StackRowEnd = createComponent('StackRow.End', 'row', {
-  justifyContent: 'flex-end',
-});
+const StackRowStart = createLayoutComponent({
+  displayName: 'StackRow.Start',
+  base: 'stack',
+  direction: 'row',
+  defaultProps: { justifyContent: 'flex-start' },
+}) as FunctionComponent<StackRowSubVariantProps>;
 
-const StackRowBetween = createComponent('StackRow.Between', 'row', {
-  justifyContent: 'space-between',
-});
+const StackRowEnd = createLayoutComponent({
+  displayName: 'StackRow.End',
+  base: 'stack',
+  direction: 'row',
+  defaultProps: { justifyContent: 'flex-end' },
+}) as FunctionComponent<StackRowSubVariantProps>;
 
-const StackRowAround = createComponent('StackRow.Around', 'row', {
-  justifyContent: 'space-around',
-});
+const StackRowBetween = createLayoutComponent({
+  displayName: 'StackRow.Between',
+  base: 'stack',
+  direction: 'row',
+  defaultProps: { justifyContent: 'space-between' },
+}) as FunctionComponent<StackRowSubVariantProps>;
 
-const StackRowEvenly = createComponent('StackRow.Evenly', 'row', {
-  justifyContent: 'space-evenly',
-});
+const StackRowAround = createLayoutComponent({
+  displayName: 'StackRow.Around',
+  base: 'stack',
+  direction: 'row',
+  defaultProps: { justifyContent: 'space-around' },
+}) as FunctionComponent<StackRowSubVariantProps>;
+
+const StackRowEvenly = createLayoutComponent({
+  displayName: 'StackRow.Evenly',
+  base: 'stack',
+  direction: 'row',
+  defaultProps: { justifyContent: 'space-evenly' },
+}) as FunctionComponent<StackRowSubVariantProps>;
 
 interface StackRowComponent extends React.FunctionComponent<StackRowProps> {
   Start: typeof StackRowStart;
@@ -41,33 +64,14 @@ interface StackRowComponent extends React.FunctionComponent<StackRowProps> {
   Evenly: typeof StackRowEvenly;
 }
 
-export const StackRow = (({
-  center = false,
-  alignItems,
-  justifyContent,
-  children,
-  ref,
-  ...props
-}: StackRowProps) => {
-  return (
-    <Stack
-      direction='row'
-      {...props}
-      ref={ref}
-      sx={[
-        {
-          alignItems: center ? 'center' : alignItems,
-          justifyContent: center ? 'center' : justifyContent,
-        },
-        ...(Array.isArray(props.sx) ? props.sx : [props.sx ?? false]),
-      ]}
-    >
-      {children}
-    </Stack>
-  );
+const StackRowBase = createLayoutComponent({
+  displayName: 'StackRow',
+  base: 'stack',
+  direction: 'row',
+  supportsCenterProp: true,
 }) as StackRowComponent;
 
-StackRow.displayName = 'StackRow';
+export const StackRow = StackRowBase;
 StackRow.Start = StackRowStart;
 StackRow.End = StackRowEnd;
 StackRow.Between = StackRowBetween;

@@ -1,6 +1,6 @@
 import type { StackProps } from '@mui/material';
-import { Stack } from '@mui/material';
-import { createComponent } from './create-component.js';
+import type { FunctionComponent } from 'react';
+import { createLayoutComponent } from '../layout/create-layout-component.js';
 
 export interface StackColumnProps extends Omit<StackProps, 'direction'> {
   center?: boolean;
@@ -8,29 +8,53 @@ export interface StackColumnProps extends Omit<StackProps, 'direction'> {
   justifyContent?: React.CSSProperties['justifyContent'];
 }
 
-const StackColumnCenter = createComponent('StackColumn.Center', 'column', {
-  justifyContent: 'center',
-});
+/** 원본 createComponent가 노출하던 서브변형 Props 타입 표면과 동일(StackProps 기반, direction 포함). */
+interface StackColumnSubVariantProps extends StackProps {
+  alignItems?: React.CSSProperties['alignItems'];
+  justifyContent?: React.CSSProperties['justifyContent'];
+}
 
-const StackColumnStart = createComponent('StackColumn.Start', 'column', {
-  justifyContent: 'flex-start',
-});
+const StackColumnCenter = createLayoutComponent({
+  displayName: 'StackColumn.Center',
+  base: 'stack',
+  direction: 'column',
+  defaultProps: { justifyContent: 'center' },
+}) as FunctionComponent<StackColumnSubVariantProps>;
 
-const StackColumnEnd = createComponent('StackColumn.End', 'column', {
-  justifyContent: 'flex-end',
-});
+const StackColumnStart = createLayoutComponent({
+  displayName: 'StackColumn.Start',
+  base: 'stack',
+  direction: 'column',
+  defaultProps: { justifyContent: 'flex-start' },
+}) as FunctionComponent<StackColumnSubVariantProps>;
 
-const StackColumnBetween = createComponent('StackColumn.Between', 'column', {
-  justifyContent: 'space-between',
-});
+const StackColumnEnd = createLayoutComponent({
+  displayName: 'StackColumn.End',
+  base: 'stack',
+  direction: 'column',
+  defaultProps: { justifyContent: 'flex-end' },
+}) as FunctionComponent<StackColumnSubVariantProps>;
 
-const StackColumnAround = createComponent('StackColumn.Around', 'column', {
-  justifyContent: 'space-around',
-});
+const StackColumnBetween = createLayoutComponent({
+  displayName: 'StackColumn.Between',
+  base: 'stack',
+  direction: 'column',
+  defaultProps: { justifyContent: 'space-between' },
+}) as FunctionComponent<StackColumnSubVariantProps>;
 
-const StackColumnEvenly = createComponent('StackColumn.Evenly', 'column', {
-  justifyContent: 'space-evenly',
-});
+const StackColumnAround = createLayoutComponent({
+  displayName: 'StackColumn.Around',
+  base: 'stack',
+  direction: 'column',
+  defaultProps: { justifyContent: 'space-around' },
+}) as FunctionComponent<StackColumnSubVariantProps>;
+
+const StackColumnEvenly = createLayoutComponent({
+  displayName: 'StackColumn.Evenly',
+  base: 'stack',
+  direction: 'column',
+  defaultProps: { justifyContent: 'space-evenly' },
+}) as FunctionComponent<StackColumnSubVariantProps>;
 
 interface StackColumnComponent extends React.FunctionComponent<StackColumnProps> {
   Start: typeof StackColumnStart;
@@ -41,33 +65,14 @@ interface StackColumnComponent extends React.FunctionComponent<StackColumnProps>
   Evenly: typeof StackColumnEvenly;
 }
 
-export const StackColumn = (({
-  center = false,
-  alignItems,
-  justifyContent,
-  children,
-  ref,
-  ...props
-}: StackColumnProps) => {
-  return (
-    <Stack
-      direction='column'
-      {...props}
-      ref={ref}
-      sx={[
-        {
-          alignItems: center ? 'center' : alignItems,
-          justifyContent: center ? 'center' : justifyContent,
-        },
-        ...(Array.isArray(props.sx) ? props.sx : [props.sx ?? false]),
-      ]}
-    >
-      {children}
-    </Stack>
-  );
+const StackColumnBase = createLayoutComponent({
+  displayName: 'StackColumn',
+  base: 'stack',
+  direction: 'column',
+  supportsCenterProp: true,
 }) as StackColumnComponent;
 
-StackColumn.displayName = 'StackColumn';
+export const StackColumn = StackColumnBase;
 StackColumn.Start = StackColumnStart;
 StackColumn.End = StackColumnEnd;
 StackColumn.Between = StackColumnBetween;
