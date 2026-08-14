@@ -3,10 +3,14 @@ import type { ReactNode } from 'react';
 import { PortletContent } from './PortletContent.js';
 import { PortletFooter } from './PortletFooter.js';
 import { PortletHeader } from './PortletHeader.js';
+import { PortletLabel } from './PortletLabel.js';
+import { PortletToolbar } from './PortletToolbar.js';
 
 export type { PortletContentProps } from './PortletContent.js';
 export type { PortletFooterProps } from './PortletFooter.js';
 export type { PortletHeaderProps } from './PortletHeader.js';
+export type { PortletLabelProps } from './PortletLabel.js';
+export type { PortletToolbarProps } from './PortletToolbar.js';
 
 const defaultProps: PaperProps = {
   square: true,
@@ -20,6 +24,8 @@ interface PortletComponent extends React.FunctionComponent<PortletProps> {
   Content: typeof PortletContent;
   Header: typeof PortletHeader;
   Footer: typeof PortletFooter;
+  Label: typeof PortletLabel;
+  Toolbar: typeof PortletToolbar;
 }
 
 export const Portlet = ((props: PortletProps) => {
@@ -51,3 +57,5 @@ Portlet.displayName = 'Portlet';
 Portlet.Content = PortletContent;
 Portlet.Header = PortletHeader;
 Portlet.Footer = PortletFooter;
+Portlet.Label = PortletLabel;
+Portlet.Toolbar = PortletToolbar;

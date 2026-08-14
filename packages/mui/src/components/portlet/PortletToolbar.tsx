@@ -1,24 +1,26 @@
-import type { ReactNode } from 'react';
+import { Box, type BoxProps } from '@mui/material';
 
-export interface PortletToolbarProps {
-  icon: ReactNode;
-  title?: string;
-  subtitle?: string;
-  children?: ReactNode;
-}
+export type PortletToolbarProps = BoxProps;
 
-export function PortletToolbar(props: PortletToolbarProps) {
-  const { children } = props;
+export const PortletToolbar = (props: PortletToolbarProps) => {
+  const { className, sx, children, ref, ...restProps } = props;
   return (
-    <div
-      className='PortletToolbar-root'
-      style={{
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        display: 'flex',
-      }}
+    <Box
+      {...restProps}
+      ref={ref}
+      className={className ? `PortletToolbar-root ${className}` : 'PortletToolbar-root'}
+      sx={[
+        {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+        },
+        ...(Array.isArray(sx) ? sx : [sx ?? false]),
+      ]}
     >
       {children}
-    </div>
+    </Box>
   );
-}
+};
+
+PortletToolbar.displayName = 'PortletToolbar';
