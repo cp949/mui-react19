@@ -2,7 +2,7 @@
 
 import { Button, type ButtonProps } from '@mui/material';
 import type { MouseEvent } from 'react';
-import { useEffect, useRef } from 'react';
+import { useDebouncedCallback } from '../hooks/useDebouncedCallback.js';
 
 export interface DebouncedButtonProps extends ButtonProps {
   /**
@@ -19,25 +19,11 @@ export const DebouncedButton = ({
   ref,
   ...props
 }: DebouncedButtonProps) => {
-  const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // 언마운트 시 타이머 정리
-  useEffect(() => {
-    return () => {
-      if (debounceTimeout.current) {
-        clearTimeout(debounceTimeout.current);
-      }
-    };
-  }, []);
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (debounceTimeout.current) {
-      clearTimeout(debounceTimeout.current);
+  const handleClick = useDebouncedCallback((event: MouseEvent<HTMLButtonElement>) => {
+    if (!disabled && onClick) {
+      onClick(event);
     }
-    debounceTimeout.current = setTimeout(() => {
-      if (!disabled && onClick) onClick(event);
-    }, debounce);
-  };
+  }, debounce);
 
   return (
     <Button {...props} ref={ref} onClick={handleClick} disabled={disabled}>
