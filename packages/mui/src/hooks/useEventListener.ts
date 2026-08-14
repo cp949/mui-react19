@@ -10,6 +10,7 @@ export function useEventListener<
 ) {
   const ref = useRef<T | undefined>(undefined);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 기존 훅의 의도된 의존성 및 실행 시점 계약을 유지합니다.
   useEffect(() => {
     if (ref.current) {
       ref.current.addEventListener(type, listener as EventListener, options);

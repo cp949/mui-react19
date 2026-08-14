@@ -40,6 +40,7 @@ export function useThrottledState<T>(
 
   // 컴포넌트 언마운트 시 타이머를 정리
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 기존 훅의 의도된 의존성 및 실행 시점 계약을 유지합니다.
   useEffect(() => clearTimeout, []);
 
   // 현재 상태 값과 쓰로틀링된 업데이트 함수 반환

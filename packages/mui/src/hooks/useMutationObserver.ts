@@ -36,6 +36,7 @@ export function useMutationObserver<T extends HTMLElement = HTMLElement>(
   const initOptions = useDeepCompareMemo(() => options, [options]);
   const callbackRef = useLatest(callback);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 기존 훅의 의도된 의존성 및 실행 시점 계약을 유지합니다.
   useEffect(() => {
     // target이 함수라면 실행하여 요소를 가져옴
     const targetElement = typeof target === 'function' ? target() : target;

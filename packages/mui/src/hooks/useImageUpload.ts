@@ -106,6 +106,7 @@ export function useImageUpload(
   const handleFileUploadRef = useLatest(handleFileUpload);
   const callbackRef = useLatest(callback);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 기존 훅의 의도된 의존성 및 실행 시점 계약을 유지합니다.
   const doUploadImageFile = useCallback(
     async (ctx: { canceled: boolean }, src: Blob): Promise<FileUploadResult | null> => {
       setLoading(true);

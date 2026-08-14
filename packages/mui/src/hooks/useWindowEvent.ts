@@ -26,6 +26,7 @@ export function useWindowEvent<K extends string>(
   options?: boolean | AddEventListenerOptions, // 이벤트 리스너 옵션
 ) {
   // 이벤트 리스너 등록 및 정리
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 기존 훅의 의도된 의존성 및 실행 시점 계약을 유지합니다.
   useEffect(() => {
     // 윈도우 이벤트 리스너 등록
     window.addEventListener(type, listener as EventListener, options);

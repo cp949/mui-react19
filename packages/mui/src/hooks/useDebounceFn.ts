@@ -51,6 +51,7 @@ type noop = (...args: any[]) => any;
 export function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
   const fnRef = useLatest(fn);
   const wait = options?.wait ?? 1000;
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 기존 훅의 의도된 의존성 및 실행 시점 계약을 유지합니다.
   const debounced = useMemo(
     () =>
       debounce(

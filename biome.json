@@ -49,7 +49,7 @@
         "noStaticOnlyClass": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "off"
+        "useExhaustiveDependencies": "error"
       },
       "style": {
         "noNonNullAssertion": "off"
