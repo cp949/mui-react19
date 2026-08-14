@@ -13,6 +13,7 @@ import { refAsPropCase } from './refAsProp.case';
 import { resizeObserverCase } from './resizeObserver.case';
 import { sessionStorageCase } from './sessionStorage.case';
 import { sessionStorageStateCase } from './sessionStorageState.case';
+import { stackFlexLayoutFamilyCase } from './stackFlexLayoutFamily.case';
 import { throttledValueCase } from './throttledValue.case';
 import { timeoutCase } from './timeout.case';
 import { timeoutDataCase } from './timeoutData.case';
@@ -24,6 +25,7 @@ import { windowSizeCase } from './windowSize.case';
 
 export const cases: HookCase[] = [
   absoluteBoxFamilyCase,
+  stackFlexLayoutFamilyCase,
   debouncedValueCase,
   clipboardCase,
   timeoutCase,
