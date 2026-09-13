@@ -31,7 +31,7 @@
     "@types/node": "^26.2.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
-    "@vitest/ui": "^4.1.10",
+    "@vitest/ui": "^5.0.0",
     "clsx": "^2.1.1",
     "happy-dom": "^20.11.2",
     "react": "^19.2.8",
@@ -39,7 +39,7 @@
     "rxjs": "^7.8.2",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.0"
   },
   "peerDependencies": {
     "@mui/material": "^9",
