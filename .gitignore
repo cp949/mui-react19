@@ -1,9 +1,9 @@
 .planning/
 
 _works/*
-!_works/README.md
 CLAUDE.md
 .claude/
+.codex
 AGENTS.md
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
