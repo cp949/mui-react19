@@ -18,6 +18,7 @@ export * from './Hide.js';
 export * from './Highlight/index.js';
 export * from './LengthLimitHelperText.js';
 export * from './LgOrUp.js';
+export * from './ListPagination.js';
 export * from './Mark.js';
 export * from './MdOrDown.js';
 export * from './MdOrUp.js';
