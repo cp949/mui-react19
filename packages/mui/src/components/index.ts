@@ -10,6 +10,7 @@ export * from './DebouncedButton.js';
 export * from './DebouncedButtonBase.js';
 export * from './DebouncedIconButton.js';
 export * from './DebouncedRender.js';
+export * from './DelayedRender.js';
 export * from './FileButton.js';
 export * from './FlexItemsContainer.js';
 export * from './FloatingIndicator/index.js';

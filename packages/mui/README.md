@@ -103,6 +103,7 @@ export default function ClientComponent() {
 
 - `FloatingIndicator` - 플로팅 인디케이터
 - `DebouncedRender` - 디바운스된 렌더링
+- `DelayedRender` - 지정한 시간이 지난 뒤에 자식을 렌더링
 - `SegmentedControl` - 세그먼트 컨트롤
 
 ## 훅 (Hooks)
