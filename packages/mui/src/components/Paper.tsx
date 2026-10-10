@@ -1,4 +1,4 @@
-import { Paper as MuiPaper, type PaperProps as MuiPaperProps } from '@mui/material';
+import MuiPaper, { type PaperProps as MuiPaperProps } from '@mui/material/Paper';
 import clsx from 'clsx';
 
 export interface PaperProps extends MuiPaperProps {

@@ -1,4 +1,4 @@
-import { Box, type BoxProps } from '@mui/material';
+import Box, { type BoxProps } from '@mui/material/Box';
 import type { CSSProperties, FunctionComponent } from 'react';
 
 type AbsoluteAxisProp = 'top' | 'left' | 'right' | 'bottom';

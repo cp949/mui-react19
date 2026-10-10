@@ -1,13 +1,9 @@
-import {
-  Box,
-  CircularProgress,
-  IconButton,
-  Stack,
-  type StackProps,
-  SvgIcon,
-  Typography,
-  type TypographyProps,
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import IconButton from '@mui/material/IconButton';
+import Stack, { type StackProps } from '@mui/material/Stack';
+import SvgIcon from '@mui/material/SvgIcon';
+import Typography, { type TypographyProps } from '@mui/material/Typography';
 import { clsx } from 'clsx';
 import type { MouseEventHandler, ReactNode } from 'react';
 

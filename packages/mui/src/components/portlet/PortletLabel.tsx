@@ -1,4 +1,5 @@
-import { Box, type BoxProps, Typography } from '@mui/material';
+import Box, { type BoxProps } from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { clsx } from 'clsx';
 import type { ReactNode } from 'react';
 

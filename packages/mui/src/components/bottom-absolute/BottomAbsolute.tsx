@@ -1,4 +1,4 @@
-import type { BoxProps } from '@mui/material';
+import type { BoxProps } from '@mui/material/Box';
 import type { CSSProperties } from 'react';
 import { createAbsoluteBox } from '../absolute-box/create-absolute-box.js';
 import { BottomAbsoluteCenter } from './BottomAbsoluteCenter.js';

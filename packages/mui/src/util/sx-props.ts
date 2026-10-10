@@ -1,4 +1,4 @@
-import type { SxProps, Theme } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material/styles';
 
 /**
  * SxProps를 flatten 한 배열로 만든다.

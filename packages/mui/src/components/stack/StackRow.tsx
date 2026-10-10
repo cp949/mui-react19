@@ -1,4 +1,4 @@
-import type { StackProps } from '@mui/material';
+import type { StackProps } from '@mui/material/Stack';
 import type { FunctionComponent } from 'react';
 import { createLayoutComponent } from '../layout/create-layout-component.js';
 

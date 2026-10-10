@@ -1,4 +1,4 @@
-import { alpha as muiAlpha } from '@mui/material';
+import { alpha as muiAlpha } from '@mui/material/styles';
 
 function clamp(value: number, min: number, max: number): number {
   if (min > max) {

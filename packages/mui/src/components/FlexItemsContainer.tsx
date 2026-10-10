@@ -1,4 +1,4 @@
-import { Grid, type GridProps } from '@mui/material';
+import Grid, { type GridProps } from '@mui/material/Grid';
 import clsx from 'clsx';
 import type { ReactElement, ReactNode } from 'react';
 import { isNil } from '../util/internal-util.js';

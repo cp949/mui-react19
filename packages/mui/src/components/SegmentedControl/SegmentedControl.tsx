@@ -1,5 +1,6 @@
-import type { SxProps, Theme, TypographyProps } from '@mui/material';
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
+import type { SxProps, Theme } from '@mui/material/styles';
+import type { TypographyProps } from '@mui/material/Typography';
 import clsx from 'clsx';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 import { useState } from 'react';

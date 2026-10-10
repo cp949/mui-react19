@@ -1,5 +1,5 @@
-import type { SxProps, Theme, TypographyProps } from '@mui/material';
-import { Typography } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material/styles';
+import Typography, { type TypographyProps } from '@mui/material/Typography';
 import clsx from 'clsx';
 import { type CSSProperties, type Ref, useMemo } from 'react';
 import { Mark } from '../Mark.js';

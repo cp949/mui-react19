@@ -1,7 +1,8 @@
 'use client';
 
-import type { BoxProps, LinkProps, SxProps } from '@mui/material';
-import { Box, Link, styled } from '@mui/material';
+import Box, { type BoxProps } from '@mui/material/Box';
+import Link, { type LinkProps } from '@mui/material/Link';
+import { type SxProps, styled } from '@mui/material/styles';
 import clsx from 'clsx';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 import { useElementSize } from '../hooks/useElementSize.js';

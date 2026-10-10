@@ -1,4 +1,4 @@
-import { TableBody, type TableBodyProps } from '@mui/material';
+import TableBody, { type TableBodyProps } from '@mui/material/TableBody';
 import clsx from 'clsx';
 
 export interface CustomTableBodyProps extends TableBodyProps {

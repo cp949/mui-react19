@@ -1,4 +1,5 @@
-import { Box, type SxProps } from '@mui/material';
+import Box from '@mui/material/Box';
+import type { SxProps } from '@mui/material/styles';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 

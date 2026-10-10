@@ -1,4 +1,5 @@
-import { Box, type BoxProps, Stack, type StackProps } from '@mui/material';
+import Box, { type BoxProps } from '@mui/material/Box';
+import Stack, { type StackProps } from '@mui/material/Stack';
 import type { CSSProperties, FunctionComponent } from 'react';
 import { overrideProps } from '../../util/override-props.js';
 

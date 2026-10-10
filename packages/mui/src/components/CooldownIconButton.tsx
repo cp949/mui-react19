@@ -1,6 +1,6 @@
 'use client';
 
-import { IconButton, type IconButtonProps } from '@mui/material';
+import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
 import { useCooldown } from '../hooks/useCooldown.js';
 
 export interface CooldownIconButtonProps extends IconButtonProps {

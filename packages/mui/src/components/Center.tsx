@@ -1,4 +1,4 @@
-import { Box, type BoxProps } from '@mui/material';
+import Box, { type BoxProps } from '@mui/material/Box';
 
 export interface CenterProps extends BoxProps {
   vertical?: boolean;

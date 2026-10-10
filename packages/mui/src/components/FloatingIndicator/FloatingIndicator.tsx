@@ -1,7 +1,6 @@
 'use client';
 
-import type { BoxProps } from '@mui/material';
-import { Box } from '@mui/material';
+import Box, { type BoxProps } from '@mui/material/Box';
 import clsx from 'clsx';
 import { useRef } from 'react';
 import { useComposedRefs } from '../../hooks/useComposedRefs.js';

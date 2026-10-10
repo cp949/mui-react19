@@ -1,4 +1,4 @@
-import type { Breakpoint } from '@mui/material';
+import type { Breakpoint } from '@mui/material/styles';
 import type { AliasesCSSProperties, StandardCSSProperties } from '@mui/system';
 
 type THEME = {

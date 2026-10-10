@@ -1,6 +1,7 @@
 'use client';
 
-import { type Theme, useMediaQuery } from '@mui/material';
+import type { Theme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import type { ReactNode } from 'react';
 
 export interface LgOrUpProps {

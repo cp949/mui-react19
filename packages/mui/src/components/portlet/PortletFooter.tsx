@@ -1,4 +1,4 @@
-import { Box, type BoxProps } from '@mui/material';
+import Box, { type BoxProps } from '@mui/material/Box';
 import { clsx } from 'clsx';
 
 export interface PortletFooterProps extends BoxProps {

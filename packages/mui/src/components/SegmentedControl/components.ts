@@ -1,5 +1,6 @@
-import type { Theme, TypographyProps } from '@mui/material';
-import { Box, type BoxProps, styled } from '@mui/material';
+import Box, { type BoxProps } from '@mui/material/Box';
+import { styled, type Theme } from '@mui/material/styles';
+import type { TypographyProps } from '@mui/material/Typography';
 import type { ComponentType } from 'react';
 
 export const SegmentedControlRoot: ComponentType<BoxProps> = styled(Box)<BoxProps>(({ theme }) => {

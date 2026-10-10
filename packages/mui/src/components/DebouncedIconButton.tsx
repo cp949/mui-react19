@@ -1,6 +1,6 @@
 'use client';
 
-import { IconButton, type IconButtonProps } from '@mui/material';
+import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
 import type { MouseEvent } from 'react';
 import { useDebouncedCallback } from '../hooks/useDebouncedCallback.js';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { ButtonBase, type ButtonBaseProps } from '@mui/material';
+import ButtonBase, { type ButtonBaseProps } from '@mui/material/ButtonBase';
 import { useCooldown } from '../hooks/useCooldown.js';
 
 export interface CooldownButtonBaseProps extends ButtonBaseProps {
