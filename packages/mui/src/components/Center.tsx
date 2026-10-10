@@ -15,7 +15,7 @@ export const Center = ({ vertical = false, sx, ref, ...props }: CenterProps) => 
           alignItems: 'center',
           justifyContent: 'center',
         },
-        ...(Array.isArray(sx) ? sx : [sx]),
+        ...(Array.isArray(sx) ? sx : [sx ?? false]),
       ]}
     />
   );
