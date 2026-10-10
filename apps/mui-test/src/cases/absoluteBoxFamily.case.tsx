@@ -3,7 +3,9 @@
 // 검증할 수 없어 추가한 순수 시각 확인용 Preview. 자동 assertion(run)은 없다 —
 // 위치 계산 로직 자체는 이미 유닛 테스트로 커버되어 있으므로 여기서는 눈으로 보는 것이 목적.
 import { BottomAbsolute, CenterAbsolute, TopAbsolute } from '@cp949/mui-react19';
-import { Box, Stack, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import type { ReactNode } from 'react';
 
 import type { HookCase } from './types';

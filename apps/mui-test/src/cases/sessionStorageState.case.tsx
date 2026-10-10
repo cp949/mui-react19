@@ -1,5 +1,7 @@
 import { useSessionStorageState } from '@cp949/mui-react19/hooks';
-import { Button, Stack, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { useEffect, useRef } from 'react';
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';

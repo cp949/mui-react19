@@ -3,7 +3,9 @@
 // center 정책이 Stack/Flex에서 다르게 동작하는 모습을 눈으로 볼 수 없어 추가한
 // 순수 시각 확인용 Preview. 자동 assertion(run)은 없다.
 import { FlexColumn, FlexRow, StackColumn, StackRow } from '@cp949/mui-react19';
-import { Box, Stack, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import type { ReactNode } from 'react';
 
 import type { HookCase } from './types';

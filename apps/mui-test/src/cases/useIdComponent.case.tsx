@@ -3,7 +3,8 @@
 // 인자 없는 파생 id는 콜론(:)이 제거되며, 렌더된 DOM에 staticId가 일관 반영되는지 확인한다.
 // useId는 hooks subpath에서 import한다.
 import { useId } from '@cp949/mui-react19/hooks';
-import { Stack, Typography } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 
 import { runReactTest } from '../test-utils/runReactTest';

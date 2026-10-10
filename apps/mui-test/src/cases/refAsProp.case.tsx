@@ -4,7 +4,9 @@
 // ref가 실제 DOM 요소로 전달되어 document에 연결(isConnected)되는지 확인한다.
 // 컴포넌트는 패키지 ROOT에서 import한다(/hooks 아님).
 import { Center, FileButton } from '@cp949/mui-react19';
-import { Button, Stack, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { useEffect, useRef } from 'react';
 
 import { runReactTest } from '../test-utils/runReactTest';
