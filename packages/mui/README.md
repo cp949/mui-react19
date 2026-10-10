@@ -98,6 +98,9 @@ export default function ClientComponent() {
 - `Hide`, `Show` - 조건부 렌더링 유틸리티
 - `Paper` - MUI Paper 래퍼
 - `Mark` - 하이라이트 마크
+- `YmdTypography` - YYYYMMDD/YYMMDD 숫자 날짜를 포맷해 표시하는 Typography
+- `YmTypography` - YYYYMM 숫자 연월을 포맷해 표시하는 Typography
+- `YmdTextField` - YYMMDD/YYYYMMDD 숫자 날짜 입력 TextField
 - `SmOrUp`, `MdOrDown`, `LgOrUp` 등 - 반응형 조건부 렌더링
 
 ### 고급 기능 컴포넌트
