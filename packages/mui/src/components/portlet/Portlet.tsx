@@ -5,12 +5,14 @@ import { PortletContent } from './PortletContent.js';
 import { PortletFooter } from './PortletFooter.js';
 import { PortletHeader } from './PortletHeader.js';
 import { PortletLabel } from './PortletLabel.js';
+import { PortletTitle } from './PortletTitle.js';
 import { PortletToolbar } from './PortletToolbar.js';
 
 export type { PortletContentProps } from './PortletContent.js';
 export type { PortletFooterProps } from './PortletFooter.js';
 export type { PortletHeaderProps } from './PortletHeader.js';
 export type { PortletLabelProps } from './PortletLabel.js';
+export type { PortletTitleProps } from './PortletTitle.js';
 export type { PortletToolbarProps } from './PortletToolbar.js';
 
 const defaultProps: PaperProps = {
@@ -26,6 +28,7 @@ interface PortletComponent extends FunctionComponent<PortletProps> {
   Header: typeof PortletHeader;
   Footer: typeof PortletFooter;
   Label: typeof PortletLabel;
+  Title: typeof PortletTitle;
   Toolbar: typeof PortletToolbar;
 }
 
@@ -75,4 +78,5 @@ Portlet.Content = PortletContent;
 Portlet.Header = PortletHeader;
 Portlet.Footer = PortletFooter;
 Portlet.Label = PortletLabel;
+Portlet.Title = PortletTitle;
 Portlet.Toolbar = PortletToolbar;
