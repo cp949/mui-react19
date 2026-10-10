@@ -1,10 +1,29 @@
 import { act } from 'react';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { createDomHarness } from '../../test-utils/dom-harness.js';
-import { Portlet } from './Portlet.js';
+import {
+  Portlet,
+  PortletContent,
+  PortletFooter,
+  PortletHeader,
+  PortletLabel,
+  PortletTitle,
+  PortletToolbar,
+} from './index.js';
 
 beforeAll(() => {
   (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
+});
+
+describe('Portlet 개별 export', () => {
+  it('점 표기와 같은 컴포넌트를 가리킨다', () => {
+    expect(Portlet.Content).toBe(PortletContent);
+    expect(Portlet.Footer).toBe(PortletFooter);
+    expect(Portlet.Header).toBe(PortletHeader);
+    expect(Portlet.Label).toBe(PortletLabel);
+    expect(Portlet.Title).toBe(PortletTitle);
+    expect(Portlet.Toolbar).toBe(PortletToolbar);
+  });
 });
 
 describe('Portlet 조립 컴포넌트', () => {

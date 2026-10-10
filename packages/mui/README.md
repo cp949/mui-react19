@@ -72,6 +72,12 @@ export default function ClientComponent() {
 }
 ```
 
+### Next.js 서버 컴포넌트에서 사용
+
+- 번들은 파일별로 출력되며 클라이언트 전용 모듈에는 `'use client'`가 유지됩니다.
+- `Portlet` 같은 점 표기 컴포넌트(`Portlet.Header`)는 서버 컴포넌트에서 속성 접근이 되지 않습니다. 서버에서는 `PortletHeader`, `PortletContent`, `PortletLabel`, `PortletToolbar`, `PortletTitle`, `PortletFooter`를 개별 import합니다.
+- 훅(`@cp949/mui-react19/hooks`)은 클라이언트 컴포넌트에서만 호출할 수 있습니다.
+
 ## LLM용 API 요약
 
 배포 패키지에 `llm.txt`가 포함됩니다. AI 코딩 도구가 공개 API 시그니처와 사용 제약을 한 번에 읽을 수 있도록 빌드 시 `dist/*.d.ts`에서 생성한 영문 요약입니다. 경로는 `node_modules/@cp949/mui-react19/llm.txt`입니다.
