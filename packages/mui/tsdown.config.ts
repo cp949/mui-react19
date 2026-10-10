@@ -4,6 +4,8 @@ export default defineConfig((options) => {
   return {
     format: ['esm', 'cjs'],
     minify: !options.watch,
+    // 파일별 출력으로 모듈 단위 'use client' 지시어를 보존한다. 단일 번들은 지시어를 제거해 RSC에서 실패한다
+    unbundle: true,
     entry: {
       index: 'src/index.ts',
       'hooks/index': 'src/hooks/index.ts',
