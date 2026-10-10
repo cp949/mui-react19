@@ -1,5 +1,6 @@
 _tmp/
 dist/
+llm.txt
 
 /.vscode
 /dist

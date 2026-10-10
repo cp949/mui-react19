@@ -72,6 +72,10 @@ export default function ClientComponent() {
 }
 ```
 
+## LLM용 API 요약
+
+배포 패키지에 `llm.txt`가 포함됩니다. AI 코딩 도구가 공개 API 시그니처와 사용 제약을 한 번에 읽을 수 있도록 빌드 시 `dist/*.d.ts`에서 생성한 영문 요약입니다. 경로는 `node_modules/@cp949/mui-react19/llm.txt`입니다.
+
 ## 컴포넌트 목록
 
 ### 레이아웃 컴포넌트
