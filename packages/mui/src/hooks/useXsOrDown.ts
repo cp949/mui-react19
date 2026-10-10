@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery, { type UseMediaQueryOptions } from '@mui/material/useMediaQuery';
 

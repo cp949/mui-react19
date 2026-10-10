@@ -1,3 +1,5 @@
+'use client';
+
 // copy from  https://github.com/radix-ui/primitives/blob/main/packages/react/compose-refs/src/composeRefs.tsx
 
 //

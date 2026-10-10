@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useState } from 'react';
 import { useDebounceEffect } from './useDebounceEffect.js';
 import { useLatest } from './useLatest.js';

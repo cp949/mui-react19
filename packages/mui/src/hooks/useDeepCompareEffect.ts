@@ -1,3 +1,5 @@
+'use client';
+
 // copy from https://github.com/streamich/react-use/tree/master
 
 import type { DependencyList, EffectCallback } from 'react';

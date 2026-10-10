@@ -1,3 +1,5 @@
+'use client';
+
 import type { DependencyList } from 'react';
 import { deepEq } from '../misc/deepEq.js';
 import { useCustomCompareMemo } from './useCustomCompareMemo.js';

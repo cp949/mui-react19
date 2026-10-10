@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo, useState } from 'react';
 import type { Observable } from './types.js';
 import { useIsomorphicEffect } from './useIsomorphicEffect.js';

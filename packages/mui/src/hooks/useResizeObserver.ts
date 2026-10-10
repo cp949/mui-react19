@@ -1,3 +1,5 @@
+'use client';
+
 // copy from mantine
 
 import { useEffect, useMemo, useRef, useState } from 'react';

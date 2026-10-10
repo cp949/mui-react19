@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 
 type LoadingState = 'unknown' | 'loading' | 'ready' | 'error';

@@ -1,3 +1,5 @@
+'use client';
+
 // copy from mantine
 import { useEffect, useState } from 'react';
 import { useThrottledCallbackWithClearTimeout } from './useThrottledCallbackWithClearTimeout.js';

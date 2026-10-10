@@ -1,3 +1,5 @@
+'use client';
+
 // copy from mantine
 import { useState } from 'react';
 import { useIsomorphicEffect } from './useIsomorphicEffect.js';

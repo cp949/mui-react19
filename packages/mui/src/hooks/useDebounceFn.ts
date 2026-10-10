@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo } from 'react';
 import { debounce } from '../misc/debounce.js';
 import { useLatest } from './useLatest.js';

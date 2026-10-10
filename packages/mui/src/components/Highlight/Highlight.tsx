@@ -1,3 +1,5 @@
+'use client';
+
 import type { SxProps, Theme } from '@mui/material/styles';
 import Typography, { type TypographyProps } from '@mui/material/Typography';
 import clsx from 'clsx';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import { isBrowser } from '../util/misc-utils.js';
 import { useRafState } from './useRafState.js';

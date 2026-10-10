@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { BehaviorSubject, distinctUntilChanged, map, switchMap, tap, timer } from 'rxjs';
 

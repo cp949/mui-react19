@@ -1,3 +1,5 @@
+'use client';
+
 import type { SetStateAction } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { debounce } from '../misc/debounce.js';

@@ -1,3 +1,5 @@
+'use client';
+
 import Box, { type BoxProps } from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { clsx } from 'clsx';

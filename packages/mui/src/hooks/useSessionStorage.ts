@@ -1,3 +1,5 @@
+'use client';
+
 import type { Dispatch, SetStateAction } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import { isBrowser, noop } from '../util/misc-utils.js';

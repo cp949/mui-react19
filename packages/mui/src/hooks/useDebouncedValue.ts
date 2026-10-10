@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useMemo, useState } from 'react';
 import { debounce } from '../misc/debounce.js';
 import { useDidUpdate } from './useDidUpdate.js';

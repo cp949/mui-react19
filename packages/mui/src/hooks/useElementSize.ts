@@ -1,3 +1,5 @@
+'use client';
+
 // copy from mantine
 import { useResizeObserver } from './useResizeObserver.js';
 

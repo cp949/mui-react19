@@ -1,3 +1,5 @@
+'use client';
+
 import Paper, { type PaperProps } from '@mui/material/Paper';
 import { clsx } from 'clsx';
 import type { FunctionComponent, ReactNode } from 'react';

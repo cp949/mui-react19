@@ -1,3 +1,5 @@
+'use client';
+
 import Pagination, { type PaginationProps } from '@mui/material/Pagination';
 import clsx from 'clsx';
 import { Center } from './Center.js';

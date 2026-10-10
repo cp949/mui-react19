@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo, useState } from 'react';
 import type { BehaviorSubject } from './types.js';
 import { useIsomorphicEffect } from './useIsomorphicEffect.js';

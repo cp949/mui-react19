@@ -1,3 +1,5 @@
+'use client';
+
 import { type DependencyList, useMemo, useRef } from 'react';
 import type { DependenciesComparator } from './types.js';
 
