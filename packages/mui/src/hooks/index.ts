@@ -11,6 +11,7 @@ export * from './useCooldown.js';
 export * from './useCustomCompareEffect.js';
 export * from './useCustomCompareMemo.js';
 export * from './useDebouncedCallback.js';
+export * from './useDebouncedParams.js';
 export * from './useDebouncedState.js';
 export * from './useDebouncedValue.js';
 export * from './useDebounceEffect.js';

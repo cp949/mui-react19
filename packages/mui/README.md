@@ -104,6 +104,7 @@ export default function ClientComponent() {
 
 - `FloatingIndicator` - 플로팅 인디케이터
 - `DebouncedRender` - 디바운스된 렌더링
+- `SearchBoxDebouncer` - 검색 조건 입력을 모아 한 번만 외부로 전달 (훅: `useDebouncedParams`)
 - `DelayedRender` - 지정한 시간이 지난 뒤에 자식을 렌더링
 - `SegmentedControl` - 세그먼트 컨트롤
 

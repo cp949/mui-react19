@@ -26,6 +26,7 @@ export * from './MdOrUp.js';
 export * from './Paper.js';
 export * from './PasswordTextField.js';
 export * from './portlet/index.js';
+export * from './SearchBoxDebouncer.js';
 export * from './SegmentedControl/index.js';
 export * from './Show.js';
 export * from './SmOrDown.js';
