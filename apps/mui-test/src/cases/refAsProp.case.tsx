@@ -40,7 +40,7 @@ export const refAsPropCase: HookCase = {
     const res = await runReactTest((done) => {
       function Harness() {
         // Center는 HTMLElement, FileButton 내부 input은 HTMLInputElement로 연결되어야 한다.
-        const centerRef = useRef<HTMLElement>(null);
+        const centerRef = useRef<HTMLDivElement>(null);
         const inputRef = useRef<HTMLInputElement>(null);
 
         useEffect(() => {
