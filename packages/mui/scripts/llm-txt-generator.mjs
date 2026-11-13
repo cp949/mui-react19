@@ -1,4 +1,5 @@
-import ts from 'typescript';
+// typescript 7은 JS 컴파일러 API를 제공하지 않는다. 호환 패키지로 6.x API를 사용한다
+import ts from '@typescript/typescript6';
 
 // 생성 결과가 이 크기를 넘으면 빌드를 실패시킨다. LLM 컨텍스트에 통째로 읽히는 파일이므로
 // 심볼이 늘어 조용히 비대해지는 것을 막는다. 한도를 올릴 때는 이유를 커밋 메시지에 남긴다.
