@@ -1,5 +1,14 @@
 # @cp949/mui-react19
 
+## 2.3.1
+
+### Patch Changes
+
+- 빌드·개발 도구 의존성을 갱신했습니다. 공개 API 변경은 없습니다.
+  
+  - 빌드 도구(`tsdown`)와 개발 의존성(`typescript` 7, `vitest`, `vite`, `@biomejs/biome` 등)을 최신으로 올렸습니다.
+  - `useLoadingVisible`과 `setCustomTimeout` 내부의 0 이하 보정을 `Math.max`로 바꿨습니다. NaN을 넘기지 않으면 동작이 같습니다.
+
 ## 2.3.0
 
 ### Minor Changes
