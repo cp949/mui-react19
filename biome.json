@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.8/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.7/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -15,7 +15,8 @@
       "!**/coverage",
       "!**/.next",
       "!**/build",
-      "!**/out"
+      "!**/out",
+      "!**/*.md"
     ]
   },
   "formatter": {
@@ -82,6 +83,16 @@
           },
           "performance": {
             "noAccumulatingSpread": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.test.tsx", "**/*.spec.tsx", "**/*.case.tsx", "**/test/**"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noComponentHookFactories": "off"
           }
         }
       }

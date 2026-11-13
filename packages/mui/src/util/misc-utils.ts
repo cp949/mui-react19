@@ -3,7 +3,7 @@ const setCustomTimeout = (callback: () => void, timeout: number) => {
     () => {
       callback();
     },
-    timeout < 0 ? 0 : timeout,
+    Math.max(0, timeout),
   );
 };
 

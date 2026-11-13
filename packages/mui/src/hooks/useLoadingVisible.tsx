@@ -62,7 +62,7 @@ export function useLoadingVisible(paramLoading: boolean, opts?: Options): boolea
           const diff = Date.now() - visibleStartTime;
           const delayAmount = minVisibleTimeRef.current - diff;
           // 지연후에 loadingVisible=false
-          return timer(delayAmount > 0 ? delayAmount : 0).pipe(
+          return timer(Math.max(0, delayAmount)).pipe(
             tap(() => {
               visibleStartTime = 0;
             }),
