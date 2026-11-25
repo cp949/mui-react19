@@ -16,8 +16,8 @@
   "scripts": {
     "build": "tsdown && node ./scripts/generate-llm-txt.mjs",
     "dev": "tsdown --watch",
-    "lint": "biome lint . && oxfmt --check .",
-    "lint:fix": "biome lint --write . && oxfmt .",
+    "lint": "oxlint --report-unused-disable-directives-severity=error && oxfmt --check .",
+    "lint:fix": "oxlint --fix && oxfmt .",
     "format": "oxfmt .",
     "check-types": "tsc --pretty --noEmit",
     "test": "vitest run",

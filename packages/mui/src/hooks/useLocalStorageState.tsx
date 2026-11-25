@@ -13,7 +13,6 @@ import { useStorageState, useStorageStateServer } from '../persistence/index.js'
  * Since the storage API isn't available in server-rendering environments, we
  * return null during SSR and hydration.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const useLocalStorageStateBrowser: UseStorageState = (...args: [any, any, any]) =>
   useStorageState(window.localStorage, ...args);
 

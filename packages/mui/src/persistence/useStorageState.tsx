@@ -102,7 +102,6 @@ export type StorageStateInitializer<T> = () => T | null;
 
 export type UseStorageStateHookResult<T> = [T | null, Dispatch<SetStateAction<T | null>>];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const serverValue: UseStorageStateHookResult<any> = [null, () => {}];
 
 export function useStorageStateServer<T = string>(): UseStorageStateHookResult<T> {

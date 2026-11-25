@@ -38,7 +38,6 @@ interface UseDebouncedCallbackOptions {
  * debouncedUpdate.cancel();
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useDebouncedCallback<T extends (...args: any[]) => void>(
   callback: T,
   wait: number,
@@ -50,7 +49,6 @@ export function useDebouncedCallback<T extends (...args: any[]) => void>(
   const callbackRef = useLatest(callback);
 
   // wait/leading/trailing이 바뀔 때만 디바운스 인스턴스를 새로 만든다.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: 기존 훅의 의도된 의존성 및 실행 시점 계약을 유지합니다.
   const debounced = useMemo(
     () =>
       debounce(

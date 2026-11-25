@@ -15,11 +15,9 @@ export function useLifecycleLogger(componentName: string, deps?: DependencyList)
     if (mountedRef.current) {
       console.log(`${componentName} updated`, deps && [...deps]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // biome-ignore lint/correctness/useExhaustiveDependencies: 기존 훅의 의도된 의존성 및 실행 시점 계약을 유지합니다.
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- 기존 훅의 의도된 의존성 및 실행 시점 계약을 유지합니다.
   }, deps);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: 기존 훅의 의도된 의존성 및 실행 시점 계약을 유지합니다.
   useEffect(() => {
     mountedRef.current = true;
     console.log(`${componentName} mounted`, deps && [...deps]);

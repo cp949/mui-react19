@@ -8,10 +8,8 @@ type SetStateFn<T> = (value: T | undefined) => void;
 
 type GetFn<T> = () => T;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const emitters: Record<string, EventEmitter<any>> = {};
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getOrCreateEmitter = (key: string): EventEmitter<any> => {
   const instance = emitters[key];
   if (instance) {

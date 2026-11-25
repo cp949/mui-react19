@@ -1,5 +1,4 @@
 // copy from https://github.com/primus/eventemitter3/blob/master/index.js
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { EventArgs, EventListener, EventNames, ValidEventTypes } from './types.js';
 

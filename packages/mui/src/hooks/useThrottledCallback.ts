@@ -22,7 +22,6 @@ import { useThrottledCallbackWithClearTimeout } from './useThrottledCallbackWith
  * return <button onClick={throttledClick}>클릭</button>;
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useThrottledCallback<T extends (...args: any[]) => any>(
   callback: T, // 쓰로틀링할 콜백 함수
   wait: number, // 호출 간격 (밀리초 단위)

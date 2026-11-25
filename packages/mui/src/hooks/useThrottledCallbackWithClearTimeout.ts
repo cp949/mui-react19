@@ -29,7 +29,6 @@ import { useCallbackRef } from './useCallbackRef.js';
  * );
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useThrottledCallbackWithClearTimeout<T extends (...args: any[]) => any>(
   callback: T, // 쓰로틀링할 콜백 함수
   wait: number, // 호출 간격(밀리초 단위)

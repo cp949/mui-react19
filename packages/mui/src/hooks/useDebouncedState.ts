@@ -44,7 +44,6 @@ export function useDebouncedState<T>(
   // wait/leading이 바뀔 때만 디바운스 인스턴스를 새로 만든다.
   const debounced = useMemo(
     () => debounce((next: SetStateAction<T>) => setValue(next), wait, { leading }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [wait, leading],
   );
 

@@ -48,6 +48,7 @@ export function useRefEffect<RefElement extends HTMLElement = HTMLElement>(
         cleanupCallbackRef.current = cleanup;
       }
     },
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- deps는 호출자가 넘긴 의존성 목록이라 정적으로 검사할 수 없습니다.
     [stableCallback, ...deps],
   );
 }

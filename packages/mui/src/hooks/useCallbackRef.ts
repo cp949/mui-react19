@@ -32,16 +32,15 @@ import { useLatest } from './useLatest.js';
  * };
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
   // 콜백 함수의 최신 참조를 저장하기 위한 ref
   const callbackRef = useLatest(callback);
 
   // 메모이제이션된 함수 반환
-  // biome-ignore lint/correctness/useExhaustiveDependencies: 기존 훅의 의도된 의존성 및 실행 시점 계약을 유지합니다.
   return useMemo(
     // 반환된 함수는 항상 최신 콜백(`callbackRef.current`)을 호출
     () => ((...args) => callbackRef.current?.(...args)) as T, // 콜백 호출 시 안전하게 `undefined` 처리
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- 기존 훅의 의도된 의존성 및 실행 시점 계약을 유지합니다.
     [], // 함수는 처음 한 번만 생성됨
   );
 }

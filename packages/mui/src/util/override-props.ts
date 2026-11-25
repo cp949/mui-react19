@@ -37,7 +37,6 @@
  * // }
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function overrideProps<T extends Record<string, any>, R extends Record<string, any>[]>(
   targetProps: T,
   ...overrides: R
