@@ -49,6 +49,20 @@ pnpm test
 배포 관련 설정은 각 패키지의 package.json 및 publishConfig 설정을 따릅니다.
 메인 라이브러리는 @cp949/mui-react19 이름으로 npmjs에 배포됩니다.
 
+npm 배포는 `v*` 태그 push로 실행되는 GitHub Actions(`.github/workflows/release.yml`)에서만 합니다. npm 토큰 대신 trusted publishing(OIDC)으로 인증하고 provenance를 붙입니다. 로컬 `npm publish`는 `prepublishOnly` 가드가 막습니다(`--dry-run`은 허용).
+
+1. `packages/mui/package.json`의 `version`과 `packages/mui/CHANGELOG.md`를 갱신해 `main`에 커밋하고 push합니다.
+2. 같은 버전의 태그를 push합니다.
+
+```bash
+git tag v2.3.2
+git push origin v2.3.2
+```
+
+workflow는 다음을 모두 확인한 뒤에만 publish합니다. 태그 커밋이 `main`에 포함되는지, 태그 이름이 `v<package.json 버전>`과 같은지, `pnpm lint`·`pnpm check-types`·`pnpm test`가 통과하는지입니다. 결과는 `gh run list --workflow release.yml`로 확인합니다.
+
+태그 push는 되돌릴 수 없는 공개 배포를 일으킵니다. npmjs.com 패키지 설정의 trusted publisher에는 저장소 `cp949/mui-react19`, workflow 파일명 `release.yml`이 등록돼 있어야 합니다.
+
 현재 배포 정책은 다음과 같습니다.
 
 - `1.x` 라인은 MUI 7 호환 버전입니다.
