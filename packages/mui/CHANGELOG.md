@@ -1,5 +1,15 @@
 # @cp949/mui-react19
 
+## 2.3.2
+
+### Patch Changes
+
+- 개발 도구와 배포 방식을 바꿨습니다. 공개 API와 런타임 동작 변경은 없습니다.
+
+  - 린터·포매터를 Biome에서 oxlint·oxfmt로 바꿨습니다. 소스 변경은 줄바꿈 위치와 주석뿐입니다.
+  - 개발 의존성을 올렸습니다(`@mui/material`·`@mui/system` 9.6.0, `vitest` 5.1.1 등). peer 범위는 그대로입니다.
+  - 이 버전부터 GitHub Actions에서 trusted publishing으로 배포하며 npm provenance가 붙습니다.
+
 ## 2.3.1
 
 ### Patch Changes
