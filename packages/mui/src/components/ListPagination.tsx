@@ -4,8 +4,10 @@ import Pagination, { type PaginationProps } from '@mui/material/Pagination';
 import clsx from 'clsx';
 import { Center } from './Center.js';
 
-export interface ListPaginationProps
-  extends Omit<PaginationProps, 'page' | 'count' | 'onChange' | 'hidden' | 'ref'> {
+export interface ListPaginationProps extends Omit<
+  PaginationProps,
+  'page' | 'count' | 'onChange' | 'hidden' | 'ref'
+> {
   /**
    * 현재 페이지 번호입니다.
    * 기본은 MUI `Pagination`과 같은 1-based이며, `zeroBased`가 true이면 첫 페이지가 `0`입니다.

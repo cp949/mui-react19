@@ -8,7 +8,6 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useEffect, useRef } from 'react';
-
 import { runReactTest } from '../test-utils/runReactTest';
 import type { HookCase } from './types';
 

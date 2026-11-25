@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest';
-
 import { cases } from '../src/cases';
 
 describe('useRefEffect case registration', () => {

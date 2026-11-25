@@ -1,7 +1,6 @@
 'use client';
 
 import { type DependencyList, useCallback, useRef } from 'react';
-
 import { useCallbackRef } from './useCallbackRef.js';
 
 export type CleanupCallback = () => void;

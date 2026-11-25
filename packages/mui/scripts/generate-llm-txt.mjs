@@ -1,7 +1,6 @@
 import { readFile, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-
 import { extractEntryApis, MAX_LLM_TXT_BYTES, renderLlmTxt } from './llm-txt-generator.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

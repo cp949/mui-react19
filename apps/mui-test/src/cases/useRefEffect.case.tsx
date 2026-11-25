@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
-
 import { delay } from '../test-utils/delay';
 import { runReactTest } from '../test-utils/runReactTest';
 import type { HookCase } from './types';
